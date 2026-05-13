@@ -2,9 +2,16 @@
   "manifest_version": 3,
   "name": "EB Finder",
   "version": "0.1.0",
-  "description": "EB Finder spots SAS EuroBonus shopping partners and reminds you to log in before buying. Independent project, not affiliated with SAS.",
-  "permissions": ["storage", "activeTab"],
-  "host_permissions": ["https://onlineshopping.loyaltykey.com/*"],
+  "description": "Spots SAS EuroBonus partner shops while you browse and reminds you to log in via SAS to earn points.",
+  "author": "Brine AB",
+  "homepage_url": "https://www.brine.co",
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://onlineshopping.loyaltykey.com/*"
+  ],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -16,15 +23,23 @@
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["content.js"],
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ],
       "run_at": "document_end"
     }
   ],
   "web_accessible_resources": [
     {
-      "resources": ["styles.css"],
-      "matches": ["<all_urls>"]
+      "resources": [
+        "styles.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
     }
   ],
   "icons": {
