@@ -1,0 +1,1013 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 100;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		791690052FB46E2600036C69 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791690042FB46E2600036C69 /* AppDelegate.swift */; };
+		791690072FB46E2600036C69 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791690062FB46E2600036C69 /* SceneDelegate.swift */; };
+		7916900A2FB46E2600036C69 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 791690082FB46E2600036C69 /* LaunchScreen.storyboard */; };
+		7916900D2FB46E2600036C69 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7916900B2FB46E2600036C69 /* Main.storyboard */; };
+		791690162FB46E2600036C69 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791690152FB46E2600036C69 /* AppDelegate.swift */; };
+		791690192FB46E2600036C69 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 791690172FB46E2600036C69 /* Main.storyboard */; };
+		791690202FB46E2600036C69 /* EB Finder Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 7916901F2FB46E2600036C69 /* EB Finder Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		7916902A2FB46E2600036C69 /* EB Finder Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 791690292FB46E2600036C69 /* EB Finder Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		7916902F2FB46E2600036C69 /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = 79168FF42FB46E2500036C69 /* Main.html */; };
+		791690302FB46E2600036C69 /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = 79168FF42FB46E2500036C69 /* Main.html */; };
+		791690312FB46E2600036C69 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 79168FF62FB46E2500036C69 /* Icon.png */; };
+		791690322FB46E2600036C69 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 79168FF62FB46E2500036C69 /* Icon.png */; };
+		791690332FB46E2600036C69 /* Style.css in Resources */ = {isa = PBXBuildFile; fileRef = 79168FF72FB46E2500036C69 /* Style.css */; };
+		791690342FB46E2600036C69 /* Style.css in Resources */ = {isa = PBXBuildFile; fileRef = 79168FF72FB46E2500036C69 /* Style.css */; };
+		791690352FB46E2600036C69 /* Script.js in Resources */ = {isa = PBXBuildFile; fileRef = 79168FF82FB46E2500036C69 /* Script.js */; };
+		791690362FB46E2600036C69 /* Script.js in Resources */ = {isa = PBXBuildFile; fileRef = 79168FF82FB46E2500036C69 /* Script.js */; };
+		791690372FB46E2600036C69 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79168FF92FB46E2500036C69 /* ViewController.swift */; };
+		791690382FB46E2600036C69 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79168FF92FB46E2500036C69 /* ViewController.swift */; };
+		791690392FB46E2600036C69 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79168FFA2FB46E2600036C69 /* Assets.xcassets */; };
+		7916903A2FB46E2600036C69 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79168FFA2FB46E2600036C69 /* Assets.xcassets */; };
+		7916903B2FB46E2600036C69 /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79168FFC2FB46E2600036C69 /* SafariWebExtensionHandler.swift */; };
+		7916903C2FB46E2600036C69 /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79168FFC2FB46E2600036C69 /* SafariWebExtensionHandler.swift */; };
+		791690542FB46E2600036C69 /* popup.js in Resources */ = {isa = PBXBuildFile; fileRef = 7916904E2FB46E2600036C69 /* popup.js */; };
+		791690552FB46E2600036C69 /* styles.css in Resources */ = {isa = PBXBuildFile; fileRef = 7916904F2FB46E2600036C69 /* styles.css */; };
+		791690562FB46E2600036C69 /* popup.html in Resources */ = {isa = PBXBuildFile; fileRef = 791690502FB46E2600036C69 /* popup.html */; };
+		791690572FB46E2600036C69 /* icons in Resources */ = {isa = PBXBuildFile; fileRef = 791690512FB46E2600036C69 /* icons */; };
+		791690582FB46E2600036C69 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 791690522FB46E2600036C69 /* manifest.json */; };
+		791690592FB46E2600036C69 /* content.js in Resources */ = {isa = PBXBuildFile; fileRef = 791690532FB46E2600036C69 /* content.js */; };
+		7916905A2FB46E2600036C69 /* popup.js in Resources */ = {isa = PBXBuildFile; fileRef = 7916904E2FB46E2600036C69 /* popup.js */; };
+		7916905B2FB46E2600036C69 /* styles.css in Resources */ = {isa = PBXBuildFile; fileRef = 7916904F2FB46E2600036C69 /* styles.css */; };
+		7916905C2FB46E2600036C69 /* popup.html in Resources */ = {isa = PBXBuildFile; fileRef = 791690502FB46E2600036C69 /* popup.html */; };
+		7916905D2FB46E2600036C69 /* icons in Resources */ = {isa = PBXBuildFile; fileRef = 791690512FB46E2600036C69 /* icons */; };
+		7916905E2FB46E2600036C69 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 791690522FB46E2600036C69 /* manifest.json */; };
+		7916905F2FB46E2600036C69 /* content.js in Resources */ = {isa = PBXBuildFile; fileRef = 791690532FB46E2600036C69 /* content.js */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		791690212FB46E2600036C69 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 79168FEE2FB46E2500036C69 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7916901E2FB46E2600036C69;
+			remoteInfo = "EB Finder Extension (iOS)";
+		};
+		7916902B2FB46E2600036C69 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 79168FEE2FB46E2500036C69 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 791690282FB46E2600036C69;
+			remoteInfo = "EB Finder Extension (macOS)";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		791690422FB46E2600036C69 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			dstPath = "";
+			dstSubfolder = PlugIns;
+			files = (
+				791690202FB46E2600036C69 /* EB Finder Extension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+		};
+		791690492FB46E2600036C69 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			dstPath = "";
+			dstSubfolder = PlugIns;
+			files = (
+				7916902A2FB46E2600036C69 /* EB Finder Extension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		79168FF52FB46E2500036C69 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = Base.lproj/Main.html; sourceTree = "<group>"; };
+		79168FF62FB46E2500036C69 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		79168FF72FB46E2500036C69 /* Style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = Style.css; sourceTree = "<group>"; };
+		79168FF82FB46E2500036C69 /* Script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Script.js; sourceTree = "<group>"; };
+		79168FF92FB46E2500036C69 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		79168FFA2FB46E2600036C69 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		79168FFC2FB46E2600036C69 /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
+		791690012FB46E2600036C69 /* EB Finder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EB Finder.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		791690042FB46E2600036C69 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		791690062FB46E2600036C69 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		791690092FB46E2600036C69 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		7916900C2FB46E2600036C69 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		7916900E2FB46E2600036C69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		791690132FB46E2600036C69 /* EB Finder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EB Finder.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		791690152FB46E2600036C69 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		791690182FB46E2600036C69 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		7916901A2FB46E2600036C69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7916901F2FB46E2600036C69 /* EB Finder Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "EB Finder Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		791690242FB46E2600036C69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		791690292FB46E2600036C69 /* EB Finder Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "EB Finder Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7916902E2FB46E2600036C69 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7916904E2FB46E2600036C69 /* popup.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = popup.js; path = ../../../extension/popup.js; sourceTree = "<group>"; };
+		7916904F2FB46E2600036C69 /* styles.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; name = styles.css; path = ../../../extension/styles.css; sourceTree = "<group>"; };
+		791690502FB46E2600036C69 /* popup.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = popup.html; path = ../../../extension/popup.html; sourceTree = "<group>"; };
+		791690512FB46E2600036C69 /* icons */ = {isa = PBXFileReference; lastKnownFileType = folder; name = icons; path = ../../../extension/icons; sourceTree = "<group>"; };
+		791690522FB46E2600036C69 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = manifest.json; path = ../../../extension/manifest.json; sourceTree = "<group>"; };
+		791690532FB46E2600036C69 /* content.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = content.js; path = ../../../extension/content.js; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		79168FFE2FB46E2600036C69 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+		791690102FB46E2600036C69 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+		7916901C2FB46E2600036C69 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+		791690262FB46E2600036C69 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		79168FED2FB46E2500036C69 = {
+			isa = PBXGroup;
+			children = (
+				79168FF22FB46E2500036C69 /* Shared (App) */,
+				79168FFB2FB46E2600036C69 /* Shared (Extension) */,
+				791690032FB46E2600036C69 /* iOS (App) */,
+				791690142FB46E2600036C69 /* macOS (App) */,
+				791690232FB46E2600036C69 /* iOS (Extension) */,
+				7916902D2FB46E2600036C69 /* macOS (Extension) */,
+				791690022FB46E2600036C69 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		79168FF22FB46E2500036C69 /* Shared (App) */ = {
+			isa = PBXGroup;
+			children = (
+				79168FF92FB46E2500036C69 /* ViewController.swift */,
+				79168FFA2FB46E2600036C69 /* Assets.xcassets */,
+				79168FF32FB46E2500036C69 /* Resources */,
+			);
+			path = "Shared (App)";
+			sourceTree = "<group>";
+		};
+		79168FF32FB46E2500036C69 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				79168FF42FB46E2500036C69 /* Main.html */,
+				79168FF62FB46E2500036C69 /* Icon.png */,
+				79168FF72FB46E2500036C69 /* Style.css */,
+				79168FF82FB46E2500036C69 /* Script.js */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		79168FFB2FB46E2600036C69 /* Shared (Extension) */ = {
+			isa = PBXGroup;
+			children = (
+				7916904D2FB46E2600036C69 /* Resources */,
+				79168FFC2FB46E2600036C69 /* SafariWebExtensionHandler.swift */,
+			);
+			path = "Shared (Extension)";
+			sourceTree = "<group>";
+		};
+		791690022FB46E2600036C69 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				791690012FB46E2600036C69 /* EB Finder.app */,
+				791690132FB46E2600036C69 /* EB Finder.app */,
+				7916901F2FB46E2600036C69 /* EB Finder Extension.appex */,
+				791690292FB46E2600036C69 /* EB Finder Extension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		791690032FB46E2600036C69 /* iOS (App) */ = {
+			isa = PBXGroup;
+			children = (
+				791690042FB46E2600036C69 /* AppDelegate.swift */,
+				791690062FB46E2600036C69 /* SceneDelegate.swift */,
+				791690082FB46E2600036C69 /* LaunchScreen.storyboard */,
+				7916900B2FB46E2600036C69 /* Main.storyboard */,
+				7916900E2FB46E2600036C69 /* Info.plist */,
+			);
+			path = "iOS (App)";
+			sourceTree = "<group>";
+		};
+		791690142FB46E2600036C69 /* macOS (App) */ = {
+			isa = PBXGroup;
+			children = (
+				791690152FB46E2600036C69 /* AppDelegate.swift */,
+				791690172FB46E2600036C69 /* Main.storyboard */,
+				7916901A2FB46E2600036C69 /* Info.plist */,
+			);
+			path = "macOS (App)";
+			sourceTree = "<group>";
+		};
+		791690232FB46E2600036C69 /* iOS (Extension) */ = {
+			isa = PBXGroup;
+			children = (
+				791690242FB46E2600036C69 /* Info.plist */,
+			);
+			path = "iOS (Extension)";
+			sourceTree = "<group>";
+		};
+		7916902D2FB46E2600036C69 /* macOS (Extension) */ = {
+			isa = PBXGroup;
+			children = (
+				7916902E2FB46E2600036C69 /* Info.plist */,
+			);
+			path = "macOS (Extension)";
+			sourceTree = "<group>";
+		};
+		7916904D2FB46E2600036C69 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7916904E2FB46E2600036C69 /* popup.js */,
+				7916904F2FB46E2600036C69 /* styles.css */,
+				791690502FB46E2600036C69 /* popup.html */,
+				791690512FB46E2600036C69 /* icons */,
+				791690522FB46E2600036C69 /* manifest.json */,
+				791690532FB46E2600036C69 /* content.js */,
+			);
+			name = Resources;
+			path = "Shared (Extension)";
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		791690002FB46E2600036C69 /* EB Finder (iOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 791690432FB46E2600036C69 /* Build configuration list for PBXNativeTarget "EB Finder (iOS)" */;
+			buildPhases = (
+				79168FFD2FB46E2600036C69 /* Sources */,
+				79168FFE2FB46E2600036C69 /* Frameworks */,
+				79168FFF2FB46E2600036C69 /* Resources */,
+				791690422FB46E2600036C69 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				791690222FB46E2600036C69 /* PBXTargetDependency */,
+			);
+			name = "EB Finder (iOS)";
+			productName = "EB Finder (iOS)";
+			productReference = 791690012FB46E2600036C69 /* EB Finder.app */;
+			productType = "com.apple.product-type.application";
+		};
+		791690122FB46E2600036C69 /* EB Finder (macOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7916904A2FB46E2600036C69 /* Build configuration list for PBXNativeTarget "EB Finder (macOS)" */;
+			buildPhases = (
+				7916900F2FB46E2600036C69 /* Sources */,
+				791690102FB46E2600036C69 /* Frameworks */,
+				791690112FB46E2600036C69 /* Resources */,
+				791690492FB46E2600036C69 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7916902C2FB46E2600036C69 /* PBXTargetDependency */,
+			);
+			name = "EB Finder (macOS)";
+			productName = "EB Finder (macOS)";
+			productReference = 791690132FB46E2600036C69 /* EB Finder.app */;
+			productType = "com.apple.product-type.application";
+		};
+		7916901E2FB46E2600036C69 /* EB Finder Extension (iOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7916903F2FB46E2600036C69 /* Build configuration list for PBXNativeTarget "EB Finder Extension (iOS)" */;
+			buildPhases = (
+				7916901B2FB46E2600036C69 /* Sources */,
+				7916901C2FB46E2600036C69 /* Frameworks */,
+				7916901D2FB46E2600036C69 /* Resources */,
+			);
+			buildRules = (
+			);
+			name = "EB Finder Extension (iOS)";
+			productName = "EB Finder Extension (iOS)";
+			productReference = 7916901F2FB46E2600036C69 /* EB Finder Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		791690282FB46E2600036C69 /* EB Finder Extension (macOS) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 791690462FB46E2600036C69 /* Build configuration list for PBXNativeTarget "EB Finder Extension (macOS)" */;
+			buildPhases = (
+				791690252FB46E2600036C69 /* Sources */,
+				791690262FB46E2600036C69 /* Frameworks */,
+				791690272FB46E2600036C69 /* Resources */,
+			);
+			buildRules = (
+			);
+			name = "EB Finder Extension (macOS)";
+			productName = "EB Finder Extension (macOS)";
+			productReference = 791690292FB46E2600036C69 /* EB Finder Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		79168FEE2FB46E2500036C69 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2650;
+				LastUpgradeCheck = 2650;
+				ORGANIZATIONNAME = "Brine AB";
+				TargetAttributes = {
+					791690002FB46E2600036C69 = {
+						CreatedOnToolsVersion = 26.5;
+					};
+					791690122FB46E2600036C69 = {
+						CreatedOnToolsVersion = 26.5;
+					};
+					7916901E2FB46E2600036C69 = {
+						CreatedOnToolsVersion = 26.5;
+					};
+					791690282FB46E2600036C69 = {
+						CreatedOnToolsVersion = 26.5;
+					};
+				};
+			};
+			buildConfigurationList = 79168FF12FB46E2500036C69 /* Build configuration list for PBXProject "EB Finder" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 79168FED2FB46E2500036C69;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 100;
+			productRefGroup = 791690022FB46E2600036C69 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				791690002FB46E2600036C69 /* EB Finder (iOS) */,
+				791690122FB46E2600036C69 /* EB Finder (macOS) */,
+				7916901E2FB46E2600036C69 /* EB Finder Extension (iOS) */,
+				791690282FB46E2600036C69 /* EB Finder Extension (macOS) */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		79168FFF2FB46E2600036C69 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+				791690312FB46E2600036C69 /* Icon.png in Resources */,
+				7916900A2FB46E2600036C69 /* LaunchScreen.storyboard in Resources */,
+				7916902F2FB46E2600036C69 /* Main.html in Resources */,
+				791690352FB46E2600036C69 /* Script.js in Resources */,
+				791690392FB46E2600036C69 /* Assets.xcassets in Resources */,
+				7916900D2FB46E2600036C69 /* Main.storyboard in Resources */,
+				791690332FB46E2600036C69 /* Style.css in Resources */,
+			);
+		};
+		791690112FB46E2600036C69 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+				791690322FB46E2600036C69 /* Icon.png in Resources */,
+				791690342FB46E2600036C69 /* Style.css in Resources */,
+				791690192FB46E2600036C69 /* Main.storyboard in Resources */,
+				791690362FB46E2600036C69 /* Script.js in Resources */,
+				7916903A2FB46E2600036C69 /* Assets.xcassets in Resources */,
+				791690302FB46E2600036C69 /* Main.html in Resources */,
+			);
+		};
+		7916901D2FB46E2600036C69 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+				7916905F2FB46E2600036C69 /* content.js in Resources */,
+				7916905A2FB46E2600036C69 /* popup.js in Resources */,
+				7916905D2FB46E2600036C69 /* icons in Resources */,
+				7916905E2FB46E2600036C69 /* manifest.json in Resources */,
+				7916905C2FB46E2600036C69 /* popup.html in Resources */,
+				7916905B2FB46E2600036C69 /* styles.css in Resources */,
+			);
+		};
+		791690272FB46E2600036C69 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+				791690592FB46E2600036C69 /* content.js in Resources */,
+				791690542FB46E2600036C69 /* popup.js in Resources */,
+				791690572FB46E2600036C69 /* icons in Resources */,
+				791690582FB46E2600036C69 /* manifest.json in Resources */,
+				791690562FB46E2600036C69 /* popup.html in Resources */,
+				791690552FB46E2600036C69 /* styles.css in Resources */,
+			);
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		79168FFD2FB46E2600036C69 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+				791690372FB46E2600036C69 /* ViewController.swift in Sources */,
+				791690052FB46E2600036C69 /* AppDelegate.swift in Sources */,
+				791690072FB46E2600036C69 /* SceneDelegate.swift in Sources */,
+			);
+		};
+		7916900F2FB46E2600036C69 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+				791690382FB46E2600036C69 /* ViewController.swift in Sources */,
+				791690162FB46E2600036C69 /* AppDelegate.swift in Sources */,
+			);
+		};
+		7916901B2FB46E2600036C69 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+				7916903B2FB46E2600036C69 /* SafariWebExtensionHandler.swift in Sources */,
+			);
+		};
+		791690252FB46E2600036C69 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+				7916903C2FB46E2600036C69 /* SafariWebExtensionHandler.swift in Sources */,
+			);
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		791690222FB46E2600036C69 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7916901E2FB46E2600036C69 /* EB Finder Extension (iOS) */;
+			targetProxy = 791690212FB46E2600036C69 /* PBXContainerItemProxy */;
+		};
+		7916902C2FB46E2600036C69 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 791690282FB46E2600036C69 /* EB Finder Extension (macOS) */;
+			targetProxy = 7916902B2FB46E2600036C69 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		79168FF42FB46E2500036C69 /* Main.html */ = {
+			isa = PBXVariantGroup;
+			children = (
+				79168FF52FB46E2500036C69 /* Base */,
+			);
+			name = Main.html;
+			sourceTree = "<group>";
+		};
+		791690082FB46E2600036C69 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				791690092FB46E2600036C69 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		7916900B2FB46E2600036C69 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7916900C2FB46E2600036C69 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		791690172FB46E2600036C69 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				791690182FB46E2600036C69 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7916903D2FB46E2600036C69 /* Debug configuration for PBXProject "EB Finder" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		7916903E2FB46E2600036C69 /* Release configuration for PBXProject "EB Finder" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				TARGETED_DEVICE_FAMILY = "";
+			};
+			name = Release;
+		};
+		791690402FB46E2600036C69 /* Debug configuration for PBXNativeTarget "EB Finder Extension (iOS)" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = P8Z5R444KA;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (Extension)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "EB Finder";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Brine AB. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 0.0.1;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.brine.ebfinder.Extension;
+				PRODUCT_NAME = "EB Finder Extension";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		791690412FB46E2600036C69 /* Release configuration for PBXNativeTarget "EB Finder Extension (iOS)" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = P8Z5R444KA;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (Extension)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "EB Finder";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Brine AB. All rights reserved.";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 0.0.1;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.brine.eb-finder.extension";
+				PRODUCT_NAME = "EB Finder Extension";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		791690442FB46E2600036C69 /* Debug configuration for PBXNativeTarget "EB Finder (iOS)" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = P8Z5R444KA;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (App)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "EB Finder";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIStatusBarHidden = NO;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.0.1;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.brine.ebfinder;
+				PRODUCT_NAME = "EB Finder";
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Debug;
+		};
+		791690452FB46E2600036C69 /* Release configuration for PBXNativeTarget "EB Finder (iOS)" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = P8Z5R444KA;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "iOS (App)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "EB Finder";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIStatusBarHidden = NO;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.0.1;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.brine.eb-finder";
+				PRODUCT_NAME = "EB Finder";
+				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		791690472FB46E2600036C69 /* Debug configuration for PBXNativeTarget "EB Finder Extension (macOS)" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = P8Z5R444KA;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (Extension)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "EB Finder";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Brine AB. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 0.0.1;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.brine.ebfinder.Extension;
+				PRODUCT_NAME = "EB Finder Extension";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		791690482FB46E2600036C69 /* Release configuration for PBXNativeTarget "EB Finder Extension (macOS)" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = P8Z5R444KA;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (Extension)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "EB Finder";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Brine AB. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 0.0.1;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.brine.eb-finder.extension";
+				PRODUCT_NAME = "EB Finder Extension";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		7916904B2FB46E2600036C69 /* Debug configuration for PBXNativeTarget "EB Finder (macOS)" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = P8Z5R444KA;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (App)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "EB Finder";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 0.0.1;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.brine.ebfinder;
+				PRODUCT_NAME = "EB Finder";
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		7916904C2FB46E2600036C69 /* Release configuration for PBXNativeTarget "EB Finder (macOS)" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = P8Z5R444KA;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "macOS (App)/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "EB Finder";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 0.0.1;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.brine.eb-finder";
+				PRODUCT_NAME = "EB Finder";
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		79168FF12FB46E2500036C69 /* Build configuration list for PBXProject "EB Finder" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7916903D2FB46E2600036C69 /* Debug configuration for PBXProject "EB Finder" */,
+				7916903E2FB46E2600036C69 /* Release configuration for PBXProject "EB Finder" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		7916903F2FB46E2600036C69 /* Build configuration list for PBXNativeTarget "EB Finder Extension (iOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				791690402FB46E2600036C69 /* Debug configuration for PBXNativeTarget "EB Finder Extension (iOS)" */,
+				791690412FB46E2600036C69 /* Release configuration for PBXNativeTarget "EB Finder Extension (iOS)" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		791690432FB46E2600036C69 /* Build configuration list for PBXNativeTarget "EB Finder (iOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				791690442FB46E2600036C69 /* Debug configuration for PBXNativeTarget "EB Finder (iOS)" */,
+				791690452FB46E2600036C69 /* Release configuration for PBXNativeTarget "EB Finder (iOS)" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		791690462FB46E2600036C69 /* Build configuration list for PBXNativeTarget "EB Finder Extension (macOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				791690472FB46E2600036C69 /* Debug configuration for PBXNativeTarget "EB Finder Extension (macOS)" */,
+				791690482FB46E2600036C69 /* Release configuration for PBXNativeTarget "EB Finder Extension (macOS)" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		7916904A2FB46E2600036C69 /* Build configuration list for PBXNativeTarget "EB Finder (macOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7916904B2FB46E2600036C69 /* Debug configuration for PBXNativeTarget "EB Finder (macOS)" */,
+				7916904C2FB46E2600036C69 /* Release configuration for PBXNativeTarget "EB Finder (macOS)" */,
+			);
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 79168FEE2FB46E2500036C69 /* Project object */;
+}

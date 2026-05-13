@@ -1,0 +1,144 @@
+:host {
+  all: initial;
+}
+
+.banner-wrapper,
+.fixed-banner-container {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+.fixed-banner-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 88px;
+  background: #0f1e82;
+  color: #ffffff;
+  padding: 12px 24px;
+  z-index: 2147483647;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  container-type: inline-size;
+}
+
+.banner-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.text-section {
+  flex: 1 1 auto;
+  min-width: 0;
+  text-align: left;
+}
+
+.text-full,
+.text-short {
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.text-short {
+  display: none;
+}
+
+.points-highlight {
+  font-weight: 900;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.cta-btn {
+  background: #f8d7b5;
+  color: #000093;
+  border-radius: 48px;
+  padding: 10px 22px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 14px;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cta-btn:hover {
+  background: #f5c89a;
+}
+
+.cta-short {
+  display: none;
+}
+
+.close-btn {
+  background: transparent;
+  border: 0;
+  color: #ffffff;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 8px;
+  opacity: 0.8;
+  flex-shrink: 0;
+}
+
+.close-btn:hover {
+  opacity: 1;
+}
+
+/* Fixed banner: switch to short copy and shrink height when its own width drops below 720px */
+@container (max-width: 720px) {
+  .fixed-banner-container {
+    height: 56px;
+    padding: 6px 14px;
+  }
+  .text-full,
+  .cta-full {
+    display: none;
+  }
+  .text-short,
+  .cta-short {
+    display: inline;
+  }
+  .text-short {
+    font-size: 13px;
+    line-height: 1.3;
+  }
+  .cta-btn {
+    padding: 7px 14px;
+    font-size: 12px;
+  }
+  .close-btn {
+    font-size: 16px;
+    padding: 4px;
+  }
+}
+
+/* Further trim on very narrow phones */
+@container (max-width: 380px) {
+  .fixed-banner-container {
+    height: 48px;
+    padding: 4px 10px;
+  }
+  .banner-wrapper {
+    gap: 8px;
+  }
+  .text-short {
+    font-size: 12px;
+  }
+  .cta-btn {
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+}
