@@ -625,7 +625,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.brine.ebfinder.Extension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.brine.ebfinder.extension;
 				PRODUCT_NAME = "EB Finder Extension";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -645,6 +645,7 @@
 		791690412FB46E2600036C69 /* Release configuration for PBXNativeTarget "EB Finder Extension (iOS)" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = P8Z5R444KA;
@@ -664,8 +665,9 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.brine.eb-finder.extension";
+				PRODUCT_BUNDLE_IDENTIFIER = com.brine.ebfinder.extension;
 				PRODUCT_NAME = "EB Finder Extension";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -762,7 +764,7 @@
 					"-framework",
 					WebKit,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.brine.eb-finder";
+				PRODUCT_BUNDLE_IDENTIFIER = com.brine.ebfinder;
 				PRODUCT_NAME = "EB Finder";
 				SDKROOT = iphoneos;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -815,7 +817,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.brine.ebfinder.Extension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.brine.ebfinder.extension;
 				PRODUCT_NAME = "EB Finder Extension";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -862,7 +864,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.brine.eb-finder.extension";
+				PRODUCT_BUNDLE_IDENTIFIER = com.brine.ebfinder.extension;
 				PRODUCT_NAME = "EB Finder Extension";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -951,7 +953,7 @@
 					"-framework",
 					WebKit,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.brine.eb-finder";
+				PRODUCT_BUNDLE_IDENTIFIER = com.brine.ebfinder;
 				PRODUCT_NAME = "EB Finder";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = macosx;
