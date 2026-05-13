@@ -625,7 +625,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.brine.ebfinder.Extension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.brine.ebfinder.extension;
 				PRODUCT_NAME = "EB Finder Extension";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -664,7 +664,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.brine.eb-finder.extension";
+				PRODUCT_BUNDLE_IDENTIFIER = com.brine.ebfinder.extension;
 				PRODUCT_NAME = "EB Finder Extension";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -762,7 +762,7 @@
 					"-framework",
 					WebKit,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.brine.eb-finder";
+				PRODUCT_BUNDLE_IDENTIFIER = com.brine.ebfinder;
 				PRODUCT_NAME = "EB Finder";
 				SDKROOT = iphoneos;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -815,7 +815,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.brine.ebfinder.Extension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.brine.ebfinder.extension;
 				PRODUCT_NAME = "EB Finder Extension";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -862,7 +862,7 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.brine.eb-finder.extension";
+				PRODUCT_BUNDLE_IDENTIFIER = com.brine.ebfinder.extension;
 				PRODUCT_NAME = "EB Finder Extension";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -951,7 +951,7 @@
 					"-framework",
 					WebKit,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.brine.eb-finder";
+				PRODUCT_BUNDLE_IDENTIFIER = com.brine.ebfinder;
 				PRODUCT_NAME = "EB Finder";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = macosx;
