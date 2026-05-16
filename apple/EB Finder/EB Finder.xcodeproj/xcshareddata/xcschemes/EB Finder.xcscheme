@@ -15,9 +15,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "791690122FB46E2600036C69"
+               BlueprintIdentifier = "791690002FB46E2600036C69"
                BuildableName = "EB Finder.app"
-               BlueprintName = "EB Finder (macOS)"
+               BlueprintName = "EB Finder"
                ReferencedContainer = "container:EB Finder.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "791690122FB46E2600036C69"
+            BlueprintIdentifier = "791690002FB46E2600036C69"
             BuildableName = "EB Finder.app"
-            BlueprintName = "EB Finder (macOS)"
+            BlueprintName = "EB Finder"
             ReferencedContainer = "container:EB Finder.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -62,9 +62,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "791690122FB46E2600036C69"
+            BlueprintIdentifier = "791690002FB46E2600036C69"
             BuildableName = "EB Finder.app"
-            BlueprintName = "EB Finder (macOS)"
+            BlueprintName = "EB Finder"
             ReferencedContainer = "container:EB Finder.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

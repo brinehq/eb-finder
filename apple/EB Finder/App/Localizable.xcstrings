@@ -1,0 +1,276 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "app.tagline" : {
+      "comment" : "Subtitle shown under the app name on the landing screen.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spot SAS EuroBonus partner shops while you browse."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hittar SAS EuroBonus-partnerbutiker när du surfar."
+          }
+        }
+      }
+    },
+    "ios.step1.detail" : {
+      "comment" : "iOS onboarding — step 1 subtitle.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap the Settings app on your Home Screen."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tryck på Inställningar på hemskärmen."
+          }
+        }
+      }
+    },
+    "ios.step1.title" : {
+      "comment" : "iOS onboarding — step 1 title.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Settings"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Öppna Inställningar"
+          }
+        }
+      }
+    },
+    "ios.step2.detail" : {
+      "comment" : "iOS onboarding — step 2 subtitle.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Find EB Finder in the list."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hitta EB Finder i listan."
+          }
+        }
+      }
+    },
+    "ios.step2.title" : {
+      "comment" : "iOS onboarding — step 2 title.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go to Apps → Safari → Extensions"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gå till Appar → Safari → Tillägg"
+          }
+        }
+      }
+    },
+    "ios.step3.detail" : {
+      "comment" : "iOS onboarding — step 3 subtitle.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allow it for the websites you visit."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tillåt det för webbplatserna du besöker."
+          }
+        }
+      }
+    },
+    "ios.step3.title" : {
+      "comment" : "iOS onboarding — step 3 title.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Turn on EB Finder"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktivera EB Finder"
+          }
+        }
+      }
+    },
+    "status.checking.detail" : {
+      "comment" : "macOS — extension state pending; supporting line.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hold tight while we ask Safari."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ett ögonblick — vi frågar Safari."
+          }
+        }
+      }
+    },
+    "status.checking.title" : {
+      "comment" : "macOS — extension state pending; title.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Checking extension status"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kontrollerar tilläggets status"
+          }
+        }
+      }
+    },
+    "status.disabled.detail" : {
+      "comment" : "macOS — extension disabled; supporting line.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Turn it on in Safari Extensions settings to start earning points."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktivera det i Safaris tilläggsinställningar för att börja tjäna poäng."
+          }
+        }
+      }
+    },
+    "status.disabled.title" : {
+      "comment" : "macOS — extension disabled; title.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EB Finder is off"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EB Finder är av"
+          }
+        }
+      }
+    },
+    "status.enabled.detail" : {
+      "comment" : "macOS — extension enabled; supporting line.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You can turn it off any time in Safari Extensions settings."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du kan stänga av det när som helst i Safaris tilläggsinställningar."
+          }
+        }
+      }
+    },
+    "status.enabled.title" : {
+      "comment" : "macOS — extension enabled; title.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EB Finder is on"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EB Finder är på"
+          }
+        }
+      }
+    },
+    "status.error.title" : {
+      "comment" : "Shown when Safari APIs return an error; the system-localized error message appears below.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Couldn’t reach Safari"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kunde inte nå Safari"
+          }
+        }
+      }
+    },
+    "status.openSettings.button" : {
+      "comment" : "macOS — primary action button on the landing screen.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Safari Extensions Settings"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Öppna Safaris tilläggsinställningar"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

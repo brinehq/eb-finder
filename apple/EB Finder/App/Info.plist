@@ -4,5 +4,7 @@
 <dict>
 	<key>SFSafariWebExtensionConverterVersion</key>
 	<string>26.5</string>
+	<key>UILaunchScreen</key>
+	<dict/>
 </dict>
 </plist>
