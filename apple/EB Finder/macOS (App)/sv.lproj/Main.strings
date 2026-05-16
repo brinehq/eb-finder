@@ -1,0 +1,36 @@
+
+/* Class = "NSMenuItem"; title = "EB Finder"; ObjectID = "1Xt-HY-uBw"; */
+"1Xt-HY-uBw.title" = "EB Finder";
+
+/* Class = "NSMenuItem"; title = "Quit EB Finder"; ObjectID = "4sb-4s-VLi"; */
+"4sb-4s-VLi.title" = "Quit EB Finder";
+
+/* Class = "NSMenuItem"; title = "About EB Finder"; ObjectID = "5kV-Vb-QxS"; */
+"5kV-Vb-QxS.title" = "About EB Finder";
+
+/* Class = "NSMenu"; title = "Main Menu"; ObjectID = "AYu-sK-qS6"; */
+"AYu-sK-qS6.title" = "Main Menu";
+
+/* Class = "NSMenu"; title = "Help"; ObjectID = "F2S-fz-NVQ"; */
+"F2S-fz-NVQ.title" = "Help";
+
+/* Class = "NSMenuItem"; title = "EB Finder Help"; ObjectID = "FKE-Sm-Kum"; */
+"FKE-Sm-Kum.title" = "EB Finder Help";
+
+/* Class = "NSWindow"; title = "EB Finder"; ObjectID = "IQv-IB-iLA"; */
+"IQv-IB-iLA.title" = "EB Finder";
+
+/* Class = "NSMenuItem"; title = "Show All"; ObjectID = "Kd2-mp-pUS"; */
+"Kd2-mp-pUS.title" = "Show All";
+
+/* Class = "NSMenuItem"; title = "Hide EB Finder"; ObjectID = "Olw-nP-bQN"; */
+"Olw-nP-bQN.title" = "Hide EB Finder";
+
+/* Class = "NSMenuItem"; title = "Hide Others"; ObjectID = "Vdr-fp-XzO"; */
+"Vdr-fp-XzO.title" = "Hide Others";
+
+/* Class = "NSMenu"; title = "EB Finder"; ObjectID = "uQy-DD-JDr"; */
+"uQy-DD-JDr.title" = "EB Finder";
+
+/* Class = "NSMenuItem"; title = "Help"; ObjectID = "wpr-3q-Mcd"; */
+"wpr-3q-Mcd.title" = "Help";
