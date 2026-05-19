@@ -389,7 +389,7 @@
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Brine AB. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.1.3;
+				MARKETING_VERSION = 0.1.4;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -430,7 +430,7 @@
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Brine AB. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.1.3;
+				MARKETING_VERSION = 0.1.4;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -470,7 +470,7 @@
 				INFOPLIST_FILE = App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "EB Finder";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.shopping";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Brine AB. All rights reserved.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UIStatusBarHidden = NO;
@@ -478,7 +478,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.1.3;
+				MARKETING_VERSION = 0.1.4;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -518,7 +518,7 @@
 				INFOPLIST_FILE = App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "EB Finder";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.shopping";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Brine AB. All rights reserved.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UIStatusBarHidden = NO;
@@ -526,7 +526,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.1.3;
+				MARKETING_VERSION = 0.1.4;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
