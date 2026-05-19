@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="sv">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EB Finder — banner preview</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: #f3f4f6;
+        color: #1f2937;
+      }
+      .preview-section {
+        padding: 24px;
+        border-bottom: 1px solid #e5e7eb;
+      }
+      .preview-section h2 {
+        margin: 0 0 12px 0;
+        font-size: 13px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #6b7280;
+      }
+      .resize-box {
+        background: #ffffff;
+        border: 1px dashed #9ca3af;
+        resize: horizontal;
+        overflow: auto;
+        max-width: 100%;
+        min-width: 320px;
+      }
+      .resize-box.wide {
+        width: 1100px;
+      }
+      .resize-box.narrow {
+        width: 400px;
+      }
+      .resize-box.tiny {
+        width: 320px;
+      }
+      .note {
+        color: #6b7280;
+        font-size: 12px;
+        margin-top: 8px;
+      }
+      .static-fixed {
+        position: static !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="preview-section">
+      <h2>Wide (1100px) — 88px tall, full text + full CTA</h2>
+      <div class="resize-box wide">
+        <div class="fixed-banner-container static-fixed">
+          <div class="banner-wrapper">
+            <div class="text-section">
+              <span class="text-full"
+                >Proshop är en EuroBonus-partner — tjäna
+                <span class="points-highlight">10 poäng</span> per 100 kr.</span
+              >
+              <span class="text-short">Proshop är en EB-partner</span>
+            </div>
+            <div class="actions">
+              <a href="#" class="cta-btn">
+                <span class="cta-full">LOGGA IN &amp; TJÄNA</span>
+                <span class="cta-short">TJÄNA</span>
+              </a>
+              <button class="close-btn" aria-label="Close">✕</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="note">Drag the bottom-right corner of any preview to resize.</p>
+    </div>
+
+    <div class="preview-section">
+      <h2>Narrow (400px) — 56px tall, short text + short CTA</h2>
+      <div class="resize-box narrow">
+        <div class="fixed-banner-container static-fixed">
+          <div class="banner-wrapper">
+            <div class="text-section">
+              <span class="text-full"
+                >Proshop är en EuroBonus-partner — tjäna
+                <span class="points-highlight">10 poäng</span> per 100 kr.</span
+              >
+              <span class="text-short">Proshop är en EB-partner</span>
+            </div>
+            <div class="actions">
+              <a href="#" class="cta-btn">
+                <span class="cta-full">LOGGA IN &amp; TJÄNA</span>
+                <span class="cta-short">TJÄNA</span>
+              </a>
+              <button class="close-btn" aria-label="Close">✕</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="preview-section">
+      <h2>Tiny (320px) — 48px tall, iPhone SE-ish width</h2>
+      <div class="resize-box tiny">
+        <div class="fixed-banner-container static-fixed">
+          <div class="banner-wrapper">
+            <div class="text-section">
+              <span class="text-full"
+                >Proshop är en EuroBonus-partner — tjäna
+                <span class="points-highlight">10 poäng</span> per 100 kr.</span
+              >
+              <span class="text-short">Proshop är en EB-partner</span>
+            </div>
+            <div class="actions">
+              <a href="#" class="cta-btn">
+                <span class="cta-full">LOGGA IN &amp; TJÄNA</span>
+                <span class="cta-short">TJÄNA</span>
+              </a>
+              <button class="close-btn" aria-label="Close">✕</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="preview-section">
+      <h2>Google badge — placed next to vendor name (mock)</h2>
+      <div
+        class="resize-box wide"
+        style="
+          padding: 16px;
+          color: #1f1f1f;
+          background: #ffffff;
+          font-family:
+            arial,
+            -apple-system,
+            sans-serif;
+        "
+      >
+        <div style="font-size: 14px; color: #4d5156">https://www.proshop.se</div>
+        <div style="font-size: 16px; line-height: 1.4; margin-top: 4px">
+          27" Apple Studio Display XDR — 5120×2880 (5K)
+        </div>
+        <div style="margin-top: 6px; font-weight: 700">35&nbsp;872,00&nbsp;kr</div>
+        <div style="margin-top: 6px; display: flex; align-items: center; gap: 0">
+          <div aria-label="From Proshop.se">Proshop.se</div>
+          <span
+            style="
+              display: inline-flex;
+              align-items: center;
+              justify-content: center;
+              vertical-align: middle;
+              background: #0f1e82;
+              color: #fff;
+              font: 700 10px/1 -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+              letter-spacing: 0.4px;
+              padding: 3px 6px;
+              border-radius: 4px;
+              margin-left: 6px;
+              cursor: pointer;
+              box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            "
+            >EB</span
+          >
+        </div>
+        <p class="note" style="margin-top: 16px">
+          The blue <strong>EB</strong> chip is injected next to Google's vendor display.
+          Clicking it opens the SAS click-through URL so the purchase earns EuroBonus
+          points.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
