@@ -30,9 +30,9 @@ External TestFlight is open for macOS and iOS / iPadOS (26.2+):
 ## Feedback
 
 Bug reports, partner-site weirdness, and feature requests go to the
-Facebook group:
+Messenger community or here on GH:
 
-→ <https://brn.sh/fb-ebfinder>
+→ <https://brn.sh/eb-finder>
 
 ## Contributing
 
