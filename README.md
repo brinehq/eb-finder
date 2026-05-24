@@ -32,8 +32,7 @@ External TestFlight is open for macOS and iOS / iPadOS (26.2+):
 Bug reports, partner-site weirdness, and feature requests go to the
 Messenger community or here on GH:
 
-→ <https://brn.sh/eb-finder>
-
+→ <https://m.me/cm/AbYqbMSdJHLmDqnD>
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
@@ -46,4 +45,4 @@ EuroBonus, or any of the shopping partners. Full notice:
 
 ## License
 
-[MIT](LICENSE) — © Brine AB.
+[MIT](LICENSE)
