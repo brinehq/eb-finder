@@ -393,7 +393,7 @@
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Brine AB. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
 				MACOSX_DEPLOYMENT_TARGET = 26.2;
-				MARKETING_VERSION = 0.1.4;
+				MARKETING_VERSION = 0.1.5;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -434,7 +434,7 @@
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Brine AB. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
 				MACOSX_DEPLOYMENT_TARGET = 26.2;
-				MARKETING_VERSION = 0.1.4;
+				MARKETING_VERSION = 0.1.5;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -482,7 +482,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
 				MACOSX_DEPLOYMENT_TARGET = 26.2;
-				MARKETING_VERSION = 0.1.4;
+				MARKETING_VERSION = 0.1.5;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -530,7 +530,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
 				MACOSX_DEPLOYMENT_TARGET = 26.2;
-				MARKETING_VERSION = 0.1.4;
+				MARKETING_VERSION = 0.1.5;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
