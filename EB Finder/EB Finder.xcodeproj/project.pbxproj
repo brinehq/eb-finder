@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		791690202FB46E2600036C69 /* EB Finder Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 7916901F2FB46E2600036C69 /* EB Finder Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		791690392FB46E2600036C69 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79168FFA2FB46E2600036C69 /* Assets.xcassets */; };
+		A1B100202FB46E2700036C69 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = A1B1001F2FB46E2700036C69 /* AppIcon.icon */; };
 		7916903B2FB46E2600036C69 /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79168FFC2FB46E2600036C69 /* SafariWebExtensionHandler.swift */; };
 		7916905A2FB46E2600036C69 /* popup.js in Resources */ = {isa = PBXBuildFile; fileRef = 7916904E2FB46E2600036C69 /* popup.js */; };
 		7916905B2FB46E2600036C69 /* styles.css in Resources */ = {isa = PBXBuildFile; fileRef = 7916904F2FB46E2600036C69 /* styles.css */; };
@@ -61,6 +62,7 @@
 		A1B100022FB46E2700036C69 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A1B100032FB46E2700036C69 /* ExtensionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionState.swift; sourceTree = "<group>"; };
 		A1B1000A2FB46E2700036C69 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		A1B1001F2FB46E2700036C69 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 				A1B100022FB46E2700036C69 /* ContentView.swift */,
 				A1B100032FB46E2700036C69 /* ExtensionState.swift */,
 				79168FFA2FB46E2600036C69 /* Assets.xcassets */,
+				A1B1001F2FB46E2700036C69 /* AppIcon.icon */,
 				A1B1000A2FB46E2700036C69 /* Localizable.xcstrings */,
 				7916900E2FB46E2600036C69 /* Info.plist */,
 			);
@@ -212,6 +215,7 @@
 			isa = PBXResourcesBuildPhase;
 			files = (
 				791690392FB46E2600036C69 /* Assets.xcassets in Resources */,
+				A1B100202FB46E2700036C69 /* AppIcon.icon in Resources */,
 				A1B100102FB46E2700036C69 /* Localizable.xcstrings in Resources */,
 			);
 		};
@@ -388,8 +392,8 @@
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Brine AB. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.1.4;
+				MACOSX_DEPLOYMENT_TARGET = 26.2;
+				MARKETING_VERSION = 0.1.5;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -429,8 +433,8 @@
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Brine AB. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.1.4;
+				MACOSX_DEPLOYMENT_TARGET = 26.2;
+				MARKETING_VERSION = 0.1.5;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -477,8 +481,8 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.1.4;
+				MACOSX_DEPLOYMENT_TARGET = 26.2;
+				MARKETING_VERSION = 0.1.5;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,
@@ -525,8 +529,8 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.1.4;
+				MACOSX_DEPLOYMENT_TARGET = 26.2;
+				MARKETING_VERSION = 0.1.5;
 				OTHER_LDFLAGS = (
 					"-framework",
 					SafariServices,

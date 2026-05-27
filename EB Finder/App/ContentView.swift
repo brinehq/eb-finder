@@ -1,33 +1,15 @@
 import SwiftUI
-#if canImport(AppKit)
-import AppKit
-#endif
-#if canImport(UIKit)
-import UIKit
-#endif
 
 struct ContentView: View {
+    @Environment(\.scenePhase) private var scenePhase
     @State private var extensionState = ExtensionState()
-
-    private var activationNotification: Notification.Name {
-        #if os(macOS)
-        return NSApplication.didBecomeActiveNotification
-        #else
-        return UIApplication.didBecomeActiveNotification
-        #endif
-    }
 
     var body: some View {
         VStack(spacing: 24) {
             Spacer(minLength: 0)
 
-            Image("LargeIcon")
-                .resizable()
-                .interpolation(.high)
-                .scaledToFit()
+            BrandIcon()
                 .frame(width: 128, height: 128)
-                .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
-                .shadow(color: .black.opacity(0.15), radius: 12, y: 4)
                 .accessibilityHidden(true)
 
             VStack(spacing: 8) {
@@ -47,17 +29,43 @@ struct ContentView: View {
         .padding(.horizontal, 24)
         .padding(.vertical, 32)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background {
-            #if os(macOS)
-            Color(nsColor: .windowBackgroundColor).ignoresSafeArea()
-            #else
-            Color(uiColor: .systemBackground).ignoresSafeArea()
-            #endif
-        }
+        .background(PlatformBackground())
         .task { await extensionState.refresh() }
-        .onReceive(NotificationCenter.default.publisher(for: activationNotification)) { _ in
-            Task { await extensionState.refresh() }
+        .onChange(of: scenePhase) { _, newPhase in
+            if newPhase == .active {
+                Task { await extensionState.refresh() }
+            }
         }
+    }
+}
+
+private struct PlatformBackground: View {
+    var body: some View {
+        #if os(macOS)
+        Color(nsColor: .windowBackgroundColor).ignoresSafeArea()
+        #else
+        Color(uiColor: .systemBackground).ignoresSafeArea()
+        #endif
+    }
+}
+
+private struct BrandIcon: View {
+    private static let baseColor = Color(.displayP3, red: 0.00007, green: 0, blue: 0.57520)
+
+    var body: some View {
+        LinearGradient(
+            colors: [Self.baseColor, Self.baseColor.opacity(0.85)],
+            startPoint: .top,
+            endPoint: .bottom
+        )
+        .overlay {
+            Image("EB")
+                .resizable()
+                .scaledToFit()
+                .padding(20)
+        }
+        .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
+        .shadow(color: .black.opacity(0.15), radius: 12, y: 4)
     }
 }
 
@@ -125,7 +133,7 @@ private struct StatusCard: View {
 
     private var tryItOutButton: some View {
         Button {
-            openDemoSearchInSafari()
+            state.openDemoSearch()
         } label: {
             Label("status.tryItOut.button", systemImage: "magnifyingglass")
                 .frame(maxWidth: .infinity)
@@ -133,22 +141,6 @@ private struct StatusCard: View {
         }
         .controlSize(.large)
         .buttonStyle(.borderedProminent)
-    }
-
-    private func openDemoSearchInSafari() {
-        let query = "studio display"
-        let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? query
-        guard let url = URL(string: "https://www.google.com/search?q=\(encoded)") else { return }
-        #if os(macOS)
-        let config = NSWorkspace.OpenConfiguration()
-        if let safari = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.apple.Safari") {
-            NSWorkspace.shared.open([url], withApplicationAt: safari, configuration: config)
-        } else {
-            NSWorkspace.shared.open(url)
-        }
-        #else
-        UIApplication.shared.open(url)
-        #endif
     }
 
     private func instructionRow(

@@ -1,6 +1,12 @@
 import Foundation
 import SafariServices
 import os.log
+#if canImport(AppKit)
+import AppKit
+#endif
+#if canImport(UIKit)
+import UIKit
+#endif
 
 private let extensionStateLogger = Logger(subsystem: "com.brine.ebfinder", category: "ExtensionState")
 
@@ -63,6 +69,22 @@ final class ExtensionState {
                 extensionStateLogger.info("openExtensionsSettings SUCCEEDED (completion fired, no error)")
             }
         }
+        #endif
+    }
+
+    func openDemoSearch() {
+        let query = "studio display"
+        let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? query
+        guard let url = URL(string: "https://www.google.com/search?q=\(encoded)") else { return }
+        #if os(macOS)
+        let config = NSWorkspace.OpenConfiguration()
+        if let safari = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.apple.Safari") {
+            NSWorkspace.shared.open([url], withApplicationAt: safari, configuration: config)
+        } else {
+            NSWorkspace.shared.open(url)
+        }
+        #else
+        UIApplication.shared.open(url)
         #endif
     }
 }
