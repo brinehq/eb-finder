@@ -394,10 +394,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
 				MACOSX_DEPLOYMENT_TARGET = 26.2;
 				MARKETING_VERSION = 0.1.5;
-				OTHER_LDFLAGS = (
-					"-framework",
-					SafariServices,
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.brine.ebfinder.extension;
 				PRODUCT_NAME = "EB Finder Extension";
 				SDKROOT = auto;
@@ -435,10 +431,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
 				MACOSX_DEPLOYMENT_TARGET = 26.2;
 				MARKETING_VERSION = 0.1.5;
-				OTHER_LDFLAGS = (
-					"-framework",
-					SafariServices,
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.brine.ebfinder.extension;
 				PRODUCT_NAME = "EB Finder Extension";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -483,10 +475,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
 				MACOSX_DEPLOYMENT_TARGET = 26.2;
 				MARKETING_VERSION = 0.1.5;
-				OTHER_LDFLAGS = (
-					"-framework",
-					SafariServices,
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.brine.ebfinder;
 				PRODUCT_NAME = "EB Finder";
 				"REGISTER_APP_GROUPS[sdk=macosx*]" = YES;
@@ -531,10 +519,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
 				MACOSX_DEPLOYMENT_TARGET = 26.2;
 				MARKETING_VERSION = 0.1.5;
-				OTHER_LDFLAGS = (
-					"-framework",
-					SafariServices,
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.brine.ebfinder;
 				PRODUCT_NAME = "EB Finder";
 				PROVISIONING_PROFILE_SPECIFIER = "";

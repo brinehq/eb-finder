@@ -1,11 +1,8 @@
 import Foundation
 import SafariServices
-import os.log
+import os
 #if canImport(AppKit)
 import AppKit
-#endif
-#if canImport(UIKit)
-import UIKit
 #endif
 
 private let extensionStateLogger = Logger(subsystem: "com.brine.ebfinder", category: "ExtensionState")
@@ -43,48 +40,42 @@ final class ExtensionState {
         }
     }
 
-    func openSafariExtensionPreferences() {
-        #if os(macOS)
-        SFSafariApplication.showPreferencesForExtension(
-            withIdentifier: extensionBundleIdentifier
-        ) { error in
-            if let error {
-                Task { @MainActor in
-                    self.status = .error(error.localizedDescription)
-                }
-            }
+    func openSafariExtensionPreferences() async {
+        do {
+            #if os(macOS)
+            try await SFSafariApplication.showPreferencesForExtension(
+                withIdentifier: extensionBundleIdentifier
+            )
+            #else
+            extensionStateLogger.info("openExtensionsSettings forIdentifiers: \(extensionBundleIdentifier, privacy: .public)")
+            try await SFSafariSettings.openExtensionsSettings(
+                forIdentifiers: [extensionBundleIdentifier]
+            )
+            extensionStateLogger.info("openExtensionsSettings succeeded")
+            #endif
+        } catch {
+            let ns = error as NSError
+            extensionStateLogger.error("openSafariExtensionPreferences failed: domain=\(ns.domain, privacy: .public) code=\(ns.code) message=\(error.localizedDescription, privacy: .public)")
+            status = .error(error.localizedDescription)
         }
-        #else
-        extensionStateLogger.info("openExtensionsSettings forIdentifiers: \(extensionBundleIdentifier, privacy: .public)")
-        SFSafariSettings.openExtensionsSettings(
-            forIdentifiers: [extensionBundleIdentifier]
-        ) { error in
-            if let error {
-                let ns = error as NSError
-                extensionStateLogger.error("openExtensionsSettings FAILED: domain=\(ns.domain, privacy: .public) code=\(ns.code) message=\(error.localizedDescription, privacy: .public)")
-                Task { @MainActor in
-                    self.status = .error(error.localizedDescription)
-                }
-            } else {
-                extensionStateLogger.info("openExtensionsSettings SUCCEEDED (completion fired, no error)")
-            }
-        }
-        #endif
     }
 
-    func openDemoSearch() {
+    func openDemoSearch(openURL: (URL) -> Void) {
         let query = "studio display"
         let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? query
         guard let url = URL(string: "https://www.google.com/search?q=\(encoded)") else { return }
         #if os(macOS)
-        let config = NSWorkspace.OpenConfiguration()
         if let safari = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.apple.Safari") {
-            NSWorkspace.shared.open([url], withApplicationAt: safari, configuration: config)
+            NSWorkspace.shared.open(
+                [url],
+                withApplicationAt: safari,
+                configuration: NSWorkspace.OpenConfiguration()
+            )
         } else {
-            NSWorkspace.shared.open(url)
+            openURL(url)
         }
         #else
-        UIApplication.shared.open(url)
+        openURL(url)
         #endif
     }
 }

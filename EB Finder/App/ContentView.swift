@@ -29,23 +29,12 @@ struct ContentView: View {
         .padding(.horizontal, 24)
         .padding(.vertical, 32)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(PlatformBackground())
         .task { await extensionState.refresh() }
         .onChange(of: scenePhase) { _, newPhase in
             if newPhase == .active {
                 Task { await extensionState.refresh() }
             }
         }
-    }
-}
-
-private struct PlatformBackground: View {
-    var body: some View {
-        #if os(macOS)
-        Color(nsColor: .windowBackgroundColor).ignoresSafeArea()
-        #else
-        Color(uiColor: .systemBackground).ignoresSafeArea()
-        #endif
     }
 }
 
@@ -71,6 +60,7 @@ private struct BrandIcon: View {
 
 private struct StatusCard: View {
     let state: ExtensionState
+    @Environment(\.openURL) private var openURL
 
     var body: some View {
         VStack(spacing: 16) {
@@ -121,7 +111,7 @@ private struct StatusCard: View {
 
     private var openSettingsButton: some View {
         Button {
-            state.openSafariExtensionPreferences()
+            Task { await state.openSafariExtensionPreferences() }
         } label: {
             Label("status.openSettings.button", systemImage: "safari")
                 .frame(maxWidth: .infinity)
@@ -133,7 +123,7 @@ private struct StatusCard: View {
 
     private var tryItOutButton: some View {
         Button {
-            state.openDemoSearch()
+            state.openDemoSearch { openURL($0) }
         } label: {
             Label("status.tryItOut.button", systemImage: "magnifyingglass")
                 .frame(maxWidth: .infinity)
