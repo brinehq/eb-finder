@@ -14,15 +14,24 @@ enum ExtensionStatus: Equatable {
 @MainActor
 @Observable
 final class ExtensionState {
-    var status: ExtensionStatus = .unknown
+    var status: ExtensionStatus
+
+    #if os(macOS)
+    private let safariApplicationURL: URL?
+    #endif
+
+    init() {
+        #if os(macOS)
+        let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.apple.Safari")
+        safariApplicationURL = url
+        status = url == nil ? .safariUnavailable : .unknown
+        #else
+        status = .unknown
+        #endif
+    }
 
     func refresh() async {
-        #if os(macOS)
-        guard isSafariAvailable else {
-            status = .safariUnavailable
-            return
-        }
-        #endif
+        guard status != .safariUnavailable else { return }
         do {
             #if os(macOS)
             let state = try await SFSafariExtensionManager.stateOfSafariExtension(
@@ -40,12 +49,7 @@ final class ExtensionState {
     }
 
     func openSafariExtensionPreferences() async {
-        #if os(macOS)
-        guard isSafariAvailable else {
-            status = .safariUnavailable
-            return
-        }
-        #endif
+        guard status != .safariUnavailable else { return }
         do {
             #if os(macOS)
             try await SFSafariApplication.showPreferencesForExtension(
@@ -66,10 +70,7 @@ final class ExtensionState {
         let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? query
         guard let url = URL(string: "https://www.google.com/search?q=\(encoded)") else { return }
         #if os(macOS)
-        guard let safari = safariApplicationURL else {
-            status = .safariUnavailable
-            return
-        }
+        guard let safari = safariApplicationURL else { return }
         NSWorkspace.shared.open(
             [url],
             withApplicationAt: safari,
@@ -79,14 +80,4 @@ final class ExtensionState {
         openURL(url)
         #endif
     }
-
-    #if os(macOS)
-    private var safariApplicationURL: URL? {
-        NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.apple.Safari")
-    }
-
-    private var isSafariAvailable: Bool {
-        safariApplicationURL != nil
-    }
-    #endif
 }
