@@ -7,6 +7,7 @@ enum ExtensionStatus: Equatable {
     case unknown
     case enabled
     case disabled
+    case safariUnavailable
     case error(String)
 }
 
@@ -16,6 +17,12 @@ final class ExtensionState {
     var status: ExtensionStatus = .unknown
 
     func refresh() async {
+        #if os(macOS)
+        guard isSafariAvailable else {
+            status = .safariUnavailable
+            return
+        }
+        #endif
         do {
             #if os(macOS)
             let state = try await SFSafariExtensionManager.stateOfSafariExtension(
@@ -33,6 +40,12 @@ final class ExtensionState {
     }
 
     func openSafariExtensionPreferences() async {
+        #if os(macOS)
+        guard isSafariAvailable else {
+            status = .safariUnavailable
+            return
+        }
+        #endif
         do {
             #if os(macOS)
             try await SFSafariApplication.showPreferencesForExtension(
@@ -53,15 +66,27 @@ final class ExtensionState {
         let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? query
         guard let url = URL(string: "https://www.google.com/search?q=\(encoded)") else { return }
         #if os(macOS)
-        if let safari = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.apple.Safari") {
-            NSWorkspace.shared.open(
-                [url],
-                withApplicationAt: safari,
-                configuration: NSWorkspace.OpenConfiguration()
-            )
+        guard let safari = safariApplicationURL else {
+            status = .safariUnavailable
             return
         }
-        #endif
+        NSWorkspace.shared.open(
+            [url],
+            withApplicationAt: safari,
+            configuration: NSWorkspace.OpenConfiguration()
+        )
+        #else
         openURL(url)
+        #endif
     }
+
+    #if os(macOS)
+    private var safariApplicationURL: URL? {
+        NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.apple.Safari")
+    }
+
+    private var isSafariAvailable: Bool {
+        safariApplicationURL != nil
+    }
+    #endif
 }

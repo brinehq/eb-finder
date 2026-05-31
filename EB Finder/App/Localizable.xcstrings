@@ -253,6 +253,42 @@
         }
       }
     },
+    "status.safariUnavailable.detail" : {
+      "comment" : "Shown when Safari is not installed on the device; supporting line.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EB Finder needs Safari to be available on this device."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EB Finder behöver Safari på den här enheten."
+          }
+        }
+      }
+    },
+    "status.safariUnavailable.title" : {
+      "comment" : "Shown when Safari is not installed on the device; title.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Safari is unavailable"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Safari är inte tillgängligt"
+          }
+        }
+      }
+    },
     "status.openSettings.button" : {
       "comment" : "macOS — primary action button on the landing screen.",
       "extractionState" : "manual",

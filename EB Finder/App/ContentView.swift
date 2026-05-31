@@ -53,9 +53,12 @@ private struct StatusCard: View {
         VStack(spacing: 16) {
             instructionsView
 
-            if case .enabled = state.status {
+            switch state.status {
+            case .enabled:
                 tryItOutButton
-            } else {
+            case .safariUnavailable:
+                EmptyView()
+            default:
                 openSettingsButton
             }
         }
@@ -90,6 +93,13 @@ private struct StatusCard: View {
                 tint: .orange,
                 title: "status.disabled.title",
                 detail: "status.disabled.detail"
+            )
+        case .safariUnavailable:
+            instructionRow(
+                icon: "xmark.octagon.fill",
+                tint: .red,
+                title: "status.safariUnavailable.title",
+                detail: "status.safariUnavailable.detail"
             )
         case .error(let message):
             errorRow(message: message)
