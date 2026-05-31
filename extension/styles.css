@@ -1,10 +1,288 @@
+/* ============================================================
+   EB FINDER — Central stylesheet
+   ------------------------------------------------------------
+   Mirrors eb-finder-design-system/project/colors_and_type.css.
+   Token architecture follows shadcn/ui
+   (https://ui.shadcn.com/docs/theming#default-theme-css):
+
+     1. PRIMITIVES (--eb-*)       — raw brand palette in sRGB.
+     2. @theme inline             — exposes tokens in Tailwind's
+                                     --color-* / --radius-* / --font-*
+                                     namespace (forward-references the
+                                     semantic tokens declared below).
+                                     Harmless without Tailwind; kept for
+                                     symmetry with the design system.
+     3. SEMANTIC TOKENS           — shadcn background/foreground pairs
+                                     consuming primitives via var().
+                                     Components read THESE.
+     4. DISPLAY P3 (@supports)    — re-states primitives in
+                                     color(display-p3 …) so the deep
+                                     indigo renders richer on wide-gamut
+                                     Apple displays. sRGB hex is the
+                                     fallback.
+     5. DARK MODE (@media)        — overrides semantic tokens that flip
+                                     with the system. Brand colors
+                                     (primary/secondary/ring) stay
+                                     constant in both modes.
+
+   Surfaces consuming the tokens (banner / popup / preview) follow
+   in sections 6–8 below.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. PRIMITIVES — raw brand palette (sRGB)
+   ------------------------------------------------------------ */
+:root,
+:host {
+  /* Brand indigo family */
+  --eb-indigo:        #0f1e82;
+  --eb-indigo-deep:   #000099;
+  --eb-indigo-ink:    #000093;
+  --eb-indigo-bright: #3131c6;
+  --eb-icon-gradient: linear-gradient(180deg, var(--eb-indigo-bright) 0%, var(--eb-indigo-deep) 100%);
+
+  /* Sand accent — the one warm note (CTA fill only) */
+  --eb-sand:        #f8d7b5;
+  --eb-sand-hover:  #f5c89a;
+
+  /* Match / success */
+  --eb-match-bg:   #ecfdf5;
+  --eb-match-fg:   #065f46;
+
+  /* Destructive / error red. Tailwind red-600 — same family as the
+     Tailwind-aligned gray ramp and emerald success, so it harmonises
+     with the rest of the palette. NOT used in the shipped product
+     (see --destructive below); provided for completeness. */
+  --eb-red:    #dc2626;
+  --eb-red-fg: #ffffff;
+
+  /* Gray ramp (Tailwind-aligned) */
+  --eb-white:    #ffffff;
+  --eb-gray-100: #f3f4f6;
+  --eb-gray-200: #e5e7eb;
+  --eb-gray-500: #6b7280;
+  --eb-gray-700: #374151;
+  --eb-gray-800: #1f2937;
+  --eb-ink:      #1a1a1a;
+}
+
+/* ------------------------------------------------------------
+   2. @theme inline — Tailwind v4 namespace exposure (shadcn convention)
+   Forward-references the semantic tokens declared in section 3.
+   Harmless when no Tailwind compiler runs; kept for symmetry.
+   ------------------------------------------------------------ */
+@theme inline {
+  --color-background:             var(--background);
+  --color-foreground:             var(--foreground);
+  --color-card:                   var(--card);
+  --color-card-foreground:        var(--card-foreground);
+  --color-popover:                var(--popover);
+  --color-popover-foreground:     var(--popover-foreground);
+  --color-primary:                var(--primary);
+  --color-primary-foreground:     var(--primary-foreground);
+  --color-secondary:              var(--secondary);
+  --color-secondary-foreground:   var(--secondary-foreground);
+  --color-secondary-hover:        var(--secondary-hover);
+  --color-muted:                  var(--muted);
+  --color-muted-foreground:       var(--muted-foreground);
+  --color-accent:                 var(--accent);
+  --color-accent-foreground:      var(--accent-foreground);
+  --color-success:                var(--success);
+  --color-success-foreground:     var(--success-foreground);
+  --color-destructive:            var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border:                 var(--border);
+  --color-input:                  var(--input);
+  --color-ring:                   var(--ring);
+
+  --font-sans: var(--font-system);
+
+  /* Radius scale derived from --radius (shadcn multipliers).
+     Pills use border-radius: 9999px directly — no custom token. */
+  --radius-sm:  calc(var(--radius) * 0.6);
+  --radius-md:  calc(var(--radius) * 0.8);
+  --radius-lg:  var(--radius);
+  --radius-xl:  calc(var(--radius) * 1.4);
+}
+
+/* ------------------------------------------------------------
+   3. SEMANTIC TOKENS (shadcn background/foreground pairs)
+   Component rules consume THESE.
+   ------------------------------------------------------------ */
+:root,
+:host {
+  color-scheme: light dark;
+
+  --radius: 0.5rem;   /* 8px — the product's card radius */
+
+  /* Surfaces */
+  --background:            var(--eb-white);
+  --foreground:            var(--eb-ink);
+  --card:                  var(--eb-white);
+  --card-foreground:       var(--eb-ink);
+  --popover:               var(--eb-white);
+  --popover-foreground:    var(--eb-ink);
+
+  /* Primary = brand indigo (high-emphasis actions, points, EB chip) */
+  --primary:               var(--eb-indigo);
+  --primary-foreground:    var(--eb-white);
+
+  /* Secondary = the sand CTA (lower-emphasis filled action).
+     The one warm fill; indigo-ink text on sand, darkens on hover. */
+  --secondary:             var(--eb-sand);
+  --secondary-foreground:  var(--eb-indigo-ink);
+  --secondary-hover:       var(--eb-sand-hover);
+
+  /* Muted = subtle surfaces + lower-emphasis text. The passive "SE"
+     locale badge is a muted chip (--muted + --muted-foreground +
+     a --border hairline) so metadata never reads as an EB affordance. */
+  --muted:                 var(--eb-gray-100);
+  --muted-foreground:      var(--eb-gray-500);
+
+  /* Accent = interactive hover/selected surfaces (list-row hover, etc.).
+     Same value as --muted in light mode (design-system intent: quiet
+     hover); diverges in dark mode below. */
+  --accent:                var(--eb-gray-100);
+  --accent-foreground:     var(--eb-gray-800);
+
+  /* Success = "this site IS a EuroBonus partner" */
+  --success:               var(--eb-match-bg);
+  --success-foreground:    var(--eb-match-fg);
+
+  /* Destructive — NOT used in the shipped product (it has no error/red
+     state; "no match" is neutral gray). Provided for shadcn completeness
+     only; reach for --muted before introducing red. */
+  --destructive:            var(--eb-red);
+  --destructive-foreground: var(--eb-red-fg);
+
+  /* Lines & focus */
+  --border:                var(--eb-gray-200);
+  --input:                 var(--eb-gray-200);
+  --ring:                  var(--eb-indigo);
+
+  /* Shadows */
+  --shadow-banner:         0 2px 8px rgba(0, 0, 0, 0.15);
+  --shadow-chip:           0 1px 2px rgba(0, 0, 0, 0.2);
+
+  /* Type */
+  --font-system: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                 Helvetica, Arial, sans-serif;
+  --font-wordmark: var(--font-system);  /* EB mark is SVG outlines */
+
+  --fw-regular:  400;
+  --fw-semibold: 600;
+  --fw-bold:     700;
+  --fw-black:    900;  /* points figures only */
+
+  /* Type scale (px, from source) */
+  --fs-banner: 16px;
+  --fs-h1:     16px;
+  --fs-status: 15px;
+  --fs-cta:    14px;
+  --fs-body:   14px;
+  --fs-short:  13px;
+  --fs-badge:  12px;
+  --fs-disc:   11px;
+  --fs-chip:   10px;
+
+  --lh-tight: 1.3;
+  --lh-snug:  1.4;
+  --lh-body:  1.5;
+
+  /* Spacing (8px-ish base) */
+  --space-1: 4px;
+  --space-2: 6px;
+  --space-3: 8px;
+  --space-4: 12px;
+  --space-5: 16px;
+  --space-6: 24px;
+}
+
+/* ------------------------------------------------------------
+   4. DISPLAY P3 ENHANCEMENT
+   On wide-gamut Apple displays, re-state the PRIMITIVES in
+   color(display-p3 …). Semantic tokens reference primitives via
+   var(), so every role inherits P3 automatically. sRGB hex stays
+   the universal fallback.
+   ------------------------------------------------------------ */
+@supports (color: color(display-p3 1 1 1)) {
+  :root,
+  :host {
+    --eb-indigo:        color(display-p3 0.0722 0.1161 0.4893);
+    --eb-indigo-deep:   color(display-p3 0      0      0.5748);
+    --eb-indigo-ink:    color(display-p3 0      0      0.5522);
+    --eb-indigo-bright: color(display-p3 0.1922 0.1922 0.7463);
+
+    --eb-sand:        color(display-p3 0.9513 0.8479 0.7260);
+    --eb-sand-hover:  color(display-p3 0.9327 0.7910 0.6275);
+
+    --eb-match-bg:    color(display-p3 0.9378 0.9900 0.9624);
+    --eb-match-fg:    color(display-p3 0.1593 0.3667 0.2808);
+
+    --eb-red:         color(display-p3 0.7729 0.1718 0.1424);
+
+    --eb-white:    color(display-p3 1      1      1);
+    --eb-gray-100: color(display-p3 0.9537 0.9567 0.9638);
+    --eb-gray-200: color(display-p3 0.8995 0.9056 0.9200);
+    --eb-gray-500: color(display-p3 0.4247 0.4462 0.4969);
+    --eb-gray-700: color(display-p3 0.2232 0.2537 0.3121);
+    --eb-gray-800: color(display-p3 0.1294 0.1596 0.2109);
+    --eb-ink:      color(display-p3 0.1020 0.1020 0.1019);
+  }
+}
+
+/* ------------------------------------------------------------
+   5. DARK MODE — follows the system.
+   Only the semantic tokens that need to flip are redefined here;
+   brand colors (primary, secondary, ring) and primitives stay
+   constant in both modes (brand identity does not invert).
+   ------------------------------------------------------------ */
+@media (prefers-color-scheme: dark) {
+  :root,
+  :host {
+    /* Surfaces */
+    --background:            #0a0a0a;
+    --foreground:            #fafafa;
+    --card:                  #171717;
+    --card-foreground:       #d4d4d4;
+    --popover:               #171717;
+    --popover-foreground:    #fafafa;
+
+    /* Muted (subtle surfaces + low-emphasis text) */
+    --muted:                 #171717;
+    --muted-foreground:      #a3a3a3;
+
+    /* Accent (interactive hover surfaces — diverges from --muted
+       in dark mode so list-row hover is visible) */
+    --accent:                #262626;
+    --accent-foreground:     #e5e5e5;
+
+    /* Success */
+    --success:               #052e1f;
+    --success-foreground:    #86efac;
+
+    /* Lines & form */
+    --border:                #262626;
+    --input:                 #262626;
+
+    /* Heavier shadows on dark surfaces */
+    --shadow-banner:         0 2px 8px rgba(0, 0, 0, 0.45);
+    --shadow-chip:           0 1px 2px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* ------------------------------------------------------------
+   6. BANNER — Shadow DOM only
+   Loaded by content.js on recognised partner sites. The :host
+   reset stops host-page styles from bleeding through.
+   ------------------------------------------------------------ */
 :host {
   all: initial;
 }
 
 .banner-wrapper,
 .fixed-banner-container {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: var(--font-system);
   box-sizing: border-box;
 }
 
@@ -14,11 +292,11 @@
   left: 0;
   right: 0;
   height: 88px;
-  background: #0f1e82;
-  color: #ffffff;
+  background: var(--primary);
+  color: var(--primary-foreground);
   padding: 12px 24px;
   z-index: 2147483647;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-banner);
   container-type: inline-size;
 }
 
@@ -40,8 +318,8 @@
 
 .text-full,
 .text-short {
-  font-size: 16px;
-  line-height: 1.4;
+  font-size: var(--fs-banner);
+  line-height: var(--lh-snug);
 }
 
 .text-short {
@@ -49,24 +327,24 @@
 }
 
 .points-highlight {
-  font-weight: 900;
+  font-weight: var(--fw-black);
 }
 
 .actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-3);
   flex-shrink: 0;
 }
 
 .cta-btn {
-  background: #f8d7b5;
-  color: #000093;
-  border-radius: 48px;
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+  border-radius: 9999px;  /* full pill — no custom token */
   padding: 10px 22px;
   text-decoration: none;
-  font-weight: 700;
-  font-size: 14px;
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-cta);
   white-space: nowrap;
   display: inline-flex;
   align-items: center;
@@ -74,7 +352,7 @@
 }
 
 .cta-btn:hover {
-  background: #f5c89a;
+  background: var(--secondary-hover);
 }
 
 .cta-short {
@@ -84,11 +362,11 @@
 .close-btn {
   background: transparent;
   border: 0;
-  color: #ffffff;
+  color: var(--primary-foreground);
   font-size: 20px;
   line-height: 1;
   cursor: pointer;
-  padding: 8px;
+  padding: var(--space-3);
   opacity: 0.8;
   flex-shrink: 0;
 }
@@ -97,11 +375,10 @@
   opacity: 1;
 }
 
-/* Fixed banner: switch to short copy and shrink height when its own width drops below 720px */
 @container (max-width: 720px) {
   .fixed-banner-container {
     height: 56px;
-    padding: 6px 14px;
+    padding: var(--space-2) 14px;
   }
   .text-full,
   .cta-full {
@@ -112,33 +389,284 @@
     display: inline;
   }
   .text-short {
-    font-size: 13px;
-    line-height: 1.3;
+    font-size: var(--fs-short);
+    line-height: var(--lh-tight);
   }
   .cta-btn {
     padding: 7px 14px;
-    font-size: 12px;
+    font-size: var(--fs-badge);
   }
   .close-btn {
     font-size: 16px;
-    padding: 4px;
+    padding: var(--space-1);
   }
 }
 
-/* Further trim on very narrow phones */
 @container (max-width: 380px) {
   .fixed-banner-container {
     height: 48px;
-    padding: 4px 10px;
+    padding: var(--space-1) 10px;
   }
   .banner-wrapper {
-    gap: 8px;
+    gap: var(--space-3);
   }
   .text-short {
-    font-size: 12px;
+    font-size: var(--fs-badge);
   }
   .cta-btn {
-    padding: 6px 12px;
+    padding: var(--space-2) 12px;
     font-size: 11px;
   }
+}
+
+/* ------------------------------------------------------------
+   7. POPUP — 320px toolbar dropdown
+   ------------------------------------------------------------ */
+body.eb-popup {
+  margin: 0;
+  font-family: var(--font-system);
+  width: 320px;
+  padding: var(--space-5);
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.header-icon {
+  border-radius: 5px;
+  flex-shrink: 0;
+}
+
+.header h1 {
+  font-size: var(--fs-h1);
+  margin: 0;
+  font-weight: var(--fw-bold);
+}
+
+/* SE locale badge — passive metadata, the design system explicitly
+   maps this to --muted + --muted-foreground + --border. */
+.badge {
+  display: inline-block;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-badge);
+  font-weight: var(--fw-semibold);
+  background: var(--muted);
+  color: var(--muted-foreground);
+  border: 1px solid var(--border);
+}
+
+.status {
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  background: var(--muted);
+  margin-bottom: var(--space-4);
+  font-size: var(--fs-body);
+  line-height: var(--lh-snug);
+}
+
+.status.match {
+  background: var(--success);
+  color: var(--success-foreground);
+}
+
+.status.no-match {
+  background: var(--muted);
+  color: var(--card-foreground);
+}
+
+.status strong {
+  display: block;
+  margin-bottom: var(--space-1);
+  font-size: var(--fs-status);
+}
+
+.cta {
+  display: block;
+  text-align: center;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  text-decoration: none;
+  padding: 10px;
+  border-radius: var(--radius-lg);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-cta);
+  margin-bottom: var(--space-4);
+}
+
+.match-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-4) 0;
+  display: none;
+  flex-direction: column;
+  gap: var(--space-1);
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.match-list.visible {
+  display: flex;
+}
+
+.match-list li {
+  margin: 0;
+}
+
+/* List row — default = --muted, hover = --accent.
+   In light mode both resolve to gray-100 (design-system intent: quiet
+   hover). In dark mode --accent diverges so hover is visible. */
+.match-list li a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) 10px;
+  border-radius: var(--radius-md);
+  background: var(--muted);
+  text-decoration: none;
+  color: var(--accent-foreground);
+  font-size: var(--fs-short);
+}
+
+.match-list li a:hover {
+  background: var(--accent);
+}
+
+.match-list .shop-name {
+  font-weight: var(--fw-semibold);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.match-list .shop-points {
+  color: var(--primary);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-badge);
+  flex-shrink: 0;
+}
+
+.match-list .shop-points.placeholder {
+  color: var(--muted-foreground);
+  font-weight: var(--fw-regular);
+}
+
+.disclaimer {
+  font-size: var(--fs-disc);
+  color: var(--muted-foreground);
+  line-height: var(--lh-snug);
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+}
+
+.disclaimer.credit {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.disclaimer a {
+  color: var(--primary);
+}
+
+/* ------------------------------------------------------------
+   8. PREVIEW — dev-only sandbox page
+   ------------------------------------------------------------ */
+body.eb-preview {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-system);
+  background: var(--muted);
+  color: var(--accent-foreground);
+}
+
+.preview-section {
+  padding: var(--space-6);
+  border-bottom: 1px solid var(--border);
+}
+
+.preview-section h2 {
+  margin: 0 0 var(--space-4) 0;
+  font-size: var(--fs-short);
+  font-weight: var(--fw-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--muted-foreground);
+}
+
+.resize-box {
+  background: var(--background);
+  border: 1px dashed var(--muted-foreground);
+  resize: horizontal;
+  overflow: auto;
+  max-width: 100%;
+  min-width: 320px;
+}
+
+.resize-box.wide   { width: 1100px; }
+.resize-box.narrow { width: 400px;  }
+.resize-box.tiny   { width: 320px;  }
+
+.note {
+  color: var(--muted-foreground);
+  font-size: var(--fs-badge);
+  margin-top: var(--space-3);
+}
+
+.static-fixed {
+  position: static !important;
+}
+
+.preview-google-mock {
+  padding: var(--space-5);
+  color: var(--foreground);
+  background: var(--background);
+  font-family: arial, -apple-system, sans-serif;
+}
+
+.preview-google-mock-url {
+  font-size: var(--fs-body);
+  color: var(--muted-foreground);
+}
+
+.preview-google-mock-title {
+  font-size: var(--fs-h1);
+  line-height: var(--lh-snug);
+  margin-top: var(--space-1);
+}
+
+.preview-google-mock-price {
+  margin-top: var(--space-2);
+  font-weight: var(--fw-bold);
+}
+
+.preview-google-mock-vendor-row {
+  margin-top: var(--space-2);
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.preview-eb-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font: var(--fw-bold) var(--fs-chip)/1 var(--font-system);
+  letter-spacing: 0.4px;
+  padding: 3px 6px;
+  border-radius: var(--radius-sm);
+  margin-left: var(--space-2);
+  cursor: pointer;
+  box-shadow: var(--shadow-chip);
 }
