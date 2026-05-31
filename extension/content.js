@@ -300,17 +300,27 @@
     new ResizeObserver(syncOffset).observe(bannerEl);
   };
 
+  // Mirrors styles.css. Inline !important styles fight third-party CSS on
+  // host pages, so `var(--*)` can't reach here — values stay literal.
+  const TOKENS = {
+    primary:           "#0f1e82",  /* --primary */
+    primaryForeground: "#ffffff",  /* --primary-foreground */
+    fontSans:          '-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif',
+    radiusSm:          "4px",      /* --radius-sm */
+    shadowChip:        "0 1px 2px rgba(0,0,0,0.2)",  /* --shadow-chip */
+  };
+
   const BADGE_STYLE = [
     "display:inline-flex !important",
     "align-items:center !important",
     "justify-content:center !important",
     "vertical-align:middle !important",
-    "background:#0f1e82 !important",
-    "color:#ffffff !important",
-    'font:700 10px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif !important',
+    `background:${TOKENS.primary} !important`,
+    `color:${TOKENS.primaryForeground} !important`,
+    `font:700 10px/1 ${TOKENS.fontSans} !important`,
     "letter-spacing:0.4px !important",
     "padding:3px 6px !important",
-    "border-radius:4px !important",
+    `border-radius:${TOKENS.radiusSm} !important`,
     "text-decoration:none !important",
     "cursor:pointer !important",
     "margin:0 0 0 6px !important",
@@ -320,7 +330,7 @@
     "user-select:none !important",
     "position:relative !important",
     "z-index:2147483646 !important",
-    "box-shadow:0 1px 2px rgba(0,0,0,0.2) !important",
+    `box-shadow:${TOKENS.shadowChip} !important`,
     "white-space:nowrap !important",
     "text-shadow:none !important",
     "opacity:1 !important",

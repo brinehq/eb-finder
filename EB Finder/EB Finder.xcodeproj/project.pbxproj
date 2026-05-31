@@ -21,6 +21,7 @@
 		A1B100062FB46E2700036C69 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B100022FB46E2700036C69 /* ContentView.swift */; };
 		A1B100082FB46E2700036C69 /* ExtensionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B100032FB46E2700036C69 /* ExtensionState.swift */; };
 		A1B100102FB46E2700036C69 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A1B1000A2FB46E2700036C69 /* Localizable.xcstrings */; };
+		EB7AB1E700000000A0000002 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7AB1E700000000A0000001 /* Theme.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		A1B1001F2FB46E2700036C69 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		A1B100302FB46E2700036C69 /* EBFinder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EBFinder.entitlements; sourceTree = "<group>"; };
 		A1B100312FB46E2700036C69 /* Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Extension.entitlements; sourceTree = "<group>"; };
+		EB7AB1E700000000A0000001 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 				A1B100012FB46E2700036C69 /* EBFinderApp.swift */,
 				A1B100022FB46E2700036C69 /* ContentView.swift */,
 				A1B100032FB46E2700036C69 /* ExtensionState.swift */,
+				EB7AB1E700000000A0000001 /* Theme.swift */,
 				79168FFA2FB46E2600036C69 /* Assets.xcassets */,
 				A1B1001F2FB46E2700036C69 /* AppIcon.icon */,
 				A1B1000A2FB46E2700036C69 /* Localizable.xcstrings */,
@@ -243,6 +246,7 @@
 				A1B100042FB46E2700036C69 /* EBFinderApp.swift in Sources */,
 				A1B100062FB46E2700036C69 /* ContentView.swift in Sources */,
 				A1B100082FB46E2700036C69 /* ExtensionState.swift in Sources */,
+				EB7AB1E700000000A0000002 /* Theme.swift in Sources */,
 			);
 		};
 		7916901B2FB46E2600036C69 /* Sources */ = {
