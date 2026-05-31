@@ -2,6 +2,8 @@
   const api = globalThis.browser || globalThis.chrome;
   if (!api || !api.storage) return;
 
+  reportHostPermission(api);
+
   const API_BASE = "https://onlineshopping.loyaltykey.com";
   const CHANNEL = "sas/sv-SE";
   const CACHE_TTL_MS = 60 * 60 * 1000;
@@ -448,3 +450,25 @@
 
   if (matchedId) await showTopBanner(matchedId);
 })();
+
+async function reportHostPermission(api) {
+  // Ping the native handler on every page load so the host app can live-verify
+  // Safari's website-access grant (e.g. while the onboarding screen waits for
+  // the user to switch "All Websites" on). Fire-and-forget — failures just
+  // leave the host app on its "set permissions" step.
+  if (!api.runtime || !api.runtime.sendNativeMessage) return;
+  let hasAllUrls = false;
+  try {
+    if (api.permissions && api.permissions.contains) {
+      hasAllUrls = await api.permissions.contains({ origins: ["*://*/*"] });
+    }
+  } catch (e) {}
+  try {
+    await api.runtime.sendNativeMessage("application.id", {
+      type: "host-permission-ping",
+      origin: location.origin,
+      hasAllUrls: hasAllUrls,
+      timestamp: Date.now(),
+    });
+  } catch (e) {}
+}

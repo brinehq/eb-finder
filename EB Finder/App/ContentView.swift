@@ -1,167 +1,310 @@
 import SwiftUI
+#if canImport(UIKit)
+import UIKit
+private typealias PlatformImage = UIImage
+#elseif canImport(AppKit)
+import AppKit
+private typealias PlatformImage = NSImage
+#endif
 
 struct ContentView: View {
     @Environment(\.scenePhase) private var scenePhase
     @State private var extensionState = ExtensionState()
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
 
     var body: some View {
-        VStack(spacing: 24) {
-            Spacer(minLength: 0)
-
-            Image("EB")
-                .resizable()
-                .scaledToFit()
-                .padding(20)
-                .frame(width: 128, height: 128)
-                .background(Color.accentColor, in: .rect(cornerRadius: 28))
-                .accessibilityHidden(true)
-
-            VStack(spacing: 8) {
-                Text("app.tagline")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal)
+        Group {
+            if hasCompletedOnboarding {
+                MainView(state: extensionState)
+            } else {
+                OnboardingFlow(state: extensionState) {
+                    withAnimation(.snappy) { hasCompletedOnboarding = true }
+                }
             }
-
-            StatusCard(state: extensionState)
-
-            Spacer(minLength: 0)
         }
-        .padding(.horizontal, 24)
-        .padding(.vertical, 32)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .task { await extensionState.refresh() }
-        .onChange(of: scenePhase) { _, newPhase in
-            if newPhase == .active {
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active {
                 Task { await extensionState.refresh() }
             }
         }
     }
 }
 
-private struct StatusCard: View {
+private enum OnboardingStep: Hashable {
+    case loading
+    case safariMissing
+    case enableExtension
+    case grantPermissions
+    case ready
+}
+
+private struct OnboardingFlow: View {
+    let state: ExtensionState
+    let onComplete: () -> Void
+    @State private var permissionStepSkipped = false
+
+    private var currentStep: OnboardingStep {
+        switch state.status {
+        case .unknown:
+            return .loading
+        case .safariUnavailable:
+            return .safariMissing
+        case .disabled, .error:
+            return .enableExtension
+        case .enabled:
+            switch state.hostPermission {
+            case .allWebsites:
+                return .ready
+            case .someWebsites, .unknown:
+                return permissionStepSkipped ? .ready : .grantPermissions
+            }
+        }
+    }
+
+    private var errorMessage: String? {
+        if case .error(let message) = state.status { return message }
+        return nil
+    }
+
+    var body: some View {
+        ZStack {
+            Color.accentColor.ignoresSafeArea()
+
+            stepView
+                .id(currentStep)
+                .transition(.asymmetric(
+                    insertion: .move(edge: .trailing).combined(with: .opacity),
+                    removal: .move(edge: .leading).combined(with: .opacity)
+                ))
+        }
+        .foregroundStyle(.white)
+        .animation(.snappy, value: currentStep)
+    }
+
+    @ViewBuilder
+    private var stepView: some View {
+        switch currentStep {
+        case .loading:
+            LoadingStep()
+        case .safariMissing:
+            OnboardingStepView(
+                icon: "exclamationmark.triangle.fill",
+                title: "onboarding.safariMissing.title",
+                detail: "onboarding.safariMissing.detail"
+            )
+        case .enableExtension:
+            OnboardingStepView(
+                icon: "puzzlepiece.extension.fill",
+                title: "onboarding.enable.title",
+                detail: "onboarding.enable.detail",
+                ctaLabel: "onboarding.enable.button",
+                action: { Task { await state.openSafariExtensionPreferences() } },
+                errorMessage: errorMessage
+            )
+        case .grantPermissions:
+            OnboardingStepView(
+                icon: "lock.shield.fill",
+                title: "onboarding.permissions.title",
+                detail: platformPermissionsDetail,
+                ctaLabel: "onboarding.permissions.button",
+                action: { Task { await state.openSafariExtensionPreferences() } },
+                imageName: platformPermissionsImage,
+                secondaryLabel: "onboarding.permissions.secondary",
+                secondaryAction: { permissionStepSkipped = true }
+            )
+        case .ready:
+            OnboardingStepView(
+                icon: "checkmark.seal.fill",
+                title: "onboarding.ready.title",
+                detail: "onboarding.ready.detail",
+                ctaLabel: "onboarding.ready.button",
+                action: onComplete
+            )
+        }
+    }
+
+    private var platformPermissionsDetail: LocalizedStringKey {
+        #if os(macOS)
+        "onboarding.permissions.detail.macos"
+        #else
+        "onboarding.permissions.detail.ios"
+        #endif
+    }
+
+    private var platformPermissionsImage: String {
+        #if os(macOS)
+        "permission-instruction-macos"
+        #else
+        "permission-instruction-ios"
+        #endif
+    }
+}
+
+private struct LoadingStep: View {
+    var body: some View {
+        VStack(spacing: 24) {
+            Image("EB")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 96, height: 96)
+            ProgressView()
+                .tint(.white)
+        }
+    }
+}
+
+private struct OnboardingStepView: View {
+    let icon: String
+    let title: LocalizedStringKey
+    let detail: LocalizedStringKey
+    var ctaLabel: LocalizedStringKey? = nil
+    var action: (() -> Void)? = nil
+    var imageName: String? = nil
+    var errorMessage: String? = nil
+    var secondaryLabel: LocalizedStringKey? = nil
+    var secondaryAction: (() -> Void)? = nil
+
+    var body: some View {
+        VStack(spacing: 32) {
+            Spacer(minLength: 0)
+
+            Image(systemName: icon)
+                .font(.system(size: 72, weight: .semibold))
+                .symbolRenderingMode(.hierarchical)
+                .foregroundStyle(.white)
+                .accessibilityHidden(true)
+
+            VStack(spacing: 12) {
+                Text(title)
+                    .font(.largeTitle.weight(.bold))
+                    .multilineTextAlignment(.center)
+                Text(detail)
+                    .font(.body)
+                    .multilineTextAlignment(.center)
+                    .opacity(0.92)
+            }
+            .padding(.horizontal, 32)
+
+            if let imageName, PlatformImage(named: imageName) != nil {
+                Image(imageName)
+                    .resizable()
+                    .scaledToFit()
+                    .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .strokeBorder(.white.opacity(0.25), lineWidth: 0.5)
+                    )
+                    .frame(maxHeight: 260)
+                    .padding(.horizontal, 32)
+            }
+
+            if let errorMessage {
+                Text(verbatim: errorMessage)
+                    .font(.caption)
+                    .foregroundStyle(.white.opacity(0.75))
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 32)
+            }
+
+            Spacer(minLength: 0)
+
+            VStack(spacing: 14) {
+                if let ctaLabel, let action {
+                    Button(action: action) {
+                        Text(ctaLabel)
+                            .font(.headline)
+                            .foregroundStyle(Color.accentColor)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 16)
+                            .background(.white, in: .capsule)
+                    }
+                    .buttonStyle(.plain)
+                }
+                if let secondaryLabel, let secondaryAction {
+                    Button(secondaryLabel, action: secondaryAction)
+                        .font(.subheadline.weight(.medium))
+                        .foregroundStyle(.white.opacity(0.9))
+                        .buttonStyle(.plain)
+                }
+            }
+            .padding(.horizontal, 32)
+            .padding(.bottom, 24)
+        }
+        .frame(maxWidth: 540)
+    }
+}
+
+private struct MainView: View {
     let state: ExtensionState
     @Environment(\.openURL) private var openURL
 
     var body: some View {
-        VStack(spacing: 16) {
-            instructionsView
+        NavigationStack {
+            List {
+                if let warning = warningKey {
+                    Section {
+                        Button {
+                            Task { await state.openSafariExtensionPreferences() }
+                        } label: {
+                            Label(warning, systemImage: "exclamationmark.triangle.fill")
+                                .foregroundStyle(.orange)
+                        }
+                    }
+                }
 
-            switch state.status {
-            case .enabled:
-                tryItOutButton
-            case .safariUnavailable:
-                EmptyView()
-            default:
-                openSettingsButton
+                Section {
+                    Button {
+                        state.openShopping { openURL($0) }
+                    } label: {
+                        Label("main.shop", systemImage: "bag.fill")
+                    }
+                }
+
+                Section {
+                    NavigationLink {
+                        PlaceholderView(title: "main.about")
+                    } label: {
+                        Label("main.about", systemImage: "info.circle")
+                    }
+                    Button {
+                        Task { await state.openSafariExtensionPreferences() }
+                    } label: {
+                        Label("main.extensionSettings", systemImage: "puzzlepiece.extension")
+                    }
+                    NavigationLink {
+                        PlaceholderView(title: "main.language")
+                    } label: {
+                        Label("main.language", systemImage: "globe")
+                    }
+                }
             }
+            .navigationTitle(Text(verbatim: "EB Finder"))
         }
-        .padding(20)
-        .background(
-            RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .fill(.background.secondary)
-        )
-        .frame(maxWidth: 380)
     }
 
-    @ViewBuilder
-    private var instructionsView: some View {
+    private var warningKey: LocalizedStringKey? {
         switch state.status {
-        case .unknown:
-            instructionRow(
-                icon: "questionmark.circle",
-                tint: .secondary,
-                title: "status.checking.title",
-                detail: "status.checking.detail"
-            )
-        case .enabled:
-            instructionRow(
-                icon: "checkmark.seal.fill",
-                tint: .green,
-                title: "status.enabled.title",
-                detail: "status.enabled.detail"
-            )
         case .disabled:
-            instructionRow(
-                icon: "exclamationmark.triangle.fill",
-                tint: .orange,
-                title: "status.disabled.title",
-                detail: "status.disabled.detail"
-            )
-        case .safariUnavailable:
-            instructionRow(
-                icon: "xmark.octagon.fill",
-                tint: .red,
-                title: "status.safariUnavailable.title",
-                detail: "status.safariUnavailable.detail"
-            )
-        case .error(let message):
-            errorRow(message: message)
+            return "main.warning.disabled"
+        case .enabled where state.hostPermission == .someWebsites:
+            return "main.warning.permissions"
+        default:
+            return nil
         }
     }
+}
 
-    private var openSettingsButton: some View {
-        Button {
-            Task { await state.openSafariExtensionPreferences() }
-        } label: {
-            Label("status.openSettings.button", systemImage: "safari")
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 4)
-        }
-        .controlSize(.large)
-        .buttonStyle(.borderedProminent)
-    }
+private struct PlaceholderView: View {
+    let title: LocalizedStringKey
 
-    private var tryItOutButton: some View {
-        Button {
-            state.openDemoSearch { openURL($0) }
-        } label: {
-            Label("status.tryItOut.button", systemImage: "magnifyingglass")
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 4)
-        }
-        .controlSize(.large)
-        .buttonStyle(.borderedProminent)
-    }
-
-    private func instructionRow(
-        icon: String,
-        tint: Color,
-        title: LocalizedStringKey,
-        detail: LocalizedStringKey
-    ) -> some View {
-        HStack(alignment: .top, spacing: 12) {
-            Image(systemName: icon)
-                .font(.title3)
-                .foregroundStyle(tint)
-                .frame(width: 24)
-                .accessibilityHidden(true)
-            VStack(alignment: .leading, spacing: 2) {
-                Text(title).font(.headline)
-                Text(detail)
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-            }
-            Spacer(minLength: 0)
-        }
-    }
-
-    private func errorRow(message: String) -> some View {
-        HStack(alignment: .top, spacing: 12) {
-            Image(systemName: "xmark.octagon.fill")
-                .font(.title3)
-                .foregroundStyle(.red)
-                .frame(width: 24)
-                .accessibilityHidden(true)
-            VStack(alignment: .leading, spacing: 2) {
-                Text("status.error.title").font(.headline)
-                Text(verbatim: message)
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-            }
-            Spacer(minLength: 0)
-        }
+    var body: some View {
+        ContentUnavailableView(
+            "placeholder.title",
+            systemImage: "hammer.fill",
+            description: Text("placeholder.detail")
+        )
+        .navigationTitle(title)
     }
 }
 
