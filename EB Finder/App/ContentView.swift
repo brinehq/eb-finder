@@ -13,10 +13,7 @@ struct ContentView: View {
                 .scaledToFit()
                 .padding(20)
                 .frame(width: 128, height: 128)
-                .background(
-                    Color(.displayP3, red: 0.00007, green: 0, blue: 0.57520),
-                    in: .rect(cornerRadius: 28)
-                )
+                .background(Color.accentColor, in: .rect(cornerRadius: 28))
                 .accessibilityHidden(true)
 
             VStack(spacing: 8) {
