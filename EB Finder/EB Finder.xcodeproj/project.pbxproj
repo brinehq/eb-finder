@@ -63,6 +63,8 @@
 		A1B100032FB46E2700036C69 /* ExtensionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionState.swift; sourceTree = "<group>"; };
 		A1B1000A2FB46E2700036C69 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		A1B1001F2FB46E2700036C69 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
+		A1B100302FB46E2700036C69 /* EBFinder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EBFinder.entitlements; sourceTree = "<group>"; };
+		A1B100312FB46E2700036C69 /* Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Extension.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 				A1B1001F2FB46E2700036C69 /* AppIcon.icon */,
 				A1B1000A2FB46E2700036C69 /* Localizable.xcstrings */,
 				7916900E2FB46E2600036C69 /* Info.plist */,
+				A1B100302FB46E2700036C69 /* EBFinder.entitlements */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -108,6 +111,7 @@
 				7916904D2FB46E2600036C69 /* Web Extension Resources */,
 				79168FFC2FB46E2600036C69 /* SafariWebExtensionHandler.swift */,
 				791690242FB46E2600036C69 /* Info.plist */,
+				A1B100312FB46E2700036C69 /* Extension.entitlements */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -377,6 +381,7 @@
 		791690402FB46E2600036C69 /* Debug configuration for PBXNativeTarget "EB Finder Extension" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Extension/Extension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 12;
@@ -396,6 +401,7 @@
 				MARKETING_VERSION = 0.1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.brine.ebfinder.extension;
 				PRODUCT_NAME = "EB Finder Extension";
+				"REGISTER_APP_GROUPS[sdk=macosx*]" = YES;
 				SDKROOT = auto;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -414,6 +420,7 @@
 		791690412FB46E2600036C69 /* Release configuration for PBXNativeTarget "EB Finder Extension" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Extension/Extension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 12;
@@ -434,6 +441,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.brine.ebfinder.extension;
 				PRODUCT_NAME = "EB Finder Extension";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"REGISTER_APP_GROUPS[sdk=macosx*]" = YES;
 				SDKROOT = auto;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -455,6 +463,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = App/EBFinder.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = P8Z5R444KA;
@@ -498,6 +507,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = App/EBFinder.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 12;
