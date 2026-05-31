@@ -121,8 +121,8 @@
         }
       }
     },
-    "onboarding.permissions.detail.ios" : {
-      "comment" : "iOS micro-instruction for granting all-websites access. Lands in Settings → Safari → Extensions → EB Finder.",
+    "onboarding.permissions.detail" : {
+      "comment" : "Micro-instruction for granting all-websites access. Lands in Settings → Safari → Extensions → EB Finder.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -135,24 +135,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Öppna Safari-inställningar, och tryck sedan under **Behörigheter** på **Alla webbplatser** → **Tillåt**. Besök valfri sida i Safari så bekräftar vi automatiskt."
-          }
-        }
-      }
-    },
-    "onboarding.permissions.detail.macos" : {
-      "comment" : "macOS micro-instruction for granting all-websites access. Lands in Safari → Settings → Extensions → EB Finder.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Open Safari settings, then set **Other Websites** to **Allow**. Visit any page in Safari and we'll confirm automatically."
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Öppna Safari-inställningar och ställ in **Andra webbplatser** på **Tillåt**. Besök valfri sida i Safari så bekräftar vi automatiskt."
           }
         }
       }
@@ -243,42 +225,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Du är redo"
-          }
-        }
-      }
-    },
-    "onboarding.safariMissing.detail" : {
-      "comment" : "Dead-end shown if Safari isn't installed on macOS. Very rare.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "EB Finder needs Safari to run. Reinstall Safari from the App Store to continue."
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "EB Finder behöver Safari för att fungera. Installera om Safari från App Store för att fortsätta."
-          }
-        }
-      }
-    },
-    "onboarding.safariMissing.title" : {
-      "comment" : "Title shown when Safari isn't installed on macOS.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Safari isn't available"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Safari är inte tillgängligt"
           }
         }
       }

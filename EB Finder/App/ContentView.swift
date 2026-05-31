@@ -26,7 +26,6 @@ struct ContentView: View {
 
 private enum OnboardingStep: Hashable {
     case loading
-    case safariMissing
     case enableExtension
     case grantPermissions
     case ready
@@ -41,8 +40,6 @@ private struct OnboardingFlow: View {
         switch state.status {
         case .unknown:
             return .loading
-        case .safariUnavailable:
-            return .safariMissing
         case .disabled, .error:
             return .enableExtension
         case .enabled:
@@ -80,12 +77,6 @@ private struct OnboardingFlow: View {
         switch currentStep {
         case .loading:
             LoadingStep()
-        case .safariMissing:
-            OnboardingStepView(
-                icon: "exclamationmark.triangle.fill",
-                title: "onboarding.safariMissing.title",
-                detail: "onboarding.safariMissing.detail"
-            )
         case .enableExtension:
             OnboardingStepView(
                 icon: "puzzlepiece.extension.fill",
@@ -99,7 +90,7 @@ private struct OnboardingFlow: View {
             OnboardingStepView(
                 icon: "lock.shield.fill",
                 title: "onboarding.permissions.title",
-                detail: platformPermissionsDetail,
+                detail: "onboarding.permissions.detail",
                 ctaLabel: "onboarding.permissions.button",
                 action: { Task { await state.openSafariExtensionPreferences() } },
                 secondaryLabel: "onboarding.permissions.secondary",
@@ -114,14 +105,6 @@ private struct OnboardingFlow: View {
                 action: onComplete
             )
         }
-    }
-
-    private var platformPermissionsDetail: LocalizedStringKey {
-        #if os(macOS)
-        "onboarding.permissions.detail.macos"
-        #else
-        "onboarding.permissions.detail.ios"
-        #endif
     }
 }
 

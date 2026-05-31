@@ -8,8 +8,5 @@ struct EBFinderApp: App {
         WindowGroup {
             ContentView()
         }
-        #if os(macOS)
-        .defaultSize(width: 520, height: 760)
-        #endif
     }
 }

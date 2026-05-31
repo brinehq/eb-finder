@@ -1,7 +1,4 @@
 import SafariServices
-#if os(macOS)
-import AppKit
-#endif
 
 private let appGroupID = "group.com.brine.ebfinder"
 let shoppingURL = URL(string: "https://onlineshopping.flysas.com/")!
@@ -14,7 +11,6 @@ private enum SharedDefaultsKey {
 
 enum ExtensionStatus: Equatable {
     case unknown
-    case safariUnavailable
     case enabled
     case disabled
     case error(String)
@@ -29,25 +25,12 @@ enum HostPermission: Equatable {
 @MainActor
 @Observable
 final class ExtensionState {
-    var status: ExtensionStatus
+    var status: ExtensionStatus = .unknown
     var hostPermission: HostPermission = .unknown
 
-    init() {
-        #if os(macOS)
-        let safariInstalled = NSWorkspace.shared.urlForApplication(
-            withBundleIdentifier: "com.apple.Safari"
-        ) != nil
-        status = safariInstalled ? .unknown : .safariUnavailable
-        #else
-        status = .unknown
-        #endif
-    }
-
     func refresh() async {
-        guard status != .safariUnavailable else { return }
-        // The macOS state check can be slow on first run (Safari scans
-        // extensions) and the bridged call can't be cancelled, so apply its
-        // result when it lands rather than blocking the UI on it…
+        // The state check bridges into Safari and can't be cancelled, so apply
+        // its result when it lands rather than blocking the UI on it…
         Task { @MainActor in
             let result = await self.checkExtensionState()
             self.status = result
@@ -63,16 +46,18 @@ final class ExtensionState {
 
     private func checkExtensionState() async -> ExtensionStatus {
         do {
-            let state = try await fetchExtensionState()
+            let state = try await SFSafariExtensionManager.stateOfExtension(
+                withIdentifier: extensionBundleIdentifier
+            )
             return state.isEnabled ? .enabled : .disabled
         } catch {
             return Self.classify(error)
         }
     }
 
-    /// On macOS, Safari failing to resolve the extension surfaces as a thrown
-    /// `SFError` rather than `isEnabled == false`. Codes 1–4 (no extension /
-    /// no attachment / loading interrupted / internal error) mean "not ready
+    /// Safari failing to resolve the extension surfaces as a thrown `SFError`
+    /// rather than `isEnabled == false`. Codes 1–4 (no extension / no
+    /// attachment / loading interrupted / internal error) mean "not ready
     /// yet", so route them to the friendly enable step. Codes 5+ (e.g. missing
     /// entitlement) signal a real build/config bug and stay visible.
     private static func classify(_ error: Error) -> ExtensionStatus {
@@ -84,56 +69,17 @@ final class ExtensionState {
     }
 
     func openSafariExtensionPreferences() async {
-        guard status != .safariUnavailable else { return }
         do {
-            try await openExtensionPreferences()
+            try await SFSafariSettings.openExtensionsSettings(
+                forIdentifiers: [extensionBundleIdentifier]
+            )
         } catch {
             status = .error(error.localizedDescription)
         }
     }
 
     func openShopping(openURL: (URL) -> Void) {
-        openInSafari(shoppingURL, fallback: openURL)
-    }
-
-    private func fetchExtensionState() async throws -> SFSafariExtensionState {
-        #if os(macOS)
-        try await SFSafariExtensionManager.stateOfSafariExtension(
-            withIdentifier: extensionBundleIdentifier
-        )
-        #else
-        try await SFSafariExtensionManager.stateOfExtension(
-            withIdentifier: extensionBundleIdentifier
-        )
-        #endif
-    }
-
-    private func openExtensionPreferences() async throws {
-        #if os(macOS)
-        try await SFSafariApplication.showPreferencesForExtension(
-            withIdentifier: extensionBundleIdentifier
-        )
-        #else
-        try await SFSafariSettings.openExtensionsSettings(
-            forIdentifiers: [extensionBundleIdentifier]
-        )
-        #endif
-    }
-
-    private func openInSafari(_ url: URL, fallback: (URL) -> Void) {
-        #if os(macOS)
-        if let safari = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.apple.Safari") {
-            NSWorkspace.shared.open(
-                [url],
-                withApplicationAt: safari,
-                configuration: NSWorkspace.OpenConfiguration()
-            )
-        } else {
-            fallback(url)
-        }
-        #else
-        fallback(url)
-        #endif
+        openURL(shoppingURL)
     }
 
     private func readHostPermission() -> HostPermission {
