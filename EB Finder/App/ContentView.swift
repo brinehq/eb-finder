@@ -17,8 +17,6 @@ struct ContentView: View {
                 .accessibilityHidden(true)
 
             VStack(spacing: 8) {
-                Text(verbatim: "EB Finder")
-                    .font(.largeTitle.weight(.semibold))
                 Text("app.tagline")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)

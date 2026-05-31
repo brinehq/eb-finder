@@ -253,6 +253,24 @@
         }
       }
     },
+    "status.openSettings.button" : {
+      "comment" : "macOS — primary action button on the landing screen.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Safari Extensions Settings"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Öppna Safaris tilläggsinställningar"
+          }
+        }
+      }
+    },
     "status.safariUnavailable.detail" : {
       "comment" : "Shown when Safari is not installed on the device; supporting line.",
       "extractionState" : "manual",
@@ -289,38 +307,19 @@
         }
       }
     },
-    "status.openSettings.button" : {
-      "comment" : "macOS — primary action button on the landing screen.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Open Safari Extensions Settings"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Öppna Safaris tilläggsinställningar"
-          }
-        }
-      }
-    },
     "status.tryItOut.button" : {
-      "comment" : "macOS — shown when the extension is enabled; opens Safari with a sample Google search to demo the badge.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Try it out in Safari"
+            "value" : "Test Googling for products"
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Prova i Safari"
+            "value" : "Testa Googla efter produkter"
           }
         }
       }
