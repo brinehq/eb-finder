@@ -1,11 +1,4 @@
 import SwiftUI
-#if canImport(UIKit)
-import UIKit
-private typealias PlatformImage = UIImage
-#elseif canImport(AppKit)
-import AppKit
-private typealias PlatformImage = NSImage
-#endif
 
 struct ContentView: View {
     @Environment(\.scenePhase) private var scenePhase
@@ -109,7 +102,6 @@ private struct OnboardingFlow: View {
                 detail: platformPermissionsDetail,
                 ctaLabel: "onboarding.permissions.button",
                 action: { Task { await state.openSafariExtensionPreferences() } },
-                imageName: platformPermissionsImage,
                 secondaryLabel: "onboarding.permissions.secondary",
                 secondaryAction: { permissionStepSkipped = true }
             )
@@ -129,14 +121,6 @@ private struct OnboardingFlow: View {
         "onboarding.permissions.detail.macos"
         #else
         "onboarding.permissions.detail.ios"
-        #endif
-    }
-
-    private var platformPermissionsImage: String {
-        #if os(macOS)
-        "permission-instruction-macos"
-        #else
-        "permission-instruction-ios"
         #endif
     }
 }
@@ -160,7 +144,6 @@ private struct OnboardingStepView: View {
     let detail: LocalizedStringKey
     var ctaLabel: LocalizedStringKey? = nil
     var action: (() -> Void)? = nil
-    var imageName: String? = nil
     var errorMessage: String? = nil
     var secondaryLabel: LocalizedStringKey? = nil
     var secondaryAction: (() -> Void)? = nil
@@ -185,19 +168,6 @@ private struct OnboardingStepView: View {
                     .opacity(0.92)
             }
             .padding(.horizontal, 32)
-
-            if let imageName, PlatformImage(named: imageName) != nil {
-                Image(imageName)
-                    .resizable()
-                    .scaledToFit()
-                    .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12, style: .continuous)
-                            .strokeBorder(.white.opacity(0.25), lineWidth: 0.5)
-                    )
-                    .frame(maxHeight: 260)
-                    .padding(.horizontal, 32)
-            }
 
             if let errorMessage {
                 Text(verbatim: errorMessage)
