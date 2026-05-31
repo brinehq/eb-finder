@@ -10,12 +10,12 @@ I kept missing EuroBonus points on everyday online shopping because I never
 remembered to start from the SAS shopping portal. Then SAS shipped an
 official [**EB Finder for Chrome**](https://chromewebstore.google.com/detail/sas-eurobonus-finder/mkodkaejnhpkbmlgdbnimeaakobcoegn)
 that nudges you when a site is a partner — exactly what I wanted, except
-it's desktop Chrome only. Nothing for iPhone, iPad, or Safari on macOS.
+it's desktop Chrome only. Nothing for iPhone or iPad.
 So I built one.
 
 ## Highlights
 
-- **Works where the official one doesn't** — Safari on iOS and macOS.
+- **Works where the official one doesn't** — Safari on iPhone and iPad.
 - **Same data as the official extension** — hits the same public LoyaltyKey
   API, so the partner list and points-per-krona stay in sync automatically.
 - **Zero tracking** — no analytics, no background script, no data leaves
@@ -23,7 +23,7 @@ So I built one.
 
 ## Try the beta
 
-External TestFlight is open for macOS and iOS / iPadOS (26.2+):
+External TestFlight is open for iOS / iPadOS (26.2+):
 
 → <https://brn.sh/eb-finder-testflight>
 
