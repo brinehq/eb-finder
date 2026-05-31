@@ -8,8 +8,15 @@ struct ContentView: View {
         VStack(spacing: 24) {
             Spacer(minLength: 0)
 
-            BrandIcon()
+            Image("EB")
+                .resizable()
+                .scaledToFit()
+                .padding(20)
                 .frame(width: 128, height: 128)
+                .background(
+                    Color(.displayP3, red: 0.00007, green: 0, blue: 0.57520),
+                    in: .rect(cornerRadius: 28)
+                )
                 .accessibilityHidden(true)
 
             VStack(spacing: 8) {
@@ -35,26 +42,6 @@ struct ContentView: View {
                 Task { await extensionState.refresh() }
             }
         }
-    }
-}
-
-private struct BrandIcon: View {
-    private static let baseColor = Color(.displayP3, red: 0.00007, green: 0, blue: 0.57520)
-
-    var body: some View {
-        LinearGradient(
-            colors: [Self.baseColor, Self.baseColor.opacity(0.85)],
-            startPoint: .top,
-            endPoint: .bottom
-        )
-        .overlay {
-            Image("EB")
-                .resizable()
-                .scaledToFit()
-                .padding(20)
-        }
-        .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
-        .shadow(color: .black.opacity(0.15), radius: 12, y: 4)
     }
 }
 

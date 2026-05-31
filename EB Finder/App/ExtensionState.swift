@@ -1,11 +1,7 @@
-import Foundation
 import SafariServices
-import os
-#if canImport(AppKit)
+#if os(macOS)
 import AppKit
 #endif
-
-private let extensionStateLogger = Logger(subsystem: "com.brine.ebfinder", category: "ExtensionState")
 
 enum ExtensionStatus: Equatable {
     case unknown
@@ -20,7 +16,6 @@ final class ExtensionState {
     var status: ExtensionStatus = .unknown
 
     func refresh() async {
-        extensionStateLogger.info("refresh() identifier=\(extensionBundleIdentifier, privacy: .public)")
         do {
             #if os(macOS)
             let state = try await SFSafariExtensionManager.stateOfSafariExtension(
@@ -31,11 +26,8 @@ final class ExtensionState {
                 withIdentifier: extensionBundleIdentifier
             )
             #endif
-            extensionStateLogger.info("refresh() got isEnabled=\(state.isEnabled)")
             status = state.isEnabled ? .enabled : .disabled
         } catch {
-            let ns = error as NSError
-            extensionStateLogger.error("refresh() failed: domain=\(ns.domain, privacy: .public) code=\(ns.code) message=\(error.localizedDescription, privacy: .public)")
             status = .error(error.localizedDescription)
         }
     }
@@ -47,15 +39,11 @@ final class ExtensionState {
                 withIdentifier: extensionBundleIdentifier
             )
             #else
-            extensionStateLogger.info("openExtensionsSettings forIdentifiers: \(extensionBundleIdentifier, privacy: .public)")
             try await SFSafariSettings.openExtensionsSettings(
                 forIdentifiers: [extensionBundleIdentifier]
             )
-            extensionStateLogger.info("openExtensionsSettings succeeded")
             #endif
         } catch {
-            let ns = error as NSError
-            extensionStateLogger.error("openSafariExtensionPreferences failed: domain=\(ns.domain, privacy: .public) code=\(ns.code) message=\(error.localizedDescription, privacy: .public)")
             status = .error(error.localizedDescription)
         }
     }
@@ -71,11 +59,9 @@ final class ExtensionState {
                 withApplicationAt: safari,
                 configuration: NSWorkspace.OpenConfiguration()
             )
-        } else {
-            openURL(url)
+            return
         }
-        #else
-        openURL(url)
         #endif
+        openURL(url)
     }
 }
