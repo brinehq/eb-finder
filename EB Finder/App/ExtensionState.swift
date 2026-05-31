@@ -1,29 +1,37 @@
-import Foundation
 import SafariServices
-import os.log
-#if canImport(AppKit)
+#if os(macOS)
 import AppKit
 #endif
-#if canImport(UIKit)
-import UIKit
-#endif
-
-private let extensionStateLogger = Logger(subsystem: "com.brine.ebfinder", category: "ExtensionState")
 
 enum ExtensionStatus: Equatable {
     case unknown
     case enabled
     case disabled
+    case safariUnavailable
     case error(String)
 }
 
 @MainActor
 @Observable
 final class ExtensionState {
-    var status: ExtensionStatus = .unknown
+    var status: ExtensionStatus
+
+    #if os(macOS)
+    private let safariApplicationURL: URL?
+    #endif
+
+    init() {
+        #if os(macOS)
+        let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.apple.Safari")
+        safariApplicationURL = url
+        status = url == nil ? .safariUnavailable : .unknown
+        #else
+        status = .unknown
+        #endif
+    }
 
     func refresh() async {
-        extensionStateLogger.info("refresh() identifier=\(extensionBundleIdentifier, privacy: .public)")
+        guard status != .safariUnavailable else { return }
         do {
             #if os(macOS)
             let state = try await SFSafariExtensionManager.stateOfSafariExtension(
@@ -34,57 +42,42 @@ final class ExtensionState {
                 withIdentifier: extensionBundleIdentifier
             )
             #endif
-            extensionStateLogger.info("refresh() got isEnabled=\(state.isEnabled)")
             status = state.isEnabled ? .enabled : .disabled
         } catch {
-            let ns = error as NSError
-            extensionStateLogger.error("refresh() failed: domain=\(ns.domain, privacy: .public) code=\(ns.code) message=\(error.localizedDescription, privacy: .public)")
             status = .error(error.localizedDescription)
         }
     }
 
-    func openSafariExtensionPreferences() {
-        #if os(macOS)
-        SFSafariApplication.showPreferencesForExtension(
-            withIdentifier: extensionBundleIdentifier
-        ) { error in
-            if let error {
-                Task { @MainActor in
-                    self.status = .error(error.localizedDescription)
-                }
-            }
+    func openSafariExtensionPreferences() async {
+        guard status != .safariUnavailable else { return }
+        do {
+            #if os(macOS)
+            try await SFSafariApplication.showPreferencesForExtension(
+                withIdentifier: extensionBundleIdentifier
+            )
+            #else
+            try await SFSafariSettings.openExtensionsSettings(
+                forIdentifiers: [extensionBundleIdentifier]
+            )
+            #endif
+        } catch {
+            status = .error(error.localizedDescription)
         }
-        #else
-        extensionStateLogger.info("openExtensionsSettings forIdentifiers: \(extensionBundleIdentifier, privacy: .public)")
-        SFSafariSettings.openExtensionsSettings(
-            forIdentifiers: [extensionBundleIdentifier]
-        ) { error in
-            if let error {
-                let ns = error as NSError
-                extensionStateLogger.error("openExtensionsSettings FAILED: domain=\(ns.domain, privacy: .public) code=\(ns.code) message=\(error.localizedDescription, privacy: .public)")
-                Task { @MainActor in
-                    self.status = .error(error.localizedDescription)
-                }
-            } else {
-                extensionStateLogger.info("openExtensionsSettings SUCCEEDED (completion fired, no error)")
-            }
-        }
-        #endif
     }
 
-    func openDemoSearch() {
+    func openDemoSearch(openURL: (URL) -> Void) {
         let query = "studio display"
         let encoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? query
         guard let url = URL(string: "https://www.google.com/search?q=\(encoded)") else { return }
         #if os(macOS)
-        let config = NSWorkspace.OpenConfiguration()
-        if let safari = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.apple.Safari") {
-            NSWorkspace.shared.open([url], withApplicationAt: safari, configuration: config)
-        } else {
-            NSWorkspace.shared.open(url)
-        }
+        guard let safari = safariApplicationURL else { return }
+        NSWorkspace.shared.open(
+            [url],
+            withApplicationAt: safari,
+            configuration: NSWorkspace.OpenConfiguration()
+        )
         #else
-        UIApplication.shared.open(url)
+        openURL(url)
         #endif
     }
 }

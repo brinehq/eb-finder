@@ -8,13 +8,15 @@ struct ContentView: View {
         VStack(spacing: 24) {
             Spacer(minLength: 0)
 
-            BrandIcon()
+            Image("EB")
+                .resizable()
+                .scaledToFit()
+                .padding(20)
                 .frame(width: 128, height: 128)
+                .background(Color.accentColor, in: .rect(cornerRadius: 28))
                 .accessibilityHidden(true)
 
             VStack(spacing: 8) {
-                Text(verbatim: "EB Finder")
-                    .font(.largeTitle.weight(.semibold))
                 Text("app.tagline")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
@@ -29,7 +31,6 @@ struct ContentView: View {
         .padding(.horizontal, 24)
         .padding(.vertical, 32)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(PlatformBackground())
         .task { await extensionState.refresh() }
         .onChange(of: scenePhase) { _, newPhase in
             if newPhase == .active {
@@ -39,46 +40,20 @@ struct ContentView: View {
     }
 }
 
-private struct PlatformBackground: View {
-    var body: some View {
-        #if os(macOS)
-        Color(nsColor: .windowBackgroundColor).ignoresSafeArea()
-        #else
-        Color(uiColor: .systemBackground).ignoresSafeArea()
-        #endif
-    }
-}
-
-private struct BrandIcon: View {
-    private static let baseColor = Color(.displayP3, red: 0.00007, green: 0, blue: 0.57520)
-
-    var body: some View {
-        LinearGradient(
-            colors: [Self.baseColor, Self.baseColor.opacity(0.85)],
-            startPoint: .top,
-            endPoint: .bottom
-        )
-        .overlay {
-            Image("EB")
-                .resizable()
-                .scaledToFit()
-                .padding(20)
-        }
-        .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
-        .shadow(color: .black.opacity(0.15), radius: 12, y: 4)
-    }
-}
-
 private struct StatusCard: View {
     let state: ExtensionState
+    @Environment(\.openURL) private var openURL
 
     var body: some View {
         VStack(spacing: 16) {
             instructionsView
 
-            if case .enabled = state.status {
+            switch state.status {
+            case .enabled:
                 tryItOutButton
-            } else {
+            case .safariUnavailable:
+                EmptyView()
+            default:
                 openSettingsButton
             }
         }
@@ -114,6 +89,13 @@ private struct StatusCard: View {
                 title: "status.disabled.title",
                 detail: "status.disabled.detail"
             )
+        case .safariUnavailable:
+            instructionRow(
+                icon: "xmark.octagon.fill",
+                tint: .red,
+                title: "status.safariUnavailable.title",
+                detail: "status.safariUnavailable.detail"
+            )
         case .error(let message):
             errorRow(message: message)
         }
@@ -121,7 +103,7 @@ private struct StatusCard: View {
 
     private var openSettingsButton: some View {
         Button {
-            state.openSafariExtensionPreferences()
+            Task { await state.openSafariExtensionPreferences() }
         } label: {
             Label("status.openSettings.button", systemImage: "safari")
                 .frame(maxWidth: .infinity)
@@ -133,7 +115,7 @@ private struct StatusCard: View {
 
     private var tryItOutButton: some View {
         Button {
-            state.openDemoSearch()
+            state.openDemoSearch { openURL($0) }
         } label: {
             Label("status.tryItOut.button", systemImage: "magnifyingglass")
                 .frame(maxWidth: .infinity)

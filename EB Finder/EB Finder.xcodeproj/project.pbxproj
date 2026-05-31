@@ -393,11 +393,7 @@
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Brine AB. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
 				MACOSX_DEPLOYMENT_TARGET = 26.2;
-				MARKETING_VERSION = 0.1.5;
-				OTHER_LDFLAGS = (
-					"-framework",
-					SafariServices,
-				);
+				MARKETING_VERSION = 0.1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.brine.ebfinder.extension;
 				PRODUCT_NAME = "EB Finder Extension";
 				SDKROOT = auto;
@@ -434,11 +430,7 @@
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Brine AB. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
 				MACOSX_DEPLOYMENT_TARGET = 26.2;
-				MARKETING_VERSION = 0.1.5;
-				OTHER_LDFLAGS = (
-					"-framework",
-					SafariServices,
-				);
+				MARKETING_VERSION = 0.1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.brine.ebfinder.extension;
 				PRODUCT_NAME = "EB Finder Extension";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -482,11 +474,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
 				MACOSX_DEPLOYMENT_TARGET = 26.2;
-				MARKETING_VERSION = 0.1.5;
-				OTHER_LDFLAGS = (
-					"-framework",
-					SafariServices,
-				);
+				MARKETING_VERSION = 0.1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.brine.ebfinder;
 				PRODUCT_NAME = "EB Finder";
 				"REGISTER_APP_GROUPS[sdk=macosx*]" = YES;
@@ -530,11 +518,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
 				MACOSX_DEPLOYMENT_TARGET = 26.2;
-				MARKETING_VERSION = 0.1.5;
-				OTHER_LDFLAGS = (
-					"-framework",
-					SafariServices,
-				);
+				MARKETING_VERSION = 0.1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.brine.ebfinder;
 				PRODUCT_NAME = "EB Finder";
 				PROVISIONING_PROFILE_SPECIFIER = "";
