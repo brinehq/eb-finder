@@ -1,22 +1,38 @@
+// EB Finder — content script.
+//
+// Runs on every page: detects EuroBonus partner shops (direct visits + Google
+// results), shows the top banner / injects result badges, and bounces the user
+// back after the SAS click-through. Shared data + the i18n helper come from the
+// `EB` namespace (shared.js, loaded before this file — see manifest). UI strings
+// live in _locales/<lang>/messages.json (standard WebExtension i18n).
+
 (async function () {
   const api = globalThis.browser || globalThis.chrome;
   if (!api || !api.storage) return;
 
   reportHostPermission(api);
 
-  const API_BASE = "https://onlineshopping.loyaltykey.com";
-  const CHANNEL = "sas/sv-SE";
-  const CACHE_TTL_MS = 60 * 60 * 1000;
+  const {
+    t,
+    formatPoints,
+    fetchShopMap,
+    fetchShopDetail,
+    getShopMatchId,
+    normalizeUrl,
+    storePendingReturn,
+    PENDING_KEY_PREFIX,
+  } = globalThis.EB;
+
   const SESSION_KEY = "ebfinder_banner_closed";
   const ROOT_ID = "ebfinder-root";
   const DECORATED_ATTR = "data-ebfinder-decorated";
   const BADGE_CLASS = "ebfinder-badge";
-  const PENDING_KEY_PREFIX = "pending_return_";
   const PENDING_TTL_MS = 60 * 60 * 1000;
 
   const detectedMatches = new Set();
   const detailPromises = new Map();
 
+  // The popup asks the content script which partners it has spotted (Google).
   if (api.runtime && api.runtime.onMessage) {
     api.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
       if (msg && msg.type === "ebfinder-detected") {
@@ -25,60 +41,7 @@
     });
   }
 
-  const STRINGS = {
-    variable: "{name} är en EuroBonus-partner — tjäna {points} per 100 kr.",
-    fixed: "{name} är en EuroBonus-partner — tjäna {points} som ny kund.",
-    short: "{name} är en EB-partner",
-    cta: "LOGGA IN & TJÄNA",
-    ctaShort: "TJÄNA",
-  };
-
-  const getCache = async (key) => {
-    try {
-      const result = await api.storage.local.get([key]);
-      const cached = result[key];
-      if (cached && Date.now() - cached.timestamp < CACHE_TTL_MS) {
-        return cached.data;
-      }
-    } catch (e) {}
-    return null;
-  };
-
-  const setCache = async (key, data) => {
-    try {
-      await api.storage.local.set({ [key]: { data, timestamp: Date.now() } });
-    } catch (e) {}
-  };
-
-  const fetchJson = async (url) => {
-    try {
-      const res = await fetch(url, { credentials: "omit" });
-      if (!res.ok) return null;
-      return await res.json();
-    } catch (e) {
-      return null;
-    }
-  };
-
-  const fetchShopMap = async () => {
-    const cacheKey = `list_${CHANNEL}`;
-    const cached = await getCache(cacheKey);
-    if (cached) return cached;
-    const json = await fetchJson(`${API_BASE}/api/browser-extension/${CHANNEL}/shops`);
-    if (json && typeof json === "object") await setCache(cacheKey, json);
-    return json;
-  };
-
-  const fetchShopDetail = async (uuid) => {
-    const cacheKey = `detail_${uuid}_${CHANNEL}`;
-    const cached = await getCache(cacheKey);
-    if (cached) return cached;
-    const json = await fetchJson(`${API_BASE}/api/browser-extension/${CHANNEL}/shops/${uuid}`);
-    const data = json && json.data ? json.data : null;
-    if (data) await setCache(cacheKey, data);
-    return data;
-  };
-
+  // Memoize per-shop detail fetches so repeated badges share one request.
   const getOrFetchDetail = (uuid) => {
     if (!detailPromises.has(uuid)) {
       detailPromises.set(uuid, fetchShopDetail(uuid));
@@ -86,48 +49,7 @@
     return detailPromises.get(uuid);
   };
 
-  const normalizeUrl = (urlStr) => {
-    if (!urlStr) return "";
-    try {
-      const url = new URL(urlStr);
-      return (url.hostname + url.pathname)
-        .toLowerCase()
-        .trim()
-        .replace(/^www\./, "")
-        .replace(/\/$/, "");
-    } catch (e) {
-      return urlStr
-        .toLowerCase()
-        .trim()
-        .replace(/^https?:\/\//, "")
-        .replace(/^www\./, "")
-        .replace(/\/$/, "");
-    }
-  };
-
-  const getShopMatchId = (currentUrl, shopList) => {
-    const testUrl = normalizeUrl(currentUrl);
-    if (!testUrl) return null;
-    const matchedKey = Object.keys(shopList).find((key) => {
-      const normalizedKey = normalizeUrl(key);
-      return testUrl === normalizedKey || testUrl.startsWith(normalizedKey + "/");
-    });
-    return matchedKey ? shopList[matchedKey] : null;
-  };
-
-  const storePendingReturn = (originalUrl, shopUuid) => {
-    try {
-      return api.storage.local.set({
-        [`${PENDING_KEY_PREFIX}${shopUuid}`]: {
-          originalUrl,
-          timestamp: Date.now(),
-        },
-      });
-    } catch (e) {
-      return Promise.resolve();
-    }
-  };
-
+  // --- pending return after the SAS click-through --------------------------
   const looksLikePostSasLanding = (url) => {
     try {
       const u = new URL(url);
@@ -200,11 +122,7 @@
     return true;
   };
 
-  const formatPoints = (value) => {
-    const n = parseInt(value, 10) || 0;
-    return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-  };
-
+  // --- top banner (direct partner visits) ----------------------------------
   const buildBanner = async (uuid) => {
     const data = await fetchShopDetail(uuid);
     if (!data) return null;
@@ -222,12 +140,11 @@
     const container = document.createElement("div");
     container.className = "fixed-banner-container";
 
-    const template = data.commission_type === "fixed" ? STRINGS.fixed : STRINGS.variable;
     const points = formatPoints(data.points || data.cashback || 0);
     const name = data.name || "";
-    const pointsSpan = `<span class="points-highlight">${points} poäng</span>`;
-    const fullText = template.replace("{points}", pointsSpan).replace("{name}", name);
-    const shortText = STRINGS.short.replace("{name}", name);
+    const suffix = t(data.commission_type === "fixed" ? "suffixFixed" : "suffixVariable");
+    const fullText = t("banner", [name, points, suffix]);
+    const shortText = t("bannerShort", [name]);
 
     container.innerHTML = `
       <div class="banner-wrapper">
@@ -237,10 +154,10 @@
         </div>
         <div class="actions">
           <a href="${data.url}" target="_blank" rel="noopener noreferrer" class="cta-btn">
-            <span class="cta-full">${STRINGS.cta}</span>
-            <span class="cta-short">${STRINGS.ctaShort}</span>
+            <span class="cta-full">${t("cta")}</span>
+            <span class="cta-short">${t("ctaShort")}</span>
           </a>
-          <button class="close-btn" aria-label="Close">✕</button>
+          <button class="close-btn" aria-label="${t("close")}">✕</button>
         </div>
       </div>`;
     shadow.appendChild(container);
@@ -300,6 +217,7 @@
     new ResizeObserver(syncOffset).observe(bannerEl);
   };
 
+  // --- Google result badges ------------------------------------------------
   // Mirrors styles.css. Inline !important styles fight third-party CSS on
   // host pages, so `var(--*)` can't reach here — values stay literal.
   const TOKENS = {
@@ -346,9 +264,9 @@
     const badge = document.createElement("span");
     badge.className = BADGE_CLASS;
     badge.innerHTML = EB_GLYPH_SVG;
-    badge.title = "EuroBonus-partner — klicka för att handla via SAS";
+    badge.title = t("badgeTitle");
     badge.setAttribute("role", "link");
-    badge.setAttribute("aria-label", "EuroBonus-partner — handla via SAS");
+    badge.setAttribute("aria-label", t("badgeAria"));
     badge.setAttribute("tabindex", "0");
     badge.style.cssText = BADGE_STYLE;
 
@@ -380,8 +298,8 @@
     getOrFetchDetail(matchedId).then((detail) => {
       if (!detail) return;
       const points = formatPoints(detail.points || detail.cashback || 0);
-      const suffix = detail.commission_type === "fixed" ? "som ny kund" : "per 100 kr";
-      badge.title = `${detail.name} – ${points} poäng ${suffix}. Klicka för att handla via SAS.`;
+      const suffix = t(detail.commission_type === "fixed" ? "suffixFixed" : "suffixVariable");
+      badge.title = t("badgeTitleDetail", [detail.name, points, suffix]);
     });
   };
 
@@ -435,6 +353,7 @@
     }
   };
 
+  // --- main ----------------------------------------------------------------
   const shops = await fetchShopMap();
   if (!shops || typeof shops !== "object") return;
 

@@ -8,10 +8,28 @@
       "comment" : "About page — independence disclaimer body.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EB Finder er ikke officielt tilknyttet SAS – Scandinavian Airlines eller EuroBonus. Det er et uafhængigt projekt og henter partnerdata via LoyaltyKeys offentlige API."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "EB Finder is not officially affiliated with SAS – Scandinavian Airlines or EuroBonus. It is an independent project and fetches partner data via LoyaltyKey's public API."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EB Finder ei ole virallisesti sidoksissa SAS – Scandinavian Airlinesiin tai EuroBonukseen. Se on riippumaton projekti ja hakee kumppanitiedot LoyaltyKeyn julkisen rajapinnan kautta."
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EB Finder er ikke offisielt tilknyttet SAS – Scandinavian Airlines eller EuroBonus. Det er et uavhengig prosjekt og henter partnerdata via LoyaltyKeys offentlige API."
           }
         },
         "sv" : {
@@ -26,10 +44,28 @@
       "comment" : "About page — disclaimer section header.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ansvarsfraskrivelse"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Disclaimer"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vastuuvapauslauseke"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ansvarsfraskrivelse"
           }
         },
         "sv" : {
@@ -44,10 +80,28 @@
       "comment" : "About page row → pushes to the License page.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licens"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "License"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lisenssi"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lisens"
           }
         },
         "sv" : {
@@ -62,10 +116,28 @@
       "comment" : "About page row → opens the GitHub source repository.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kildekode"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Source code"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lähdekoodi"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kildekode"
           }
         },
         "sv" : {
@@ -80,10 +152,28 @@
       "comment" : "About page navigation title.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Om"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "About"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tietoja"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Om"
           }
         },
         "sv" : {
@@ -98,10 +188,28 @@
       "comment" : "About page row label — paired with the marketing version number.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Version"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versio"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versjon"
           }
         },
         "sv" : {
@@ -116,7 +224,25 @@
       "comment" : "License page — copyright line.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright © Brine AB"
+          }
+        },
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright © Brine AB"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright © Brine AB"
+          }
+        },
+        "no" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Copyright © Brine AB"
@@ -134,10 +260,28 @@
       "comment" : "License page — MIT grant paragraph (plain-language summary).",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der gives hermed tilladelse, gratis, til enhver, der får en kopi af denne software, til at bruge, kopiere, ændre og distribuere den uden begrænsning."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Permission is hereby granted, free of charge, to anyone obtaining a copy of this software to use, copy, modify and distribute it without restriction."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Täten myönnetään maksutta lupa kenelle tahansa, joka hankkii kopion tästä ohjelmistosta, käyttää, kopioida, muokata ja jakaa sitä rajoituksetta."
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Det gis herved tillatelse, vederlagsfritt, til enhver som skaffer seg en kopi av denne programvaren til å bruke, kopiere, endre og distribuere den uten begrensning."
           }
         },
         "sv" : {
@@ -152,10 +296,28 @@
       "comment" : "License page — warranty disclaimer line.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Softwaren leveres, »som den er«, uden nogen form for garanti."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "The software is provided \"as is\", without warranty of any kind."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ohjelmisto tarjotaan ”sellaisenaan”, ilman minkäänlaista takuuta."
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Programvaren leveres «som den er», uten noen form for garanti."
           }
         },
         "sv" : {
@@ -170,10 +332,28 @@
       "comment" : "License page row → opens the full LICENSE file on GitHub.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vis fuld licens"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "View full license"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Näytä koko lisenssi"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vis full lisens"
           }
         },
         "sv" : {
@@ -188,10 +368,28 @@
       "comment" : "License page — MIT section header.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MIT-licens"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "MIT License"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MIT-lisenssi"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MIT-lisens"
           }
         },
         "sv" : {
@@ -206,10 +404,28 @@
       "comment" : "License page navigation title.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licens"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "License"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lisenssi"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lisens"
           }
         },
         "sv" : {
@@ -224,10 +440,28 @@
       "comment" : "CTA label while the app re-checks the extension/permission state.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TJEKKER…"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "CHECKING…"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TARKISTETAAN…"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SJEKKER…"
           }
         },
         "sv" : {
@@ -242,10 +476,28 @@
       "comment" : "CTA that advances to the next onboarding step once the current one is satisfied.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FORTSÆT"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "CONTINUE"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "JATKA"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FORTSETT"
           }
         },
         "sv" : {
@@ -260,10 +512,28 @@
       "comment" : "Final onboarding CTA; completes setup and enters the app.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AFSLUT"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "FINISH"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VALMIS"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FULLFØR"
           }
         },
         "sv" : {
@@ -278,10 +548,28 @@
       "comment" : "Subtitle on the 'all set' screen.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EB Finder viser nu tydeligt, hvilke EuroBonus-partnere du besøger, mens du surfer i Safari."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "EB Finder will now clearly show which EuroBonus partners you visit as you browse in Safari."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EB Finder näyttää nyt selkeästi, mitä EuroBonus-kumppaneita vierailet selatessasi Safarissa."
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EB Finder viser nå tydelig hvilke EuroBonus-partnere du besøker mens du surfer i Safari."
           }
         },
         "sv" : {
@@ -296,10 +584,28 @@
       "comment" : "Title on the final 'all set' onboarding screen.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alt er klar!"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "All set!"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Valmista!"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alt klart!"
           }
         },
         "sv" : {
@@ -314,10 +620,28 @@
       "comment" : "CTA on the 'turn on the extension' step → opens Safari settings.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ÅBN SAFARI-INDSTILLINGER"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "OPEN SAFARI SETTINGS"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AVAA SAFARIN ASETUKSET"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ÅPNE SAFARI-INNSTILLINGER"
           }
         },
         "sv" : {
@@ -332,10 +656,28 @@
       "comment" : "Body on the 'turn on the extension' step.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slå EB Finder til i Safari-indstillingerne, så vi kan finde EuroBonus-partnere, mens du surfer."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Switch on EB Finder in Safari settings so we can spot EuroBonus partners while you browse."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ota EB Finder käyttöön Safarin asetuksissa, jotta voimme löytää EuroBonus-kumppanit selatessasi."
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slå på EB Finder i Safari-innstillingene slik at vi kan finne EuroBonus-partnere mens du surfer."
           }
         },
         "sv" : {
@@ -350,10 +692,28 @@
       "comment" : "Confirmation body once the extension is enabled.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EB Finder er aktiveret i Safari."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "EB Finder is enabled in Safari."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EB Finder on käytössä Safarissa."
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EB Finder er aktivert i Safari."
           }
         },
         "sv" : {
@@ -368,10 +728,28 @@
       "comment" : "Confirmation title once the extension is enabled.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Udvidelsen er slået til"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "The extension is on"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Laajennus on päällä"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utvidelsen er på"
           }
         },
         "sv" : {
@@ -386,10 +764,28 @@
       "comment" : "Settings breadcrumb chip on the 'turn on the extension' step.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Indstillinger › Apps › Safari › Udvidelser"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Settings › Apps › Safari › Extensions"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Asetukset › Apit › Safari › Laajennukset"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Innstillinger › Apper › Safari › Utvidelser"
           }
         },
         "sv" : {
@@ -404,10 +800,28 @@
       "comment" : "Title on the 'turn on the extension' step.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slå udvidelsen til"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Turn on the extension"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ota laajennus käyttöön"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slå på utvidelsen"
           }
         },
         "sv" : {
@@ -422,10 +836,28 @@
       "comment" : "CTA on the 'allow all websites' step → opens Safari settings.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ÅBN TILLADELSER"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "OPEN PERMISSIONS"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AVAA KÄYTTÖOIKEUDET"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ÅPNE TILLATELSER"
           }
         },
         "sv" : {
@@ -440,10 +872,28 @@
       "comment" : "Body on the 'allow all websites' step, including the privacy reassurance.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giv EB Finder adgang til alle domæner — ellers kan partnere på nogle sider blive overset. Vi sammenligner kun webstedets domænenavn med partnerlisten; intet andet læses, spores eller gemmes."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Give EB Finder access to all domains — otherwise partners on some pages may be missed. We only compare the site's domain name against the partner list; nothing else is read, tracked or stored."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anna EB Finderille pääsy kaikkiin verkkotunnuksiin — muuten kumppanit joillakin sivuilla voivat jäädä huomaamatta. Vertaamme vain sivuston verkkotunnusta kumppaniluetteloon; mitään muuta ei lueta, seurata tai tallenneta."
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gi EB Finder tilgang til alle domener — ellers kan partnere på enkelte sider bli oversett. Vi sammenligner bare nettstedets domenenavn mot partnerlisten; ingenting annet leses, spores eller lagres."
           }
         },
         "sv" : {
@@ -458,10 +908,28 @@
       "comment" : "Confirmation body once all-websites access is granted.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EB Finder kan læse alle websteder."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "EB Finder can read all websites."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EB Finder voi lukea kaikkia verkkosivustoja."
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EB Finder kan lese alle nettsteder."
           }
         },
         "sv" : {
@@ -476,10 +944,28 @@
       "comment" : "Confirmation title once all-websites access is granted.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adgang givet"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Access granted"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Käyttöoikeus myönnetty"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tilgang gitt"
           }
         },
         "sv" : {
@@ -494,10 +980,28 @@
       "comment" : "Settings breadcrumb chip on the 'allow all websites' step.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tillad › Alle websteder"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Allow › All Websites"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salli › Kaikki verkkosivustot"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tillat › Alle nettsteder"
           }
         },
         "sv" : {
@@ -512,10 +1016,28 @@
       "comment" : "Escape-hatch button on the permissions step so users are never trapped if live detection lags.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spring over"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Skip"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ohita"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hopp over"
           }
         },
         "sv" : {
@@ -530,10 +1052,28 @@
       "comment" : "Title on the 'allow all websites' step.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tillad på alle websteder"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Allow on all websites"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salli kaikilla verkkosivustoilla"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tillat på alle nettsteder"
           }
         },
         "sv" : {
@@ -548,10 +1088,28 @@
       "comment" : "Welcome screen primary CTA; starts the setup flow.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KOM I GANG"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "GET STARTED"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ALOITA"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "KOM I GANG"
           }
         },
         "sv" : {
@@ -566,10 +1124,28 @@
       "comment" : "Welcome screen subtitle.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EB Finder finder EuroBonus-partnere automatisk og minder dig om at logge ind via SAS — før du køber."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "EB Finder spots EuroBonus partners automatically and reminds you to sign in via SAS — before you buy."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EB Finder tunnistaa EuroBonus-kumppanit automaattisesti ja muistuttaa kirjautumaan SAS:n kautta — ennen kuin ostat."
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EB Finder oppdager EuroBonus-partnere automatisk og minner deg på å logge inn via SAS — før du handler."
           }
         },
         "sv" : {
@@ -584,10 +1160,28 @@
       "comment" : "Welcome screen headline. The newline is intentional (two balanced lines).",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Optjen point\nmens du surfer"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Earn points\nwhile you browse"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ansaitse pisteitä\nselaillessasi"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tjen poeng\nmens du surfer"
           }
         },
         "sv" : {
@@ -602,10 +1196,28 @@
       "comment" : "Settings root row → About page.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Om"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "About"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tietoja"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Om"
           }
         },
         "sv" : {
@@ -620,10 +1232,28 @@
       "comment" : "Settings root row → opens a mailto to support.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kontakt"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Contact"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ota yhteyttä"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kontakt"
           }
         },
         "sv" : {
@@ -638,10 +1268,28 @@
       "comment" : "Footer at the bottom of every settings page. Markdown link → brine.co.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lavet af [Brine AB](https://www.brine.co)"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Made by [Brine AB](https://www.brine.co)"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tekijä [Brine AB](https://www.brine.co)"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Laget av [Brine AB](https://www.brine.co)"
           }
         },
         "sv" : {
@@ -656,10 +1304,28 @@
       "comment" : "Settings root row → opens Safari's extension settings.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Udvidelse"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Extension"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Laajennus"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utvidelse"
           }
         },
         "sv" : {
@@ -674,7 +1340,10 @@
       "comment" : "Extension row value when the extension is switched off.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : { "stringUnit" : { "state" : "translated", "value" : "Fra" } },
         "en" : { "stringUnit" : { "state" : "translated", "value" : "Off" } },
+        "fi" : { "stringUnit" : { "state" : "translated", "value" : "Pois" } },
+        "no" : { "stringUnit" : { "state" : "translated", "value" : "Av" } },
         "sv" : { "stringUnit" : { "state" : "translated", "value" : "Av" } }
       }
     },
@@ -682,7 +1351,10 @@
       "comment" : "Extension row value when the extension is switched on.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : { "stringUnit" : { "state" : "translated", "value" : "Til" } },
         "en" : { "stringUnit" : { "state" : "translated", "value" : "On" } },
+        "fi" : { "stringUnit" : { "state" : "translated", "value" : "Päällä" } },
+        "no" : { "stringUnit" : { "state" : "translated", "value" : "På" } },
         "sv" : { "stringUnit" : { "state" : "translated", "value" : "På" } }
       }
     },
@@ -690,10 +1362,28 @@
       "comment" : "Accessibility label for the warning marker on the Extension Settings row.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kræver handling"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Needs attention"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vaatii huomiota"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trenger oppmerksomhet"
           }
         },
         "sv" : {
@@ -708,10 +1398,28 @@
       "comment" : "Settings root row → display language (display-only for now).",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprog"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Language"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kieli"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Språk"
           }
         },
         "sv" : {
@@ -722,32 +1430,32 @@
         }
       }
     },
-    "settings.language.value" : {
-      "comment" : "Detail value on the Language row — the current display language.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Swedish"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Svenska"
-          }
-        }
-      }
-    },
     "settings.resetOnboarding" : {
       "comment" : "Settings row that re-runs the setup onboarding.",
       "extractionState" : "manual",
       "localizations" : {
+        "da" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nulstil onboarding"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Reset onboarding"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nollaa käyttöönotto"
+          }
+        },
+        "no" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tilbakestill onboarding"
           }
         },
         "sv" : {

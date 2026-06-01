@@ -1,0 +1,32 @@
+{
+  "extName": {
+    "message": "EB Finder",
+    "description": "Extension name shown in Safari settings and the App Store."
+  },
+  "extDescription": {
+    "message": "Spots SAS EuroBonus partner shops while you browse and reminds you to log in via SAS to earn points.",
+    "description": "Extension description shown in Safari settings."
+  },
+  "banner": { "message": "$1 is a EuroBonus partner — earn <span class='points-highlight'>$2 points</span> $3." },
+  "bannerShort": { "message": "$1 is an EB partner" },
+  "cta": { "message": "LOG IN & EARN" },
+  "ctaShort": { "message": "EARN" },
+  "suffixFixed": { "message": "as a new customer" },
+  "suffixVariable": { "message": "per 100 kr" },
+  "badgeTitle": { "message": "EuroBonus partner — click to shop via SAS" },
+  "badgeAria": { "message": "EuroBonus partner — shop via SAS" },
+  "badgeTitleDetail": { "message": "$1 – $2 points $3. Click to shop via SAS." },
+  "close": { "message": "Close" },
+  "searching": { "message": "Looking for partner…" },
+  "creditPrefix": { "message": "Made by" },
+  "unknownShop": { "message": "Unknown shop" },
+  "loading": { "message": "Loading…" },
+  "noActiveTab": { "message": "No active tab found." },
+  "googleNoMatch": { "message": "<strong>Google search</strong>No EuroBonus partners found on the page yet. Scroll or reload if the page just opened." },
+  "googleMatch": { "message": "<strong>$1 EuroBonus partners on the page</strong>Open a shop via SAS to earn points." },
+  "listFetchError": { "message": "Couldn't fetch the shop list. Try again later." },
+  "notPartner": { "message": "<strong>Not a EuroBonus partner</strong>This page doesn't earn any EuroBonus points." },
+  "partnerFallback": { "message": "<strong>EuroBonus partner</strong>Log in via SAS to earn points." },
+  "partner": { "message": "<strong>$1 is a EuroBonus partner</strong>Earn <strong style='display:inline'>$2 points</strong> $3." },
+  "pointsShort": { "message": "$1 pts" }
+}

@@ -1,8 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "EB Finder",
+  "name": "__MSG_extName__",
   "version": "0.1.6",
-  "description": "Spots SAS EuroBonus partner shops while you browse and reminds you to log in via SAS to earn points.",
+  "description": "__MSG_extDescription__",
+  "default_locale": "en",
   "author": "Brine AB",
   "homepage_url": "https://www.brine.co",
   "permissions": [
@@ -27,6 +28,7 @@
         "<all_urls>"
       ],
       "js": [
+        "shared.js",
         "content.js"
       ],
       "run_at": "document_end"

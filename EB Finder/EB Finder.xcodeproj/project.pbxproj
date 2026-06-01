@@ -17,6 +17,8 @@
 		7916905D2FB46E2600036C69 /* icons in Resources */ = {isa = PBXBuildFile; fileRef = 791690512FB46E2600036C69 /* icons */; };
 		7916905E2FB46E2600036C69 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 791690522FB46E2600036C69 /* manifest.json */; };
 		7916905F2FB46E2600036C69 /* content.js in Resources */ = {isa = PBXBuildFile; fileRef = 791690532FB46E2600036C69 /* content.js */; };
+		EB10CA1E00000000B0000006 /* _locales in Resources */ = {isa = PBXBuildFile; fileRef = EB10CA1E00000000B0000005 /* _locales */; };
+		EB10CA1E00000000B0000004 /* shared.js in Resources */ = {isa = PBXBuildFile; fileRef = EB10CA1E00000000B0000003 /* shared.js */; };
 		EB7AB1E700000000B0000002 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = EB7AB1E700000000B0000001 /* fonts */; };
 		A1B100042FB46E2700036C69 /* EBFinderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B100012FB46E2700036C69 /* EBFinderApp.swift */; };
 		A1B100062FB46E2700036C69 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B100022FB46E2700036C69 /* ContentView.swift */; };
@@ -62,6 +64,8 @@
 		791690512FB46E2600036C69 /* icons */ = {isa = PBXFileReference; lastKnownFileType = folder; name = icons; path = ../../extension/icons; sourceTree = "<group>"; };
 		791690522FB46E2600036C69 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = manifest.json; path = ../../extension/manifest.json; sourceTree = "<group>"; };
 		791690532FB46E2600036C69 /* content.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = content.js; path = ../../extension/content.js; sourceTree = "<group>"; };
+		EB10CA1E00000000B0000005 /* _locales */ = {isa = PBXFileReference; lastKnownFileType = folder; name = _locales; path = ../../extension/_locales; sourceTree = "<group>"; };
+		EB10CA1E00000000B0000003 /* shared.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = shared.js; path = ../../extension/shared.js; sourceTree = "<group>"; };
 		EB7AB1E700000000B0000001 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fonts; path = ../../extension/fonts; sourceTree = "<group>"; };
 		A1B100012FB46E2700036C69 /* EBFinderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EBFinderApp.swift; sourceTree = "<group>"; };
 		A1B100022FB46E2700036C69 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -145,6 +149,8 @@
 				791690512FB46E2600036C69 /* icons */,
 				791690522FB46E2600036C69 /* manifest.json */,
 				791690532FB46E2600036C69 /* content.js */,
+				EB10CA1E00000000B0000005 /* _locales */,
+				EB10CA1E00000000B0000003 /* shared.js */,
 				EB7AB1E700000000B0000001 /* fonts */,
 			);
 			name = "Web Extension Resources";
@@ -212,6 +218,9 @@
 			knownRegions = (
 				en,
 				sv,
+				no,
+				da,
+				fi,
 			);
 			mainGroup = 79168FED2FB46E2500036C69;
 			minimizedProjectReferenceProxies = 1;
@@ -239,6 +248,8 @@
 			isa = PBXResourcesBuildPhase;
 			files = (
 				7916905F2FB46E2600036C69 /* content.js in Resources */,
+				EB10CA1E00000000B0000006 /* _locales in Resources */,
+				EB10CA1E00000000B0000004 /* shared.js in Resources */,
 				7916905A2FB46E2600036C69 /* popup.js in Resources */,
 				7916905D2FB46E2600036C69 /* icons in Resources */,
 				7916905E2FB46E2600036C69 /* manifest.json in Resources */,

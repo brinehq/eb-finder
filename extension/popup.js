@@ -1,91 +1,38 @@
+// EB Finder — toolbar popup.
+//
+// Shows the partner status for the active tab (direct match, or the list of
+// partners the content script spotted on a Google results page) and the
+// "log in & earn" CTA. Shared data + the i18n helper come from the `EB`
+// namespace (shared.js, loaded before this file — see popup.html). UI strings
+// live in _locales/<lang>/messages.json (standard WebExtension i18n).
+
 (async function () {
   const api = globalThis.browser || globalThis.chrome;
+  const {
+    t,
+    formatPoints,
+    fetchShopMap,
+    fetchShopDetail,
+    getShopMatchId,
+    storePendingReturn,
+  } = globalThis.EB;
+
   const statusEl = document.getElementById("status");
   const ctaEl = document.getElementById("cta");
   const listEl = document.getElementById("match-list");
 
-  const API_BASE = "https://onlineshopping.loyaltykey.com";
-  const CHANNEL = "sas/sv-SE";
-  const CACHE_TTL_MS = 60 * 60 * 1000;
-
-  const normalizeUrl = (urlStr) => {
-    if (!urlStr) return "";
-    try {
-      const url = new URL(urlStr);
-      return (url.hostname + url.pathname)
-        .toLowerCase()
-        .trim()
-        .replace(/^www\./, "")
-        .replace(/\/$/, "");
-    } catch (e) {
-      return urlStr
-        .toLowerCase()
-        .trim()
-        .replace(/^https?:\/\//, "")
-        .replace(/^www\./, "")
-        .replace(/\/$/, "");
-    }
-  };
-
-  const getShopMatchId = (currentUrl, shopList) => {
-    const testUrl = normalizeUrl(currentUrl);
-    if (!testUrl) return null;
-    const matchedKey = Object.keys(shopList).find((key) => {
-      const normalizedKey = normalizeUrl(key);
-      return testUrl === normalizedKey || testUrl.startsWith(normalizedKey + "/");
-    });
-    return matchedKey ? shopList[matchedKey] : null;
-  };
-
-  const storePendingReturn = (originalUrl, shopUuid) => {
-    try {
-      return api.storage.local.set({
-        [`pending_return_${shopUuid}`]: {
-          originalUrl,
-          timestamp: Date.now(),
-        },
-      });
-    } catch (e) {
-      return Promise.resolve();
-    }
-  };
-
-  const cacheGet = async (key) => {
-    try {
-      const r = await api.storage.local.get([key]);
-      const c = r[key];
-      if (c && Date.now() - c.timestamp < CACHE_TTL_MS) return c.data;
-    } catch (e) {}
-    return null;
-  };
-
-  const cacheSet = async (key, data) => {
-    try {
-      await api.storage.local.set({ [key]: { data, timestamp: Date.now() } });
-    } catch (e) {}
-  };
-
-  const fetchJson = async (url) => {
-    try {
-      const r = await fetch(url, { credentials: "omit" });
-      if (!r.ok) return null;
-      return await r.json();
-    } catch (e) {
-      return null;
-    }
-  };
-
-  const fetchShopDetail = async (uuid) => {
-    const key = `detail_${uuid}_${CHANNEL}`;
-    let detail = await cacheGet(key);
-    if (detail) return detail;
-    const json = await fetchJson(
-      `${API_BASE}/api/browser-extension/${CHANNEL}/shops/${uuid}`,
-    );
-    detail = json && json.data ? json.data : null;
-    if (detail) await cacheSet(key, detail);
-    return detail;
-  };
+  // Localize the static popup chrome (HTML ships with English defaults).
+  // The browser-resolved UI locale (matched against _locales) drives <html lang>.
+  document.documentElement.lang = api.i18n.getUILanguage();
+  const statusBody = statusEl.querySelector(".status-body");
+  if (statusBody) statusBody.textContent = t("searching");
+  ctaEl.textContent = t("cta");
+  const creditEl = document.getElementById("credit");
+  if (creditEl) {
+    creditEl.innerHTML =
+      t("creditPrefix") +
+      ' <a href="https://www.brine.co" target="_blank" rel="noopener noreferrer">Brine AB</a>';
+  }
 
   // EB icon glyph — the framed "EB" monogram (currentColor).
   const ebGlyph = (size) =>
@@ -106,17 +53,14 @@
     statusEl.innerHTML = `<span class="status-icon">${icon}</span><div class="status-body">${html}</div>`;
   };
 
-  const formatPoints = (v) =>
-    (parseInt(v, 10) || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-
   // Match-list row = shadcn Item: media (EB glyph) · content (name + suffix) · actions (points).
   const renderMatchItem = (li, detail) => {
     if (!detail) {
-      li.innerHTML = `<div class="item"><span class="item-media">${ebGlyph(15)}</span><span class="item-content"><div class="item-title">Okänd butik</div></span></div>`;
+      li.innerHTML = `<div class="item"><span class="item-media">${ebGlyph(15)}</span><span class="item-content"><div class="item-title">${t("unknownShop")}</div></span></div>`;
       return;
     }
     const points = formatPoints(detail.points || detail.cashback || 0);
-    const suffix = detail.commission_type === "fixed" ? "som ny kund" : "per 100 kr";
+    const suffix = t(detail.commission_type === "fixed" ? "suffixFixed" : "suffixVariable");
     li.innerHTML = `
       <a href="${detail.url || "#"}" target="_blank" rel="noopener noreferrer">
         <div class="item">
@@ -125,7 +69,7 @@
             <div class="item-title">${detail.name || ""}</div>
             <div class="item-desc">${suffix}</div>
           </span>
-          <span class="item-actions">${points} p</span>
+          <span class="item-actions">${t("pointsShort", [points])}</span>
         </div>
       </a>
     `;
@@ -136,7 +80,7 @@
     listEl.classList.add("visible");
     const items = uuids.map((uuid) => {
       const li = document.createElement("li");
-      li.innerHTML = `<div class="item"><span class="item-media">${ebGlyph(15)}</span><span class="item-content"><div class="item-title">Laddar…</div></span><span class="item-actions placeholder">…</span></div>`;
+      li.innerHTML = `<div class="item"><span class="item-media">${ebGlyph(15)}</span><span class="item-content"><div class="item-title">${t("loading")}</div></span><span class="item-actions placeholder">…</span></div>`;
       listEl.appendChild(li);
       return { uuid, li };
     });
@@ -159,7 +103,7 @@
 
   const tab = await getCurrentTab();
   if (!tab || !tab.url) {
-    setStatus("Ingen aktiv flik hittades.", "no-match");
+    setStatus(t("noActiveTab"), "no-match");
     return;
   }
 
@@ -176,55 +120,35 @@
     } catch (e) {}
     const matches = (response && response.matches) || [];
     if (matches.length === 0) {
-      setStatus(
-        "<strong>Google-sökning</strong>Inga EuroBonus-partner hittade på sidan ännu. Scrolla eller ladda om om sidan precis öppnades.",
-        "no-match",
-      );
+      setStatus(t("googleNoMatch"), "no-match");
       return;
     }
-    setStatus(
-      `<strong>${matches.length} EuroBonus-partner på sidan</strong>Öppna en butik via SAS för att tjäna poäng.`,
-      "match",
-    );
+    setStatus(t("googleMatch", [String(matches.length)]), "match");
     await renderMatchList(matches);
     return;
   }
 
-  const listKey = `list_${CHANNEL}`;
-  let shops = await cacheGet(listKey);
+  const shops = await fetchShopMap();
   if (!shops) {
-    shops = await fetchJson(`${API_BASE}/api/browser-extension/${CHANNEL}/shops`);
-    if (shops) await cacheSet(listKey, shops);
-  }
-  if (!shops) {
-    setStatus("Kunde inte hämta butikslistan. Försök igen senare.", "no-match");
+    setStatus(t("listFetchError"), "no-match");
     return;
   }
 
   const matchedId = getShopMatchId(tab.url, shops);
   if (!matchedId) {
-    setStatus(
-      "<strong>Inte en EuroBonus-partner</strong>Den här sidan ger inga EuroBonus-poäng.",
-      "no-match",
-    );
+    setStatus(t("notPartner"), "no-match");
     return;
   }
 
   const detail = await fetchShopDetail(matchedId);
   if (!detail) {
-    setStatus(
-      "<strong>EuroBonus-partner</strong>Logga in via SAS för att tjäna poäng.",
-      "match",
-    );
+    setStatus(t("partnerFallback"), "match");
     return;
   }
 
   const points = formatPoints(detail.points || detail.cashback || 0);
-  const suffix = detail.commission_type === "fixed" ? "som ny kund" : "per 100 kr";
-  setStatus(
-    `<strong>${detail.name} är en EuroBonus-partner</strong>Tjäna <strong style="display:inline">${points} poäng</strong> ${suffix}.`,
-    "match",
-  );
+  const suffix = t(detail.commission_type === "fixed" ? "suffixFixed" : "suffixVariable");
+  setStatus(t("partner", [detail.name, points, suffix]), "match");
   if (detail.url) {
     ctaEl.href = detail.url;
     ctaEl.style.display = "block";
