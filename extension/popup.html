@@ -8,11 +8,12 @@
   </head>
   <body class="eb-popup">
     <div class="header">
-      <img class="header-icon" src="icons/icon-gradient.svg" width="22" height="22" alt="" />
-      <h1>EB Finder</h1>
-      <span class="badge">SE</span>
+      <img class="header-icon" src="icons/icon-gradient.svg" width="28" height="28" alt="EB Finder" />
     </div>
-    <div id="status" class="status">Söker partner…</div>
+    <div id="status" class="status">
+      <span class="status-icon"></span>
+      <div class="status-body">Söker partner…</div>
+    </div>
     <ul id="match-list" class="match-list"></ul>
     <a
       id="cta"
@@ -23,20 +24,10 @@
       style="display: none"
       >LOGGA IN & TJÄNA</a
     >
-    <p class="disclaimer">
-      EB Finder är inte officiellt anslutet till SAS – Scandinavian Airlines
-      eller EuroBonus.
-    </p>
-    <p class="disclaimer credit">
+    <p class="credit">
       Skapat av
       <a href="https://www.brine.co" target="_blank" rel="noopener noreferrer"
         >Brine AB</a
-      >
-      <a
-        href="https://github.com/brinehq/eb-finder"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Källkod</a
       >
     </p>
     <script src="popup.js"></script>

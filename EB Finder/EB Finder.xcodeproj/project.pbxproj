@@ -17,11 +17,14 @@
 		7916905D2FB46E2600036C69 /* icons in Resources */ = {isa = PBXBuildFile; fileRef = 791690512FB46E2600036C69 /* icons */; };
 		7916905E2FB46E2600036C69 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 791690522FB46E2600036C69 /* manifest.json */; };
 		7916905F2FB46E2600036C69 /* content.js in Resources */ = {isa = PBXBuildFile; fileRef = 791690532FB46E2600036C69 /* content.js */; };
+		EB7AB1E700000000B0000002 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = EB7AB1E700000000B0000001 /* fonts */; };
 		A1B100042FB46E2700036C69 /* EBFinderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B100012FB46E2700036C69 /* EBFinderApp.swift */; };
 		A1B100062FB46E2700036C69 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B100022FB46E2700036C69 /* ContentView.swift */; };
 		A1B100082FB46E2700036C69 /* ExtensionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B100032FB46E2700036C69 /* ExtensionState.swift */; };
 		A1B100102FB46E2700036C69 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A1B1000A2FB46E2700036C69 /* Localizable.xcstrings */; };
 		EB7AB1E700000000A0000002 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7AB1E700000000A0000001 /* Theme.swift */; };
+		EB7AB1E700000000A0000004 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7AB1E700000000A0000003 /* OnboardingView.swift */; };
+		EB7AB1E700000000A0000006 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7AB1E700000000A0000005 /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +62,7 @@
 		791690512FB46E2600036C69 /* icons */ = {isa = PBXFileReference; lastKnownFileType = folder; name = icons; path = ../../extension/icons; sourceTree = "<group>"; };
 		791690522FB46E2600036C69 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = manifest.json; path = ../../extension/manifest.json; sourceTree = "<group>"; };
 		791690532FB46E2600036C69 /* content.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = content.js; path = ../../extension/content.js; sourceTree = "<group>"; };
+		EB7AB1E700000000B0000001 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fonts; path = ../../extension/fonts; sourceTree = "<group>"; };
 		A1B100012FB46E2700036C69 /* EBFinderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EBFinderApp.swift; sourceTree = "<group>"; };
 		A1B100022FB46E2700036C69 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A1B100032FB46E2700036C69 /* ExtensionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionState.swift; sourceTree = "<group>"; };
@@ -67,6 +71,8 @@
 		A1B100302FB46E2700036C69 /* EBFinder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EBFinder.entitlements; sourceTree = "<group>"; };
 		A1B100312FB46E2700036C69 /* Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Extension.entitlements; sourceTree = "<group>"; };
 		EB7AB1E700000000A0000001 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		EB7AB1E700000000A0000003 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		EB7AB1E700000000A0000005 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +105,8 @@
 				A1B100022FB46E2700036C69 /* ContentView.swift */,
 				A1B100032FB46E2700036C69 /* ExtensionState.swift */,
 				EB7AB1E700000000A0000001 /* Theme.swift */,
+				EB7AB1E700000000A0000003 /* OnboardingView.swift */,
+				EB7AB1E700000000A0000005 /* SettingsView.swift */,
 				79168FFA2FB46E2600036C69 /* Assets.xcassets */,
 				A1B1001F2FB46E2700036C69 /* AppIcon.icon */,
 				A1B1000A2FB46E2700036C69 /* Localizable.xcstrings */,
@@ -137,6 +145,7 @@
 				791690512FB46E2600036C69 /* icons */,
 				791690522FB46E2600036C69 /* manifest.json */,
 				791690532FB46E2600036C69 /* content.js */,
+				EB7AB1E700000000B0000001 /* fonts */,
 			);
 			name = "Web Extension Resources";
 			sourceTree = "<group>";
@@ -235,6 +244,7 @@
 				7916905E2FB46E2600036C69 /* manifest.json in Resources */,
 				7916905C2FB46E2600036C69 /* popup.html in Resources */,
 				7916905B2FB46E2600036C69 /* styles.css in Resources */,
+				EB7AB1E700000000B0000002 /* fonts in Resources */,
 			);
 		};
 /* End PBXResourcesBuildPhase section */
@@ -247,6 +257,8 @@
 				A1B100062FB46E2700036C69 /* ContentView.swift in Sources */,
 				A1B100082FB46E2700036C69 /* ExtensionState.swift in Sources */,
 				EB7AB1E700000000A0000002 /* Theme.swift in Sources */,
+				EB7AB1E700000000A0000004 /* OnboardingView.swift in Sources */,
+				EB7AB1E700000000A0000006 /* SettingsView.swift in Sources */,
 			);
 		};
 		7916901B2FB46E2600036C69 /* Sources */ = {
