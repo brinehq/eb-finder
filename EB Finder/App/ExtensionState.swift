@@ -1,7 +1,6 @@
 import SafariServices
 
 private let appGroupID = "group.com.brine.ebfinder"
-let shoppingURL = URL(string: "https://onlineshopping.flysas.com/")!
 
 private enum SharedDefaultsKey {
     static let permissionPingTimestamp = "permission.lastPingTimestamp"
@@ -28,19 +27,30 @@ final class ExtensionState {
     var status: ExtensionStatus = .unknown
     var hostPermission: HostPermission = .unknown
 
+    /// True while a `refresh()` is in flight. Drives the onboarding's "checking…"
+    /// state so each re-verification (notably on app reopen) reads as a live
+    /// re-check rather than a silent state swap.
+    private(set) var isChecking = false
+
     func refresh() async {
+        isChecking = true
+        // The permission ping is a cheap synchronous read — pick it up immediately.
+        hostPermission = readHostPermission()
+
         // The state check bridges into Safari and can't be cancelled, so apply
         // its result when it lands rather than blocking the UI on it…
         Task { @MainActor in
             let result = await self.checkExtensionState()
             self.status = result
             self.hostPermission = self.readHostPermission()
+            self.isChecking = false
         }
-        // …and if it hasn't landed shortly, drop the spinner for the
-        // actionable enable step instead of hanging. The check corrects it.
+        // …and if it hasn't landed shortly, stop the spinner and fall back to the
+        // actionable enable step instead of hanging. A late result still corrects it.
         try? await Task.sleep(for: .seconds(2.5))
-        if status == .unknown {
-            status = .disabled
+        if isChecking {
+            isChecking = false
+            if status == .unknown { status = .disabled }
         }
     }
 
@@ -76,10 +86,6 @@ final class ExtensionState {
         } catch {
             status = .error(error.localizedDescription)
         }
-    }
-
-    func openShopping(openURL: (URL) -> Void) {
-        openURL(shoppingURL)
     }
 
     private func readHostPermission() -> HostPermission {

@@ -4,6 +4,12 @@
 <dict>
 	<key>SFSafariWebExtensionConverterVersion</key>
 	<string>26.5</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>ScandinavianNew-Regular.ttf</string>
+		<string>ScandinavianNew-Bold.ttf</string>
+		<string>ScandinavianNew-Black.ttf</string>
+	</array>
 	<key>UILaunchScreen</key>
 	<dict/>
 </dict>

@@ -303,24 +303,27 @@
   // Mirrors styles.css. Inline !important styles fight third-party CSS on
   // host pages, so `var(--*)` can't reach here — values stay literal.
   const TOKENS = {
-    primary:           "#0f1e82",  /* --primary */
-    primaryForeground: "#ffffff",  /* --primary-foreground */
-    fontSans:          '-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif',
-    radiusSm:          "4px",      /* --radius-sm */
-    shadowChip:        "0 1px 2px rgba(0,0,0,0.2)",  /* --shadow-chip */
+    primary:  "#003df5",  /* --primary (SAS blue) */
+    radiusMd: "6px",      /* --radius-md */
   };
 
+  // EB icon glyph — the framed "EB" monogram (currentColor).
+  const EB_GLYPH_SVG =
+    '<svg width="17" height="17" fill="none" viewBox="0 0 24 24" aria-hidden="true" style="display:block">' +
+    '<path fill="currentColor" fill-rule="evenodd" d="M12.31 15.5v-7h2.663q.754 0 1.253.24.503.235.75.645.253.411.252.93 0 .428-.163.731-.164.3-.438.49a1.9 1.9 0 0 1-.615.27v.068q.37.02.71.228.344.205.56.582.218.375.218.909 0 .543-.262.977-.261.43-.788.68-.526.25-1.324.25zm1.26-1.06h1.355q.687 0 .989-.263a.87.87 0 0 0 .306-.683 1.05 1.05 0 0 0-.588-.957 1.44 1.44 0 0 0-.673-.147H13.57zm0-2.963h1.247q.326 0 .587-.12a.928.928 0 0 0 .564-.878.87.87 0 0 0-.285-.67q-.282-.263-.84-.263H13.57z" clip-rule="evenodd"></path>' +
+    '<path fill="currentColor" d="M6.5 8.5v7h4.552v-1.063H7.76v-1.91h3.03v-1.064H7.76v-1.9h3.264V8.5z"></path>' +
+    '<path fill="currentColor" fill-rule="evenodd" d="M4.2 4h15.6A2.2 2.2 0 0 1 22 6.2v11.6a2.2 2.2 0 0 1-2.2 2.2H4.2A2.2 2.2 0 0 1 2 17.8V6.2A2.2 2.2 0 0 1 4.2 4m0 1.5a.7.7 0 0 0-.7.7v11.6a.7.7 0 0 0 .7.7h15.6a.7.7 0 0 0 .7-.7V6.2a.7.7 0 0 0-.7-.7z" clip-rule="evenodd"></path></svg>';
+
+  // Ghost badge: transparent fill, SAS-blue framed-EB glyph (shadcn Badge ghost).
   const BADGE_STYLE = [
     "display:inline-flex !important",
     "align-items:center !important",
     "justify-content:center !important",
     "vertical-align:middle !important",
-    `background:${TOKENS.primary} !important`,
-    `color:${TOKENS.primaryForeground} !important`,
-    `font:700 10px/1 ${TOKENS.fontSans} !important`,
-    "letter-spacing:0.4px !important",
-    "padding:3px 6px !important",
-    `border-radius:${TOKENS.radiusSm} !important`,
+    "background:transparent !important",
+    `color:${TOKENS.primary} !important`,
+    "padding:3px !important",
+    `border-radius:${TOKENS.radiusMd} !important`,
     "text-decoration:none !important",
     "cursor:pointer !important",
     "margin:0 0 0 6px !important",
@@ -330,9 +333,7 @@
     "user-select:none !important",
     "position:relative !important",
     "z-index:2147483646 !important",
-    `box-shadow:${TOKENS.shadowChip} !important`,
     "white-space:nowrap !important",
-    "text-shadow:none !important",
     "opacity:1 !important",
   ].join(";");
 
@@ -344,7 +345,7 @@
 
     const badge = document.createElement("span");
     badge.className = BADGE_CLASS;
-    badge.textContent = "EB";
+    badge.innerHTML = EB_GLYPH_SVG;
     badge.title = "EuroBonus-partner — klicka för att handla via SAS";
     badge.setAttribute("role", "link");
     badge.setAttribute("aria-label", "EuroBonus-partner — handla via SAS");
@@ -467,12 +468,7 @@ async function reportHostPermission(api) {
   // the user to switch "All Websites" on). Fire-and-forget — failures just
   // leave the host app on its "set permissions" step.
   if (!api.runtime || !api.runtime.sendNativeMessage) return;
-  let hasAllUrls = false;
-  try {
-    if (api.permissions && api.permissions.contains) {
-      hasAllUrls = await api.permissions.contains({ origins: ["*://*/*"] });
-    }
-  } catch (e) {}
+  const hasAllUrls = await hasAllSitesAccess(api);
   try {
     await api.runtime.sendNativeMessage("application.id", {
       type: "host-permission-ping",
@@ -481,4 +477,18 @@ async function reportHostPermission(api) {
       timestamp: Date.now(),
     });
   } catch (e) {}
+}
+
+async function hasAllSitesAccess(api) {
+  // Safari can report the all-websites grant under more than one match-pattern
+  // shape, so probe several rather than trusting a single pattern (the cause of
+  // the host app sometimes never confirming the permission step).
+  if (!api.permissions || !api.permissions.contains) return false;
+  const candidates = [["*://*/*"], ["https://*/*", "http://*/*"], ["<all_urls>"]];
+  for (const origins of candidates) {
+    try {
+      if (await api.permissions.contains({ origins })) return true;
+    } catch (e) {}
+  }
+  return false;
 }

@@ -99,6 +99,39 @@ struct Theme {
     )
 }
 
+// MARK: - Onboarding palette
+
+extension Theme {
+    /// Brand-derived colors for the onboarding "Liquid Glass" atmosphere. Every
+    /// value lives in the asset catalog (theme-onboarding-* colorsets) with
+    /// light + dark appearances, so the welcome/step screens never hardcode hex.
+    /// Semantic roles (ink → `foreground`, subtitle → `mutedForeground`, the
+    /// sand CTA → `secondary`, dots → `primary`/`secondary`) reuse the shadcn
+    /// tokens above; only the atmosphere wash, the ambient blobs and the step
+    /// glyph are onboarding-specific and defined here.
+    struct Onboarding {
+        let atmosphereTop:    Color
+        let atmosphereMid:    Color
+        let atmosphereBottom: Color
+        let blob1:            Color
+        let blob2:            Color
+        let blob3:            Color
+        let glyph:            Color
+    }
+
+    var onboarding: Onboarding {
+        Onboarding(
+            atmosphereTop:    .themeOnboardingAtmosphereTop,
+            atmosphereMid:    .themeOnboardingAtmosphereMid,
+            atmosphereBottom: .themeOnboardingAtmosphereBottom,
+            blob1:            .themeOnboardingBlob1,
+            blob2:            .themeOnboardingBlob2,
+            blob3:            .themeOnboardingBlob3,
+            glyph:            .themeOnboardingGlyph
+        )
+    }
+}
+
 // MARK: - Radius
 
 extension Theme {
@@ -114,6 +147,19 @@ extension Theme {
         static let lg: CGFloat = 8
         /// 11.2pt — slightly larger cards.
         static let xl: CGFloat = lg * 1.4
+    }
+}
+
+// MARK: - Brand font
+
+extension Theme {
+    /// The ScandinavianNew brand face (SAS). Resolved by family name, so it works
+    /// once the .ttf/.otf are added to the app target and listed in Info.plist's
+    /// `UIAppFonts`; until then `Font.custom` falls back to San Francisco, so
+    /// there's no regression. Used for the onboarding's brand text — the settings
+    /// list intentionally stays on the native system face.
+    static func brandFont(_ size: CGFloat, _ weight: Font.Weight = .regular) -> Font {
+        Font.custom("ScandinavianNew", size: size).weight(weight)
     }
 }
 
