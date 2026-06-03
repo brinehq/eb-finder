@@ -318,8 +318,44 @@
   // Mirrors styles.css. Inline !important styles fight third-party CSS on
   // host pages, so `var(--*)` can't reach here — values stay literal.
   const TOKENS = {
-    primary:  "#003df5",  /* --primary (SAS blue) */
-    radiusMd: "6px",      /* --radius-md */
+    primary:    "#003df5",  /* --primary (SAS blue) — glyph color on light backgrounds */
+    onDark:     "#ffffff",  /* glyph color on dark backgrounds (e.g. Google dark mode) */
+    radiusMd:   "6px",      /* --radius-md */
+  };
+
+  // Parse a CSS color ("rgb(...)" / "rgba(...)") into {r,g,b,a}. Returns null
+  // if the string isn't an rgb(a) value (e.g. "transparent", which computed
+  // styles normalize to rgba(0,0,0,0) anyway).
+  const parseRgb = (str) => {
+    const m = /rgba?\(([^)]+)\)/.exec(str || "");
+    if (!m) return null;
+    const parts = m[1].split(",").map((s) => parseFloat(s));
+    if (parts.length < 3 || parts.some((n) => Number.isNaN(n))) return null;
+    return { r: parts[0], g: parts[1], b: parts[2], a: parts.length >= 4 ? parts[3] : 1 };
+  };
+
+  // Decide whether the background behind `el` is dark. Walks up ancestors to the
+  // first opaque background color and compares its relative luminance against a
+  // mid threshold. Falls back to the OS/browser color-scheme preference when
+  // every ancestor is transparent.
+  const backgroundIsDark = (el) => {
+    let node = el;
+    while (node && node.nodeType === 1) {
+      const bg = parseRgb(getComputedStyle(node).backgroundColor);
+      if (bg && bg.a > 0) {
+        const lum = (0.2126 * bg.r + 0.7152 * bg.g + 0.0722 * bg.b) / 255;
+        return lum < 0.5;
+      }
+      node = node.parentElement;
+    }
+    return !!(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
+  };
+
+  // Set the glyph color from the badge's surrounding background: white on dark,
+  // SAS blue on light. Safe to call repeatedly (e.g. when the page theme flips).
+  const applyBadgeColor = (badge) => {
+    const color = backgroundIsDark(badge) ? TOKENS.onDark : TOKENS.primary;
+    badge.style.setProperty("color", color, "important");
   };
 
   // EB icon glyph — the framed "EB" monogram (currentColor).
@@ -329,14 +365,14 @@
     '<path fill="currentColor" d="M6.5 8.5v7h4.552v-1.063H7.76v-1.91h3.03v-1.064H7.76v-1.9h3.264V8.5z"></path>' +
     '<path fill="currentColor" fill-rule="evenodd" d="M4.2 4h15.6A2.2 2.2 0 0 1 22 6.2v11.6a2.2 2.2 0 0 1-2.2 2.2H4.2A2.2 2.2 0 0 1 2 17.8V6.2A2.2 2.2 0 0 1 4.2 4m0 1.5a.7.7 0 0 0-.7.7v11.6a.7.7 0 0 0 .7.7h15.6a.7.7 0 0 0 .7-.7V6.2a.7.7 0 0 0-.7-.7z" clip-rule="evenodd"></path></svg>';
 
-  // Ghost badge: transparent fill, SAS-blue framed-EB glyph (shadcn Badge ghost).
+  // Ghost badge: transparent fill, framed-EB glyph. The glyph color is set per
+  // badge by applyBadgeColor() so it adapts to light/dark host backgrounds.
   const BADGE_STYLE = [
     "display:inline-flex !important",
     "align-items:center !important",
     "justify-content:center !important",
     "vertical-align:middle !important",
     "background:transparent !important",
-    `color:${TOKENS.primary} !important`,
     "padding:3px !important",
     `border-radius:${TOKENS.radiusMd} !important`,
     "text-decoration:none !important",
@@ -391,6 +427,9 @@
     });
 
     target.parentNode.insertBefore(badge, target.nextSibling);
+    // Resolve glyph color now that the badge is in the DOM and its ancestor
+    // backgrounds are computable.
+    applyBadgeColor(badge);
 
     getOrFetchDetail(matchedId).then((detail) => {
       if (!detail) return;
@@ -417,6 +456,12 @@
   const ariaVendorSelector = '[aria-label^="From "],[aria-label^="Från "],[aria-label^="Fra "]';
 
   const decorateGooglePartners = (shopList) => {
+    // Re-resolve glyph color on already-injected badges so they track the host
+    // theme if the user toggles Google's light/dark mode mid-session.
+    for (const badge of document.querySelectorAll(`.${BADGE_CLASS}`)) {
+      applyBadgeColor(badge);
+    }
+
     // Primary signal: Google's `data-dtld` ("displayed top-level domain") attribute,
     // present on both shopping card containers and the URL chip in organic results.
     const dtldElements = document.querySelectorAll(`[data-dtld]:not([${DECORATED_ATTR}])`);
