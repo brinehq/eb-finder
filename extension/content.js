@@ -256,11 +256,20 @@
     const closeBtn = shadow.querySelector(".close-btn");
     if (closeBtn) {
       closeBtn.addEventListener("click", () => {
-        root.remove();
-        document.documentElement.style.marginTop = "";
-        document.querySelectorAll('[data-ebfinder-pushed="true"]').forEach((el) => {
-          el.style.top = el.dataset.ebfinderPrevTop || "";
-        });
+        // Fade out, then tear down once the transition finishes.
+        container.classList.remove("is-visible");
+        let done = false;
+        const cleanup = () => {
+          if (done) return;
+          done = true;
+          root.remove();
+          document.documentElement.style.marginTop = "";
+          document.querySelectorAll('[data-ebfinder-pushed="true"]').forEach((el) => {
+            el.style.top = el.dataset.ebfinderPrevTop || "";
+          });
+        };
+        container.addEventListener("transitionend", cleanup, { once: true });
+        setTimeout(cleanup, 450); // fallback if transitionend never fires
         try {
           sessionStorage.setItem(SESSION_KEY, "true");
         } catch (e) {}
@@ -298,6 +307,12 @@
 
     syncOffset();
     new ResizeObserver(syncOffset).observe(bannerEl);
+
+    // Double rAF: let the initial opacity:0 paint before flipping to visible so
+    // the opacity transition actually runs (fades the banner in).
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => bannerEl.classList.add("is-visible"));
+    });
   };
 
   // Mirrors styles.css. Inline !important styles fight third-party CSS on

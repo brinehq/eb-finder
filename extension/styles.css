@@ -272,10 +272,18 @@
 
 .fixed-banner-container {
   position: fixed; top: 0; left: 0; right: 0; height: 88px;
-  background: var(--primary); color: var(--primary-foreground);
+  /* Reversed scheme: light surface in light mode, brand navy in dark mode.
+     Translucent fill + backdrop blur give a subtle see-through frost. */
+  background: color-mix(in oklch, var(--secondary) 82%, transparent);
+  color: var(--secondary-foreground);
+  -webkit-backdrop-filter: blur(12px) saturate(1.4);
+  backdrop-filter: blur(12px) saturate(1.4);
   padding: 12px 24px; z-index: 2147483647;
   box-shadow: var(--shadow-banner); container-type: inline-size;
+  opacity: 0; transition: opacity 320ms ease;
 }
+/* JS toggles this once mounted to fade the banner in (and removes it to fade out). */
+.fixed-banner-container.is-visible { opacity: 1; }
 .banner-wrapper {
   display: flex; align-items: center; justify-content: space-between;
   gap: 16px; height: 100%; max-width: 1200px; margin: 0 auto;
@@ -286,24 +294,24 @@
 .points-highlight { font-weight: var(--fw-black); }
 .actions { display: flex; align-items: center; gap: var(--space-3); flex-shrink: 0; }
 
-/* secondary (outline) button — white fill, blue text, pill */
+/* primary (solid) button — blue fill, white text, pill (reversed scheme) */
 .cta-btn {
-  background: var(--secondary); color: var(--secondary-foreground);
+  background: var(--primary); color: var(--primary-foreground);
   border-radius: 9999px; padding: 9px 20px; text-decoration: none;
   font-weight: var(--fw-semibold); font-size: var(--fs-cta);
   white-space: nowrap; display: inline-flex; align-items: center; justify-content: center;
 }
-.cta-btn:hover { background: var(--muted); }
+.cta-btn:hover { opacity: 0.9; }
 .cta-short { display: none; }
 
 /* close — small ghost icon button */
 .close-btn {
-  background: transparent; border: 0; color: var(--primary-foreground);
+  background: transparent; border: 0; color: var(--secondary-foreground);
   width: 26px; height: 26px; border-radius: 9999px; line-height: 1; cursor: pointer;
   padding: 0; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center;
   font-size: 18px; opacity: 0.85;
 }
-.close-btn:hover { opacity: 1; background: oklch(1 0 0 / 0.15); }
+.close-btn:hover { opacity: 1; background: color-mix(in oklch, currentColor 15%, transparent); }
 
 @container (max-width: 720px) {
   .fixed-banner-container { height: 56px; padding: var(--space-2) 14px; }
@@ -400,7 +408,7 @@ body.eb-preview {
 .resize-box.narrow { width: 400px; }
 .resize-box.tiny { width: 320px; }
 .note { color: var(--muted-foreground); font-size: var(--fs-badge); margin-top: var(--space-3); }
-.static-fixed { position: static !important; }
+.static-fixed { position: static !important; opacity: 1 !important; }
 .preview-google-mock { padding: var(--space-5); color: var(--foreground); background: var(--background); font-family: arial, -apple-system, sans-serif; }
 .preview-google-mock-url { font-size: var(--fs-body); color: var(--muted-foreground); }
 .preview-google-mock-title { font-size: var(--fs-h1); line-height: var(--lh-snug); margin-top: var(--space-1); }
