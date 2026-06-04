@@ -7,16 +7,16 @@
 # fixed by Apple's contract: ci_scripts/ci_post_clone.sh at the repo root.
 #
 # What we do here:
-#   1. Install XcodeGen and generate "EB Finder.xcodeproj" from project.yml —
-#      the project file is generated, not committed (see EB Finder/project.yml).
+#   1. Install a pinned XcodeGen and generate "EB Finder.xcodeproj" from
+#      project.yml — the project file is generated, never committed.
 #   2. Sync the marketing version (MARKETING_VERSION + manifest.json) from the
 #      most recent git tag (vX.Y.Z → X.Y.Z).
 #   3. Stamp CURRENT_PROJECT_VERSION (CFBundleVersion) with Xcode Cloud's own
-#      unique build number ($CI_BUILD_NUMBER), so every uploaded build is
-#      automatically unique without any manual bumping.
+#      unique build number ($CI_BUILD_NUMBER).
 #
 # Version keys live in EB Finder/Config/Version.xcconfig and are read at build
-# time, so they take effect whether or not the project is regenerated after.
+# time. Signing is NOT committed — DEVELOPMENT_TEAM lives in the git-ignored
+# Config/Signing.local.xcconfig; Xcode Cloud injects distribution signing.
 #
 # Env vars provided by Xcode Cloud:
 #   CI_BUILD_NUMBER             monotonically-increasing integer per workflow run
@@ -28,22 +28,21 @@ set -euo pipefail
 cd "$CI_PRIMARY_REPOSITORY_PATH"
 
 VERSION_XCCONFIG="EB Finder/Config/Version.xcconfig"
+XCODEGEN_VERSION="2.45.4"
+WORK="${TMPDIR:-/tmp}"
 
-echo "==> Installing XcodeGen"
-# Xcode Cloud runs this script with a minimal environment, so Homebrew and the
-# tools it installs aren't necessarily on PATH. Source brew's shellenv first so
-# both `brew` and the freshly-installed `xcodegen` resolve.
-if [ -x /opt/homebrew/bin/brew ]; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-elif [ -x /usr/local/bin/brew ]; then
-  eval "$(/usr/local/bin/brew shellenv)"
-fi
-brew install xcodegen
-xcodegen --version   # fail loudly here (not mid-build) if it didn't land on PATH
+# Install XcodeGen from its pinned GitHub release binary rather than Homebrew:
+# reproducible, and free of the brew-PATH issues that bite ci_post_clone.
+echo "==> Installing XcodeGen $XCODEGEN_VERSION"
+curl -fsSL -o "$WORK/xcodegen.zip" \
+  "https://github.com/yonaskolb/XcodeGen/releases/download/${XCODEGEN_VERSION}/xcodegen.zip"
+unzip -q -o "$WORK/xcodegen.zip" -d "$WORK/xcodegen-dist"
+XCODEGEN="$(find "$WORK/xcodegen-dist" -type f -name xcodegen | head -1)"
+chmod +x "$XCODEGEN"
+"$XCODEGEN" --version
 
 echo "==> Syncing marketing version from latest git tag"
-# Ensure tags exist on Xcode Cloud's shallow clone before describing them.
-git fetch --tags --quiet 2>/dev/null || true
+git fetch --tags --quiet 2>/dev/null || true   # tags may be absent on a shallow CI clone
 ./scripts/sync-version.sh
 
 echo "==> Stamping CURRENT_PROJECT_VERSION = $CI_BUILD_NUMBER"
@@ -51,7 +50,7 @@ sed -i.bak -E "s/^CURRENT_PROJECT_VERSION = .*/CURRENT_PROJECT_VERSION = $CI_BUI
 rm -f "$VERSION_XCCONFIG.bak"
 
 echo "==> Generating Xcode project from project.yml"
-( cd "EB Finder" && xcodegen generate )
+( cd "EB Finder" && "$XCODEGEN" generate )
 
 echo "==> Final versioning state:"
 grep -E "^(MARKETING_VERSION|CURRENT_PROJECT_VERSION)" "$VERSION_XCCONFIG"
