@@ -30,10 +30,20 @@ cd "$CI_PRIMARY_REPOSITORY_PATH"
 VERSION_XCCONFIG="EB Finder/Config/Version.xcconfig"
 
 echo "==> Installing XcodeGen"
-# For fully reproducible generation, pin a version instead of floating to latest.
+# Xcode Cloud runs this script with a minimal environment, so Homebrew and the
+# tools it installs aren't necessarily on PATH. Source brew's shellenv first so
+# both `brew` and the freshly-installed `xcodegen` resolve.
+if [ -x /opt/homebrew/bin/brew ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [ -x /usr/local/bin/brew ]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+fi
 brew install xcodegen
+xcodegen --version   # fail loudly here (not mid-build) if it didn't land on PATH
 
 echo "==> Syncing marketing version from latest git tag"
+# Ensure tags exist on Xcode Cloud's shallow clone before describing them.
+git fetch --tags --quiet 2>/dev/null || true
 ./scripts/sync-version.sh
 
 echo "==> Stamping CURRENT_PROJECT_VERSION = $CI_BUILD_NUMBER"
