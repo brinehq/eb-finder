@@ -10,7 +10,8 @@ Icon
 build/
 DerivedData/
 
-## XcodeGen output — generated from "EB Finder/project.yml" (run `make`)
+## XcodeGen output — generated from "EB Finder/project.yml"
+## (cd "EB Finder" && xcodegen generate)
 *.xcodeproj
 
 ## Local signing identity (DEVELOPMENT_TEAM) — owner/CI only, never committed
