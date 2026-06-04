@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #
 # Sync the marketing version (CFBundleShortVersionString) across:
-#   - extension/manifest.json            "version" field
-#   - EB Finder/.../project.pbxproj      MARKETING_VERSION (all targets)
+#   - EB Finder/Extension/Resources/manifest.json   "version" field
+#   - EB Finder/Config/Version.xcconfig             MARKETING_VERSION
 #
 # Source of truth: the most recent git tag matching `vX.Y.Z`.
 #
@@ -19,8 +19,8 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$REPO_ROOT"
 
-MANIFEST="extension/manifest.json"
-PBXPROJ="EB Finder/EB Finder.xcodeproj/project.pbxproj"
+MANIFEST="EB Finder/Extension/Resources/manifest.json"
+VERSION_XCCONFIG="EB Finder/Config/Version.xcconfig"
 
 if [[ $# -ge 1 ]]; then
   TAG="$1"
@@ -47,9 +47,9 @@ echo "Syncing marketing version → $VERSION (from tag $TAG)"
 sed -i.bak -E "s/(\"version\"[[:space:]]*:[[:space:]]*\")[^\"]+(\")/\1$VERSION\2/" "$MANIFEST"
 rm -f "$MANIFEST.bak"
 
-sed -i.bak -E "s/MARKETING_VERSION = [^;]+;/MARKETING_VERSION = $VERSION;/g" "$PBXPROJ"
-rm -f "$PBXPROJ.bak"
+sed -i.bak -E "s/^MARKETING_VERSION = .*/MARKETING_VERSION = $VERSION/" "$VERSION_XCCONFIG"
+rm -f "$VERSION_XCCONFIG.bak"
 
 echo "Done."
-echo "  manifest.json: $(grep -E '"version"' "$MANIFEST" | head -1 | xargs)"
-echo "  pbxproj:       $(grep -E 'MARKETING_VERSION' "$PBXPROJ" | head -1 | xargs)"
+echo "  manifest.json:    $(grep -E '"version"' "$MANIFEST" | head -1 | xargs)"
+echo "  Version.xcconfig: $(grep -E '^MARKETING_VERSION' "$VERSION_XCCONFIG" | head -1 | xargs)"

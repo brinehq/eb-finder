@@ -1,0 +1,6 @@
+// Base build configuration applied to every target/config (referenced from
+// project.yml → configFiles). It composes the committed version numbers with an
+// optional, git-ignored local signing identity — so the public project carries
+// no Apple Developer team, and contributors can build without one.
+#include "Version.xcconfig"
+#include? "Signing.local.xcconfig"

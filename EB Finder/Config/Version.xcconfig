@@ -1,0 +1,16 @@
+// Single source of truth for app versioning.
+//
+//   MARKETING_VERSION         CFBundleShortVersionString (e.g. 0.2.0)
+//                             Synced from the latest git tag by
+//                             scripts/sync-version.sh.
+//   CURRENT_PROJECT_VERSION   CFBundleVersion (build number)
+//                             Stamped by Xcode Cloud ($CI_BUILD_NUMBER) in
+//                             ci_scripts/ci_post_clone.sh.
+//
+// These keys live here — not in project.yml — so version bumps never touch
+// the project structure and are resolved at build time (no regeneration
+// needed for a local bump). Both targets inherit them via the project's
+// base configuration (see `configFiles` in project.yml).
+
+MARKETING_VERSION = 0.2.0
+CURRENT_PROJECT_VERSION = 12

@@ -348,10 +348,10 @@ struct OnboardingPalette {
 
     init() {
         pageGradient = LinearGradient(
-            colors: [Color("Brand"), Color("Primary"), Color("Brand")],
+            colors: [Theme.Colors.brand, Theme.Colors.primary, Theme.Colors.brand],
             startPoint: .top, endPoint: .bottom
         )
-        let onBrand = Color("BrandForeground")
+        let onBrand = Theme.Colors.brandForeground
         ink = onBrand
         sub = onBrand.opacity(0.72)
         glyph = onBrand
@@ -361,9 +361,9 @@ struct OnboardingPalette {
         dotInactive = onBrand.opacity(0.4)
         // Ambient blurred glows of the brand tokens over the gradient.
         blobs = [
-            Blob(id: 0, color: Color("Primary"), size: 360, alignment: .topTrailing,   offset: CGSize(width: 80, height: -90), opacity: 0.35),
-            Blob(id: 1, color: Color("Brand"),   size: 320, alignment: .leading,        offset: CGSize(width: -100, height: 0), opacity: 0.32),
-            Blob(id: 2, color: Color("Primary"), size: 260, alignment: .bottomTrailing, offset: CGSize(width: 60, height: 70), opacity: 0.26),
+            Blob(id: 0, color: Theme.Colors.primary, size: 360, alignment: .topTrailing,   offset: CGSize(width: 80, height: -90), opacity: 0.35),
+            Blob(id: 1, color: Theme.Colors.brand,   size: 320, alignment: .leading,        offset: CGSize(width: -100, height: 0), opacity: 0.32),
+            Blob(id: 2, color: Theme.Colors.primary, size: 260, alignment: .bottomTrailing, offset: CGSize(width: 60, height: 70), opacity: 0.26),
         ]
     }
 }
@@ -509,7 +509,7 @@ private struct OnboardingCTAButton: View {
                 if spinner {
                     ProgressView()
                         .controlSize(.small)
-                        .tint(Color("BrandForeground"))
+                        .tint(Theme.Colors.brandForeground)
                 }
                 Text(titleKey)
                     .kerning(0.6)
@@ -540,14 +540,14 @@ private struct CTABackground: ViewModifier {
         switch variant {
         case .primary:
             content
-                .foregroundStyle(Color("PrimaryForeground"))
-                .background(Color("Primary"))
+                .foregroundStyle(Theme.Colors.primaryForeground)
+                .background(Theme.Colors.primary)
                 .overlay { if shimmer { shimmerSweep } }
                 .clipShape(.capsule)
-                .shadow(color: Color("Primary").opacity(0.40), radius: 13, x: 0, y: 10)
+                .shadow(color: Theme.Colors.primary.opacity(0.40), radius: 13, x: 0, y: 10)
         case .glass:
             content
-                .foregroundStyle(Color("BrandForeground"))
+                .foregroundStyle(Theme.Colors.brandForeground)
                 .glassEffect(.regular, in: .capsule)
         }
     }
@@ -568,15 +568,14 @@ private struct CTABackground: ViewModifier {
 
 private extension Text {
     func onboardingTitle(_ color: Color) -> some View {
-        self.font(Theme.Typography.title)
+        self.typography(.title)
             .foregroundStyle(color)
             .fixedSize(horizontal: false, vertical: true)
     }
 
     func onboardingBody(_ color: Color) -> some View {
-        self.font(Theme.Typography.body)
+        self.typography(.body)
             .foregroundStyle(color)
-            .lineSpacing(2)
             .fixedSize(horizontal: false, vertical: true)
     }
 }

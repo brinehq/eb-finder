@@ -1,0 +1,167 @@
+name: EB Finder
+
+# ---------------------------------------------------------------------------
+# Project options
+# ---------------------------------------------------------------------------
+options:
+  deploymentTarget:
+    iOS: "26.2"
+  developmentLanguage: en
+  groupSortPosition: top
+  generateEmptyDirectories: true
+  # settingPresets: all (default) — supplies the standard CLANG_WARN_* /
+  # GCC_WARN_* boilerplate so we only declare settings that actually differ
+  # from the Xcode template defaults below.
+
+attributes:
+  ORGANIZATIONNAME: Brine AB
+
+# Config names → type (drives the per-config optimization/debug presets).
+configs:
+  Debug: debug
+  Release: release
+
+# Project base configuration (applied to every target/config). Build.xcconfig
+# composes the committed version numbers with the git-ignored local signing
+# identity, so the public project carries no Apple Developer team.
+configFiles:
+  Debug: Config/Build.xcconfig
+  Release: Config/Build.xcconfig
+
+# ---------------------------------------------------------------------------
+# Settings shared by every target (project-level build configuration)
+# ---------------------------------------------------------------------------
+settings:
+  base:
+    # DEVELOPMENT_TEAM is intentionally NOT set here — it lives in the
+    # git-ignored Config/Signing.local.xcconfig (see Config/Build.xcconfig).
+    SWIFT_VERSION: "6.0"
+    SDKROOT: iphoneos
+    SUPPORTED_PLATFORMS: iphoneos iphonesimulator
+    SUPPORTS_MACCATALYST: NO
+    SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: NO
+    SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD: NO
+    TARGETED_DEVICE_FAMILY: "1,2"
+    CODE_SIGN_STYLE: Automatic
+    GENERATE_INFOPLIST_FILE: YES
+    ONLY_ACTIVE_ARCH: YES
+    ENABLE_TESTABILITY: YES
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+    # Language standards (XcodeGen's presets default to gnu11/gnu++14)
+    GCC_C_LANGUAGE_STANDARD: gnu17
+    CLANG_CXX_LANGUAGE_STANDARD: "gnu++20"
+    # Swift 6 / Xcode 26 feature flags (not in XcodeGen's setting presets)
+    SWIFT_APPROACHABLE_CONCURRENCY: YES
+    SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY: YES
+    SWIFT_EMIT_LOC_STRINGS: YES
+    # Localization / string catalogs
+    LOCALIZATION_PREFERS_STRING_CATALOGS: YES
+    STRING_CATALOG_GENERATE_SYMBOLS: YES
+    ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS: YES
+    # Info.plist keys shared by both targets
+    INFOPLIST_KEY_CFBundleDisplayName: EB Finder
+    INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: NO
+    INFOPLIST_KEY_NSHumanReadableCopyright: Copyright © 2026 Brine AB. All rights reserved.
+  configs:
+    Release:
+      PROVISIONING_PROFILE_SPECIFIER: ""
+      VALIDATE_PRODUCT: YES
+
+# ---------------------------------------------------------------------------
+# Targets
+# ---------------------------------------------------------------------------
+targets:
+
+  # SwiftUI host app. Code + assets are recursed from App/, so new files in
+  # App/Features, App/DesignSystem, App/Core, etc. are picked up automatically.
+  EB Finder:
+    type: application
+    platform: iOS
+    sources:
+      - path: App
+        excludes:
+          - Info.plist            # referenced via INFOPLIST_FILE, not bundled
+          - EBFinder.entitlements # referenced via CODE_SIGN_ENTITLEMENTS
+          - "**/.DS_Store"
+      - path: App/Info.plist
+        buildPhase: none
+      - path: App/EBFinder.entitlements
+        buildPhase: none
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.brine.ebfinder
+        PRODUCT_NAME: EB Finder
+        INFOPLIST_FILE: App/Info.plist
+        CODE_SIGN_ENTITLEMENTS: App/EBFinder.entitlements
+        # Override XcodeGen's "iPhone Developer" preset to match the project.
+        CODE_SIGN_IDENTITY: Apple Development
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        # Asset symbol generation OFF on purpose: generated Primary/Secondary
+        # symbols collide with SwiftUI. Do not re-enable.
+        ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS: NO
+        ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS: NO
+        SWIFT_DEFAULT_ACTOR_ISOLATION: MainActor
+        INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.shopping
+        INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents: YES
+        INFOPLIST_KEY_UIStatusBarHidden: NO
+        INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown
+    dependencies:
+      - target: EB Finder Extension
+        embed: true
+
+  # Safari Web Extension. The web bundle lives in the standard Safari location
+  # (Extension/Resources) so it nests naturally under the Extension group.
+  EB Finder Extension:
+    type: app-extension
+    platform: iOS
+    sources:
+      - Extension/SafariWebExtensionHandler.swift
+      - path: Extension/Info.plist
+        buildPhase: none
+      - path: Extension/Extension.entitlements
+        buildPhase: none
+      # Flat web files are recursed (new ones picked up automatically). images
+      # and _locales are folder references so their subdirectories survive in
+      # the .appex — manifest.json points at images/icon-*.png and the i18n
+      # loader reads _locales/<lang>/messages.json. _preview.html is a dev-only
+      # preview, excluded from the bundle.
+      - path: Extension/Resources
+        excludes:
+          - images
+          - _locales
+          - _preview.html
+          - "**/.DS_Store"
+      - path: Extension/Resources/images
+        type: folder
+      - path: Extension/Resources/_locales
+        type: folder
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.brine.ebfinder.extension
+        PRODUCT_NAME: EB Finder Extension
+        INFOPLIST_FILE: Extension/Info.plist
+        CODE_SIGN_ENTITLEMENTS: Extension/Extension.entitlements
+        CODE_SIGN_IDENTITY: Apple Development
+        SKIP_INSTALL: YES
+
+# ---------------------------------------------------------------------------
+# Schemes (replaces the hand-maintained EB Finder.xcscheme)
+# ---------------------------------------------------------------------------
+schemes:
+  EB Finder:
+    build:
+      targets:
+        EB Finder: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+      gatherCoverageData: false
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release
+      revealArchiveInOrganizer: true

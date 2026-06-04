@@ -227,7 +227,7 @@ private struct SettingsRow: View {    var symbol: String? = nil
             if warning {
                 Image(systemName: "exclamationmark.triangle.fill")
                     .font(.callout)
-                    .foregroundStyle(Color("Warning"))
+                    .foregroundStyle(Theme.Colors.warning)
                     .accessibilityLabel(Text("settings.extension.warning"))
             }
             trailingIcon
@@ -277,7 +277,7 @@ private struct GuidedTestCard: View {    let disabled: Bool
             HStack(spacing: 9) {
                 Image(systemName: "sparkles")
                     .font(.system(size: 17, weight: .semibold))
-                    .foregroundStyle(Color("Primary"))
+                    .foregroundStyle(Theme.Colors.primary)
                 Text("settings.guidedTest.title")
                     .font(.headline)
             }
@@ -287,19 +287,9 @@ private struct GuidedTestCard: View {    let disabled: Bool
                 GuidedTestStepRow(index: 2, title: "settings.guidedTest.step2")
             }
 
-            Button(action: action) {
-                HStack(spacing: 6) {
-                    Image(systemName: "magnifyingglass")
-                    Text("settings.guidedTest.button")
-                }
-                .font(.system(size: 15, weight: .semibold))
-                .frame(maxWidth: .infinity, minHeight: 44)
-                .foregroundStyle(Color("PrimaryForeground"))
-                .background(Color("Primary"), in: .capsule)
-                .opacity(disabled ? 0.4 : 1)
-            }
-            .buttonStyle(.plain)
-            .disabled(disabled)
+            SButton("settings.guidedTest.button", systemImage: "magnifyingglass",
+                    variant: .primary, size: .md, fullWidth: true, action: action)
+                .disabled(disabled)
 
             Text(disabled ? "settings.guidedTest.disabledHint" : "settings.guidedTest.caption")
                 .font(.footnote)
@@ -317,9 +307,9 @@ private struct GuidedTestStepRow: View {    let index: Int
         HStack(spacing: 10) {
             Text(verbatim: "\(index)")
                 .font(.system(size: 13, weight: .bold))
-                .foregroundStyle(Color("PrimaryForeground"))
+                .foregroundStyle(Theme.Colors.primaryForeground)
                 .frame(width: 22, height: 22)
-                .background(Color("Primary"), in: .circle)
+                .background(Theme.Colors.primary, in: .circle)
             Text(title)
                 .font(.subheadline)
                 .foregroundStyle(.primary)

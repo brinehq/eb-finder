@@ -10,6 +10,12 @@ Icon
 build/
 DerivedData/
 
+## XcodeGen output — generated from "EB Finder/project.yml" (run `make`)
+*.xcodeproj
+
+## Local signing identity (DEVELOPMENT_TEAM) — owner/CI only, never committed
+**/Signing.local.xcconfig
+
 ## Various settings
 ExportOptions.plist
 *.pbxuser
