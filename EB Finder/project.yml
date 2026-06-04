@@ -21,18 +21,20 @@ configs:
   Debug: debug
   Release: release
 
-# Project base configuration: versioning lives in an .xcconfig so bumps never
-# touch the generated project. Applied to every target/config.
+# Project base configuration (applied to every target/config). Build.xcconfig
+# composes the committed version numbers with the git-ignored local signing
+# identity, so the public project carries no Apple Developer team.
 configFiles:
-  Debug: Config/Version.xcconfig
-  Release: Config/Version.xcconfig
+  Debug: Config/Build.xcconfig
+  Release: Config/Build.xcconfig
 
 # ---------------------------------------------------------------------------
 # Settings shared by every target (project-level build configuration)
 # ---------------------------------------------------------------------------
 settings:
   base:
-    DEVELOPMENT_TEAM: P8Z5R444KA
+    # DEVELOPMENT_TEAM is intentionally NOT set here — it lives in the
+    # git-ignored Config/Signing.local.xcconfig (see Config/Build.xcconfig).
     SWIFT_VERSION: "6.0"
     SDKROOT: iphoneos
     SUPPORTED_PLATFORMS: iphoneos iphonesimulator

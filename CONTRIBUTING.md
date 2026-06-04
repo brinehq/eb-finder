@@ -25,3 +25,13 @@ make open               # generate, then open in Xcode
 Re-run `make` whenever you pull changes that touch `project.yml`. The app version
 lives in [`EB Finder/Config/Version.xcconfig`](EB%20Finder/Config/Version.xcconfig);
 release tooling keeps it in sync from git tags.
+
+The project ships **without a signing identity** so anyone can build it. To run on
+a **physical device**, drop your Apple Developer team into a git-ignored
+`EB Finder/Config/Signing.local.xcconfig`:
+
+```
+DEVELOPMENT_TEAM = YOURTEAMID
+```
+
+Simulator builds need nothing. (Xcode Cloud injects its own signing for releases.)
