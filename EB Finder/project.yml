@@ -9,6 +9,10 @@ options:
   developmentLanguage: en
   groupSortPosition: top
   generateEmptyDirectories: true
+  # Mirror the file system in the navigator so nested sources (e.g. the
+  # extension's Resources, Resources/images, Resources/_locales) nest under their
+  # parent group instead of floating at the project root.
+  createIntermediateGroups: true
   # settingPresets: all (default) — supplies the standard CLANG_WARN_* /
   # GCC_WARN_* boilerplate so we only declare settings that actually differ
   # from the Xcode template defaults below.
@@ -128,6 +132,7 @@ targets:
       # preview, excluded from the bundle.
       - path: Extension/Resources
         excludes:
+          - manifest.json   # produced by the "Stamp manifest version" phase below
           - images
           - _locales
           - _preview.html
@@ -136,6 +141,11 @@ targets:
         type: folder
       - path: Extension/Resources/_locales
         type: folder
+      # Visible in the navigator but NOT copied — the bundled manifest is produced
+      # by the "Stamp manifest version" phase (including it here too would
+      # double-produce the file in the .appex).
+      - path: Extension/Resources/manifest.json
+        buildPhase: none
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.brine.ebfinder.extension
@@ -144,6 +154,23 @@ targets:
         CODE_SIGN_ENTITLEMENTS: Extension/Extension.entitlements
         CODE_SIGN_IDENTITY: Apple Development
         SKIP_INSTALL: YES
+    # The manifest's "version" is derived from $MARKETING_VERSION (one source of
+    # truth for both the app and the extension), so it's never hard-coded in the
+    # committed JSON. manifest.json is excluded from the resource copy above; this
+    # phase generates the bundled copy with the version substituted in. Declared
+    # input/output keep it happy under ENABLE_USER_SCRIPT_SANDBOXING.
+    postBuildScripts:
+      - name: Stamp manifest version
+        basedOnDependencyAnalysis: false
+        script: |
+          set -euo pipefail
+          mkdir -p "$(dirname "$SCRIPT_OUTPUT_FILE_0")"
+          sed -E 's/("version"[[:space:]]*:[[:space:]]*")[^"]+(")/\1'"${MARKETING_VERSION}"'\2/' \
+            "$SCRIPT_INPUT_FILE_0" > "$SCRIPT_OUTPUT_FILE_0"
+        inputFiles:
+          - $(SRCROOT)/Extension/Resources/manifest.json
+        outputFiles:
+          - $(BUILT_PRODUCTS_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/manifest.json
 
 # ---------------------------------------------------------------------------
 # Schemes (replaces the hand-maintained EB Finder.xcscheme)
