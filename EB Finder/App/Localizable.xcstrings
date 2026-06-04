@@ -2,12 +2,25 @@
   "sourceLanguage" : "en",
   "strings" : {
     "" : {
-
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : ""
+          }
+        }
+      }
     },
     "about.disclaimer.body" : {
       "comment" : "About page — independence disclaimer body.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "EB Finder is not officially affiliated with SAS – Scandinavian Airlines or EuroBonus. It is an independent project and fetches partner data via LoyaltyKey's public API."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -26,6 +39,12 @@
       "comment" : "About page — disclaimer section header.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Disclaimer"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -44,6 +63,12 @@
       "comment" : "About page row → pushes to the License page.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "License"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -62,6 +87,12 @@
       "comment" : "About page row → opens the GitHub source repository.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Source code"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -80,6 +111,12 @@
       "comment" : "About page navigation title.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "About"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -98,6 +135,12 @@
       "comment" : "About page row label — paired with the marketing version number.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Version"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -116,6 +159,12 @@
       "comment" : "License page — copyright line.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Copyright © Brine AB"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -134,6 +183,12 @@
       "comment" : "License page — MIT grant paragraph (plain-language summary).",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Permission is hereby granted, free of charge, to anyone obtaining a copy of this software to use, copy, modify and distribute it without restriction."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -152,6 +207,12 @@
       "comment" : "License page — warranty disclaimer line.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "The software is provided \"as is\", without warranty of any kind."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -170,6 +231,12 @@
       "comment" : "License page row → opens the full LICENSE file on GitHub.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "View full license"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -188,6 +255,12 @@
       "comment" : "License page — MIT section header.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "MIT License"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -206,6 +279,12 @@
       "comment" : "License page navigation title.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "License"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -224,6 +303,12 @@
       "comment" : "CTA label while the app re-checks the extension/permission state.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "CHECKING…"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -242,6 +327,12 @@
       "comment" : "CTA that advances to the next onboarding step once the current one is satisfied.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "CONTINUE"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -260,6 +351,12 @@
       "comment" : "Final onboarding CTA; completes setup and enters the app.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "FINISH"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -278,6 +375,12 @@
       "comment" : "Subtitle on the 'all set' screen.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "EB Finder will now clearly show which EuroBonus partners you visit as you browse in Safari."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -296,6 +399,12 @@
       "comment" : "Title on the final 'all set' onboarding screen.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "All set!"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -314,6 +423,12 @@
       "comment" : "CTA on the 'turn on the extension' step → opens Safari settings.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "OPEN SAFARI SETTINGS"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -332,6 +447,12 @@
       "comment" : "Body on the 'turn on the extension' step.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Switch on EB Finder in Safari settings so we can spot EuroBonus partners while you browse."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -350,6 +471,12 @@
       "comment" : "Confirmation body once the extension is enabled.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "EB Finder is enabled in Safari."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -368,6 +495,12 @@
       "comment" : "Confirmation title once the extension is enabled.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "The extension is on"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -386,6 +519,12 @@
       "comment" : "Settings breadcrumb chip on the 'turn on the extension' step.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Settings › Apps › Safari › Extensions"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -404,6 +543,12 @@
       "comment" : "Title on the 'turn on the extension' step.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Turn on the extension"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -422,6 +567,12 @@
       "comment" : "CTA on the 'allow all websites' step → opens Safari settings.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "OPEN PERMISSIONS"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -440,6 +591,12 @@
       "comment" : "Body on the 'allow all websites' step, including the privacy reassurance.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Give EB Finder access to all domains — otherwise partners on some pages may be missed. We only compare the site's domain name against the partner list; nothing else is read, tracked or stored."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -458,6 +615,12 @@
       "comment" : "Confirmation body once all-websites access is granted.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "EB Finder can read all websites."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -476,6 +639,12 @@
       "comment" : "Confirmation title once all-websites access is granted.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Access granted"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -494,6 +663,12 @@
       "comment" : "Settings breadcrumb chip on the 'allow all websites' step.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Allow › All Websites"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -512,6 +687,12 @@
       "comment" : "Escape-hatch button on the permissions step so users are never trapped if live detection lags.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Skip"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -530,6 +711,12 @@
       "comment" : "Title on the 'allow all websites' step.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Allow on all websites"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -548,6 +735,12 @@
       "comment" : "Welcome screen primary CTA; starts the setup flow.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "GET STARTED"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -566,6 +759,12 @@
       "comment" : "Welcome screen subtitle.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "EB Finder spots EuroBonus partners automatically and reminds you to sign in via SAS — before you buy."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -584,6 +783,12 @@
       "comment" : "Welcome screen headline. The newline is intentional (two balanced lines).",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Earn points\nwhile you browse"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -602,6 +807,12 @@
       "comment" : "Settings root row → About page.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "About"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -620,6 +831,12 @@
       "comment" : "Settings root row → opens a mailto to support.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Contact"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -638,6 +855,12 @@
       "comment" : "Footer at the bottom of every settings page. Markdown link → brine.co.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Made by [Brine AB](https://www.brine.co)"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -656,6 +879,12 @@
       "comment" : "Settings root row → opens Safari's extension settings.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Extension"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -674,22 +903,60 @@
       "comment" : "Extension row value when the extension is switched off.",
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Off" } },
-        "sv" : { "stringUnit" : { "state" : "translated", "value" : "Av" } }
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Off"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Off"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Av"
+          }
+        }
       }
     },
     "settings.extension.on" : {
       "comment" : "Extension row value when the extension is switched on.",
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "On" } },
-        "sv" : { "stringUnit" : { "state" : "translated", "value" : "På" } }
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "On"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "På"
+          }
+        }
       }
     },
     "settings.extension.warning" : {
       "comment" : "Accessibility label for the warning marker on the Extension Settings row.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Needs attention"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -704,10 +971,160 @@
         }
       }
     },
+    "settings.guidedTest.button" : {
+      "comment" : "Guided-test card — primary action button; opens a Google search in Safari.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Search for a product"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search for a product"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sök efter en produkt"
+          }
+        }
+      }
+    },
+    "settings.guidedTest.caption" : {
+      "comment" : "Guided-test card — caption under the button.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Opens a Google search in Safari."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens a Google search in Safari."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Öppnar en Google-sökning i Safari."
+          }
+        }
+      }
+    },
+    "settings.guidedTest.disabledHint" : {
+      "comment" : "Guided-test card — shown instead of the caption when the extension is off or lacks all-sites access.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Turn the extension on (with access to all websites) to run the test."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Turn the extension on (with access to all websites) to run the test."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktivera tillägget (med åtkomst till alla webbplatser) för att köra testet."
+          }
+        }
+      }
+    },
+    "settings.guidedTest.step1" : {
+      "comment" : "Guided-test card — step 1 label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Search for a product"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search for a product"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sök efter en produkt"
+          }
+        }
+      }
+    },
+    "settings.guidedTest.step2" : {
+      "comment" : "Guided-test card — step 2 label.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Visit a EuroBonus partner"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visit a EuroBonus partner"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Besök en EuroBonus-partner"
+          }
+        }
+      }
+    },
+    "settings.guidedTest.title" : {
+      "comment" : "Guided-test card — header title.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Try it out"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Try it out"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prova det"
+          }
+        }
+      }
+    },
     "settings.language" : {
       "comment" : "Settings root row → display language (display-only for now).",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Language"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -726,6 +1143,12 @@
       "comment" : "Detail value on the Language row — the current display language.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Swedish"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -744,6 +1167,12 @@
       "comment" : "Settings row that re-runs the setup onboarding.",
       "extractionState" : "manual",
       "localizations" : {
+        "base" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Reset onboarding"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",

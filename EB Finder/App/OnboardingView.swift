@@ -18,8 +18,6 @@ struct OnboardingView: View {
     let state: ExtensionState
     let onComplete: () -> Void
 
-    @Environment(\.theme) private var theme
-    @Environment(\.colorScheme) private var colorScheme
     @State private var screen: Screen = .welcome
     /// The steps that still need action, snapshotted when the user taps Get
     /// Started. Steps already satisfied at that point are never presented; this
@@ -29,7 +27,7 @@ struct OnboardingView: View {
     private enum Screen: Hashable { case welcome, enableExtension, grantPermissions, done }
 
     var body: some View {
-        let palette = OnboardingPalette(theme: theme, colorScheme: colorScheme)
+        let palette = OnboardingPalette()
         ZStack {
             OnboardingAtmosphere(palette: palette)
 
@@ -102,7 +100,7 @@ struct OnboardingView: View {
         VStack(spacing: 0) {
             EBAppIcon(size: 96, float: true)
             Text("onboarding.welcome.title")
-                .onboardingTitle(28, palette.ink)
+                .onboardingTitle(palette.ink)
                 .padding(.top, 30)
             Text("onboarding.welcome.detail")
                 .onboardingBody(palette.sub)
@@ -130,7 +128,7 @@ struct OnboardingView: View {
             .frame(height: 104)
 
             Text(status == .done ? copy.doneTitle : copy.title)
-                .onboardingTitle(28, palette.ink)
+                .onboardingTitle(palette.ink)
                 .padding(.top, 30)
 
             Text(status == .done ? copy.doneDetail : copy.detail)
@@ -158,7 +156,7 @@ struct OnboardingView: View {
     private func done(_ palette: OnboardingPalette) -> some View {
         VStack(spacing: 0) {
             Text("onboarding.done.title")
-                .onboardingTitle(30, palette.ink)
+                .onboardingTitle(palette.ink)
             Text("onboarding.done.detail")
                 .onboardingBody(palette.sub)
                 .frame(maxWidth: 290)
@@ -174,14 +172,14 @@ struct OnboardingView: View {
     private func cta(_ palette: OnboardingPalette) -> some View {
         switch screen {
         case .welcome:
-            OnboardingCTAButton("onboarding.welcome.button", variant: .primary, palette: palette,
+            OnboardingCTAButton("onboarding.welcome.button", variant: .primary,
                                 showArrow: true, shimmer: true, action: goNext)
         case .enableExtension:
             stepCTA(palette, step: .enableExtension)
         case .grantPermissions:
             stepCTA(palette, step: .grantPermissions)
         case .done:
-            OnboardingCTAButton("onboarding.done.button", variant: .primary, palette: palette,
+            OnboardingCTAButton("onboarding.done.button", variant: .primary,
                                 showArrow: true, shimmer: true, action: onComplete)
         }
     }
@@ -191,12 +189,12 @@ struct OnboardingView: View {
         let copy = OnboardingCopy.copy(for: step)
         switch status(for: step) {
         case .checking:
-            OnboardingCTAButton("onboarding.checking", variant: .glass, palette: palette,
+            OnboardingCTAButton("onboarding.checking", variant: .glass,
                                 spinner: true, action: {})
                 .disabled(true)
         case .blocked:
             VStack(spacing: 14) {
-                OnboardingCTAButton(copy.button, variant: .primary, palette: palette, action: openSettings)
+                OnboardingCTAButton(copy.button, variant: .primary, action: openSettings)
                 if step == .grantPermissions {
                     // Live permission detection relies on the extension pinging the
                     // app group after the user next loads a page, which can lag — so
@@ -213,7 +211,7 @@ struct OnboardingView: View {
                 }
             }
         case .done:
-            OnboardingCTAButton("onboarding.continue", variant: .primary, palette: palette,
+            OnboardingCTAButton("onboarding.continue", variant: .primary,
                                 showArrow: true, shimmer: true, action: goNext)
         }
     }
@@ -324,13 +322,11 @@ private struct OnboardingCopy {
 
 // MARK: - Palette (brand-derived, light/dark)
 
-/// The onboarding's Liquid-Glass atmosphere, sourced entirely from `Theme`
-/// primitives — the atmosphere wash, ambient blobs and step glyph come from the
-/// `theme.onboarding.*` colorsets (which carry their own light + dark values),
-/// while ink/subtitle/chip reuse the shadcn tokens. Nothing here hardcodes a
-/// color; only blob opacity and the active-dot accent vary by appearance.
+/// The onboarding's atmosphere — a deep-blue brand wash (`Brand → Primary →
+/// Brand`) with ambient `Primary`/`Brand` glows. Text, icons and dots use the
+/// `BrandForeground` pair so they read light on it. A fixed brand moment: it
+/// looks the same in light and dark (these colors don't flip).
 struct OnboardingPalette {
-    let isDark: Bool
     let pageGradient: LinearGradient
     let ink: Color
     let sub: Color
@@ -350,28 +346,24 @@ struct OnboardingPalette {
         let opacity: Double
     }
 
-    init(theme: Theme, colorScheme: ColorScheme) {
-        let dark = colorScheme == .dark
-        isDark = dark
-        let atmo = theme.onboarding
+    init() {
         pageGradient = LinearGradient(
-            colors: [atmo.atmosphereTop, atmo.atmosphereMid, atmo.atmosphereBottom],
+            colors: [Color("Brand"), Color("Primary"), Color("Brand")],
             startPoint: .top, endPoint: .bottom
         )
-        ink = theme.foreground
-        sub = theme.mutedForeground
-        glyph = atmo.glyph
-        chipBackground = theme.muted
-        chipForeground = theme.mutedForeground
-        // Active dot follows each mode's hero accent: indigo on light, sand on dark.
-        dotActive = dark ? theme.secondary : theme.primary
-        dotInactive = theme.mutedForeground.opacity(0.5)
-        // Pale light blobs need more presence; saturated dark blobs need less.
-        let opacity = dark ? [0.55, 0.40, 0.45] : [0.85, 0.65, 0.55]
+        let onBrand = Color("BrandForeground")
+        ink = onBrand
+        sub = onBrand.opacity(0.72)
+        glyph = onBrand
+        chipBackground = onBrand.opacity(0.12)
+        chipForeground = onBrand
+        dotActive = onBrand
+        dotInactive = onBrand.opacity(0.4)
+        // Ambient blurred glows of the brand tokens over the gradient.
         blobs = [
-            Blob(id: 0, color: atmo.blob1, size: 300, alignment: .topTrailing,    offset: CGSize(width: 70, height: -70),  opacity: opacity[0]),
-            Blob(id: 1, color: atmo.blob2, size: 240, alignment: .leading,        offset: CGSize(width: -90, height: -40), opacity: opacity[1]),
-            Blob(id: 2, color: atmo.blob3, size: 220, alignment: .bottomTrailing, offset: CGSize(width: 50, height: 50),   opacity: opacity[2]),
+            Blob(id: 0, color: Color("Primary"), size: 360, alignment: .topTrailing,   offset: CGSize(width: 80, height: -90), opacity: 0.35),
+            Blob(id: 1, color: Color("Brand"),   size: 320, alignment: .leading,        offset: CGSize(width: -100, height: 0), opacity: 0.32),
+            Blob(id: 2, color: Color("Primary"), size: 260, alignment: .bottomTrailing, offset: CGSize(width: 60, height: 70), opacity: 0.26),
         ]
     }
 }
@@ -491,7 +483,6 @@ private struct SettingsPathChip: View {
 private struct OnboardingCTAButton: View {
     let titleKey: LocalizedStringKey
     var variant: Variant = .primary
-    let palette: OnboardingPalette
     var showArrow: Bool = false
     var spinner: Bool = false
     var shimmer: Bool = false
@@ -499,15 +490,13 @@ private struct OnboardingCTAButton: View {
 
     enum Variant { case primary, glass }
 
-    @Environment(\.theme) private var theme
     @State private var shimmerX: CGFloat = -1.2
 
-    init(_ titleKey: LocalizedStringKey, variant: Variant = .primary, palette: OnboardingPalette,
+    init(_ titleKey: LocalizedStringKey, variant: Variant = .primary,
          showArrow: Bool = false, spinner: Bool = false, shimmer: Bool = false,
          action: @escaping () -> Void) {
         self.titleKey = titleKey
         self.variant = variant
-        self.palette = palette
         self.showArrow = showArrow
         self.spinner = spinner
         self.shimmer = shimmer
@@ -520,7 +509,7 @@ private struct OnboardingCTAButton: View {
                 if spinner {
                     ProgressView()
                         .controlSize(.small)
-                        .tint(palette.isDark ? .white : theme.primary)
+                        .tint(Color("BrandForeground"))
                 }
                 Text(titleKey)
                     .kerning(0.6)
@@ -528,9 +517,9 @@ private struct OnboardingCTAButton: View {
                     Image(systemName: "arrow.right")
                 }
             }
-            .font(Theme.brandFont(15, .bold))
+            .font(.system(size: 15, weight: .bold))
             .frame(maxWidth: .infinity, minHeight: 54)
-            .modifier(CTABackground(variant: variant, palette: palette, theme: theme, shimmerX: shimmerX, shimmer: shimmer))
+            .modifier(CTABackground(variant: variant, shimmerX: shimmerX, shimmer: shimmer))
         }
         .buttonStyle(.plain)
         .onAppear {
@@ -544,8 +533,6 @@ private struct OnboardingCTAButton: View {
 
 private struct CTABackground: ViewModifier {
     let variant: OnboardingCTAButton.Variant
-    let palette: OnboardingPalette
-    let theme: Theme
     let shimmerX: CGFloat
     let shimmer: Bool
 
@@ -553,14 +540,14 @@ private struct CTABackground: ViewModifier {
         switch variant {
         case .primary:
             content
-                .foregroundStyle(theme.primaryForeground)
-                .background(theme.primary)
+                .foregroundStyle(Color("PrimaryForeground"))
+                .background(Color("Primary"))
                 .overlay { if shimmer { shimmerSweep } }
                 .clipShape(.capsule)
-                .shadow(color: theme.primary.opacity(0.40), radius: 13, x: 0, y: 10)
+                .shadow(color: Color("Primary").opacity(0.40), radius: 13, x: 0, y: 10)
         case .glass:
             content
-                .foregroundStyle(palette.isDark ? .white : theme.primary)
+                .foregroundStyle(Color("BrandForeground"))
                 .glassEffect(.regular, in: .capsule)
         }
     }
@@ -580,14 +567,14 @@ private struct CTABackground: ViewModifier {
 // MARK: - Helpers
 
 private extension Text {
-    func onboardingTitle(_ size: CGFloat, _ color: Color) -> some View {
-        self.font(Theme.brandFont(size, .bold))
+    func onboardingTitle(_ color: Color) -> some View {
+        self.font(Theme.Typography.title)
             .foregroundStyle(color)
             .fixedSize(horizontal: false, vertical: true)
     }
 
     func onboardingBody(_ color: Color) -> some View {
-        self.font(Theme.brandFont(16))
+        self.font(Theme.Typography.body)
             .foregroundStyle(color)
             .lineSpacing(2)
             .fixedSize(horizontal: false, vertical: true)

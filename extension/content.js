@@ -2,6 +2,19 @@
   const api = globalThis.browser || globalThis.chrome;
   if (!api || !api.storage) return;
 
+  // Guided test: the host app appends #ebf=<nonce> to the Google URL it opens.
+  // Capture it synchronously now, before Google's SERP JS can rewrite the URL.
+  // This is the primary launch signal (a native-message read can hang from a
+  // content script in Safari, so we never depend on it to start the tour).
+  const launchNonce = (() => {
+    const h = /[#&]ebf=(\d+)/.exec(window.location.hash || "");
+    if (h) return parseInt(h[1], 10);
+    const q = new URLSearchParams(window.location.search).get("ebf");
+    return q && /^\d+$/.test(q) ? parseInt(q, 10) : null;
+  })();
+  if (launchNonce != null)
+    console.info("[EB Finder] guided-test launch nonce:", launchNonce);
+
   reportHostPermission(api);
 
   const API_BASE = "https://onlineshopping.loyaltykey.com";
@@ -13,6 +26,9 @@
   const BADGE_CLASS = "ebfinder-badge";
   const PENDING_KEY_PREFIX = "pending_return_";
   const PENDING_TTL_MS = 60 * 60 * 1000;
+  const COACH_ROOT_ID = "ebfinder-coach-root";
+  const TOUR_KEY = "ebfinder_tour";
+  const TOUR_TTL_MS = 30 * 60 * 1000;
 
   const detectedMatches = new Set();
   const detailPromises = new Map();
@@ -31,6 +47,18 @@
     short: "{name} är en EB-partner",
     cta: "LOGGA IN & TJÄNA",
     ctaShort: "TJÄNA",
+    // Guided-test coachmarks — the host app's "prova det" tour.
+    coachSearchTitle: "Det här är EB-märket",
+    coachSearchBody:
+      "Vi hittade en EuroBonus-partner i resultaten. Leta efter den här ikonen bredvid en butik — den visar att du kan tjäna poäng där.",
+    coachSearchCta: "Besök sajten",
+    coachEmptyTitle: "Leta efter EB-märket",
+    coachEmptyBody:
+      "EB-märket dyker upp bredvid butiker som är EuroBonus-partner. Besök en partner så visar vi hur det ser ut.",
+    coachBannerTitle: "Så ser det ut hos en partner",
+    coachBannerBody:
+      "När du besöker en EuroBonus-partner visar vi den här listen högst upp. Logga in och handla via SAS för att tjäna poäng på köpet.",
+    coachBannerCta: "Okej",
   };
 
   const getCache = async (key) => {
@@ -64,7 +92,9 @@
     const cacheKey = `list_${CHANNEL}`;
     const cached = await getCache(cacheKey);
     if (cached) return cached;
-    const json = await fetchJson(`${API_BASE}/api/browser-extension/${CHANNEL}/shops`);
+    const json = await fetchJson(
+      `${API_BASE}/api/browser-extension/${CHANNEL}/shops`,
+    );
     if (json && typeof json === "object") await setCache(cacheKey, json);
     return json;
   };
@@ -73,7 +103,9 @@
     const cacheKey = `detail_${uuid}_${CHANNEL}`;
     const cached = await getCache(cacheKey);
     if (cached) return cached;
-    const json = await fetchJson(`${API_BASE}/api/browser-extension/${CHANNEL}/shops/${uuid}`);
+    const json = await fetchJson(
+      `${API_BASE}/api/browser-extension/${CHANNEL}/shops/${uuid}`,
+    );
     const data = json && json.data ? json.data : null;
     if (data) await setCache(cacheKey, data);
     return data;
@@ -105,12 +137,29 @@
     }
   };
 
+  const cleanHost = (s) =>
+    (s || "")
+      .toString()
+      .trim()
+      .toLowerCase()
+      .replace(/^https?:\/\//, "")
+      .split("/")[0];
+
+  // Reverse-lookup a shop's domain key from its id — used to pick a navigation
+  // origin for the guided test when only the shop id is known.
+  const navHostForId = (id, shopList) => {
+    const key = Object.keys(shopList).find((k) => shopList[k] === id);
+    return key ? cleanHost(key) : null;
+  };
+
   const getShopMatchId = (currentUrl, shopList) => {
     const testUrl = normalizeUrl(currentUrl);
     if (!testUrl) return null;
     const matchedKey = Object.keys(shopList).find((key) => {
       const normalizedKey = normalizeUrl(key);
-      return testUrl === normalizedKey || testUrl.startsWith(normalizedKey + "/");
+      return (
+        testUrl === normalizedKey || testUrl.startsWith(normalizedKey + "/")
+      );
     });
     return matchedKey ? shopList[matchedKey] : null;
   };
@@ -138,11 +187,16 @@
       if (p.has("tduid")) return true;
       if (p.has("afsrc")) return true;
       const utmSource = (p.get("utm_source") || "").toLowerCase();
-      if (/impact|awin|adtraction|tradedoubler|cobiro|loyaltykey/.test(utmSource)) {
+      if (
+        /impact|awin|adtraction|tradedoubler|cobiro|loyaltykey/.test(utmSource)
+      ) {
         return true;
       }
       const utmCampaign = (p.get("utm_campaign") || "").toLowerCase();
-      if (utmCampaign.includes("sas") && utmCampaign.includes("onlineshopping")) {
+      if (
+        utmCampaign.includes("sas") &&
+        utmCampaign.includes("onlineshopping")
+      ) {
         return true;
       }
       return false;
@@ -222,11 +276,14 @@
     const container = document.createElement("div");
     container.className = "fixed-banner-container";
 
-    const template = data.commission_type === "fixed" ? STRINGS.fixed : STRINGS.variable;
+    const template =
+      data.commission_type === "fixed" ? STRINGS.fixed : STRINGS.variable;
     const points = formatPoints(data.points || data.cashback || 0);
     const name = data.name || "";
     const pointsSpan = `<span class="points-highlight">${points} poäng</span>`;
-    const fullText = template.replace("{points}", pointsSpan).replace("{name}", name);
+    const fullText = template
+      .replace("{points}", pointsSpan)
+      .replace("{name}", name);
     const shortText = STRINGS.short.replace("{name}", name);
 
     container.innerHTML = `
@@ -264,9 +321,11 @@
           done = true;
           root.remove();
           document.documentElement.style.marginTop = "";
-          document.querySelectorAll('[data-ebfinder-pushed="true"]').forEach((el) => {
-            el.style.top = el.dataset.ebfinderPrevTop || "";
-          });
+          document
+            .querySelectorAll('[data-ebfinder-pushed="true"]')
+            .forEach((el) => {
+              el.style.top = el.dataset.ebfinderPrevTop || "";
+            });
         };
         container.addEventListener("transitionend", cleanup, { once: true });
         setTimeout(cleanup, 450); // fallback if transitionend never fires
@@ -299,10 +358,16 @@
     const syncOffset = () => {
       const h = bannerEl.offsetHeight;
       if (h <= 0) return;
-      document.documentElement.style.setProperty("margin-top", `${h}px`, "important");
-      document.querySelectorAll('[data-ebfinder-pushed="true"]').forEach((el) => {
-        el.style.setProperty("top", `${h}px`, "important");
-      });
+      document.documentElement.style.setProperty(
+        "margin-top",
+        `${h}px`,
+        "important",
+      );
+      document
+        .querySelectorAll('[data-ebfinder-pushed="true"]')
+        .forEach((el) => {
+          el.style.setProperty("top", `${h}px`, "important");
+        });
     };
 
     syncOffset();
@@ -318,9 +383,11 @@
   // Mirrors styles.css. Inline !important styles fight third-party CSS on
   // host pages, so `var(--*)` can't reach here — values stay literal.
   const TOKENS = {
-    primary:    "#003df5",  /* --primary (SAS blue) — glyph color on light backgrounds */
-    onDark:     "#ffffff",  /* glyph color on dark backgrounds (e.g. Google dark mode) */
-    radiusMd:   "6px",      /* --radius-md */
+    primary:
+      "#003df5" /* --primary (SAS blue) — glyph color on light backgrounds */,
+    onDark:
+      "#ffffff" /* glyph color on dark backgrounds (e.g. Google dark mode) */,
+    radiusMd: "6px" /* --radius-md */,
   };
 
   // Parse a CSS color ("rgb(...)" / "rgba(...)") into {r,g,b,a}. Returns null
@@ -331,7 +398,12 @@
     if (!m) return null;
     const parts = m[1].split(",").map((s) => parseFloat(s));
     if (parts.length < 3 || parts.some((n) => Number.isNaN(n))) return null;
-    return { r: parts[0], g: parts[1], b: parts[2], a: parts.length >= 4 ? parts[3] : 1 };
+    return {
+      r: parts[0],
+      g: parts[1],
+      b: parts[2],
+      a: parts.length >= 4 ? parts[3] : 1,
+    };
   };
 
   // Decide whether the background behind `el` is dark. Walks up ancestors to the
@@ -348,7 +420,10 @@
       }
       node = node.parentElement;
     }
-    return !!(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    return !!(
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+    );
   };
 
   // Set the glyph color from the badge's surrounding background: white on dark,
@@ -388,7 +463,7 @@
     "opacity:1 !important",
   ].join(";");
 
-  const injectBadge = (target, matchedId) => {
+  const injectBadge = (target, matchedId, navHost) => {
     if (!target || !target.parentNode) return;
     if (target.classList && target.classList.contains(BADGE_CLASS)) return;
     const next = target.nextElementSibling;
@@ -396,6 +471,7 @@
 
     const badge = document.createElement("span");
     badge.className = BADGE_CLASS;
+    if (navHost) badge.dataset.ebHost = navHost;
     badge.innerHTML = EB_GLYPH_SVG;
     badge.title = "EuroBonus-partner — klicka för att handla via SAS";
     badge.setAttribute("role", "link");
@@ -406,7 +482,8 @@
     const activate = async (e) => {
       e.preventDefault();
       e.stopPropagation();
-      if (typeof e.stopImmediatePropagation === "function") e.stopImmediatePropagation();
+      if (typeof e.stopImmediatePropagation === "function")
+        e.stopImmediatePropagation();
       const detail = await getOrFetchDetail(matchedId);
       if (detail && detail.url) {
         window.open(detail.url, "_blank", "noopener,noreferrer");
@@ -415,7 +492,8 @@
 
     const swallow = (e) => {
       e.stopPropagation();
-      if (typeof e.stopImmediatePropagation === "function") e.stopImmediatePropagation();
+      if (typeof e.stopImmediatePropagation === "function")
+        e.stopImmediatePropagation();
     };
 
     badge.addEventListener("click", activate);
@@ -434,7 +512,8 @@
     getOrFetchDetail(matchedId).then((detail) => {
       if (!detail) return;
       const points = formatPoints(detail.points || detail.cashback || 0);
-      const suffix = detail.commission_type === "fixed" ? "som ny kund" : "per 100 kr";
+      const suffix =
+        detail.commission_type === "fixed" ? "som ny kund" : "per 100 kr";
       badge.title = `${detail.name} – ${points} poäng ${suffix}. Klicka för att handla via SAS.`;
     });
   };
@@ -453,7 +532,8 @@
     return null;
   };
 
-  const ariaVendorSelector = '[aria-label^="From "],[aria-label^="Från "],[aria-label^="Fra "]';
+  const ariaVendorSelector =
+    '[aria-label^="From "],[aria-label^="Från "],[aria-label^="Fra "]';
 
   const decorateGooglePartners = (shopList) => {
     // Re-resolve glyph color on already-injected badges so they track the host
@@ -464,7 +544,9 @@
 
     // Primary signal: Google's `data-dtld` ("displayed top-level domain") attribute,
     // present on both shopping card containers and the URL chip in organic results.
-    const dtldElements = document.querySelectorAll(`[data-dtld]:not([${DECORATED_ATTR}])`);
+    const dtldElements = document.querySelectorAll(
+      `[data-dtld]:not([${DECORATED_ATTR}])`,
+    );
     for (const el of dtldElements) {
       el.setAttribute(DECORATED_ATTR, "1");
       const domain = el.getAttribute("data-dtld");
@@ -475,7 +557,7 @@
       // Prefer the visible vendor-name display inside the card (aria-label="From X")
       const vendorEl = el.querySelector(ariaVendorSelector);
       const target = vendorEl && el.contains(vendorEl) ? vendorEl : el;
-      injectBadge(target, matchedId);
+      injectBadge(target, matchedId, cleanHost(domain));
     }
 
     // Fallback: aria-label="From X" elements outside of any [data-dtld] container
@@ -491,8 +573,278 @@
       const matchedId = matchVendorString(m[1], shopList);
       if (!matchedId) continue;
       detectedMatches.add(matchedId);
-      injectBadge(el, matchedId);
+      injectBadge(el, matchedId, navHostForId(matchedId, shopList));
     }
+  };
+
+  // ===========================================================================
+  // GUIDED TEST — coachmark tour ("prova det", launched from the host app card)
+  // The card bumps a nonce in the app group and opens a Swedish Google search.
+  // Here we detect that nonce, coach the first EB badge, then (on the partner
+  // site we navigate to) coach the banner. State lives in browser.storage.local
+  // so it survives the Google → partner navigation.
+  // ===========================================================================
+
+  const getTour = async () => {
+    try {
+      const r = await api.storage.local.get([TOUR_KEY]);
+      return r[TOUR_KEY] || null;
+    } catch (e) {
+      return null;
+    }
+  };
+  const setTour = (tour) => {
+    try {
+      return api.storage.local.set({ [TOUR_KEY]: tour });
+    } catch (e) {
+      return Promise.resolve();
+    }
+  };
+  // Mark the run finished while RETAINING the nonce, so a normal Google search
+  // later (same nonce, no fresh tap) can't be mistaken for a new run and
+  // re-coach the user. A fresh run only starts when the host app bumps the nonce.
+  const endTour = (nonce) => {
+    try {
+      return api.storage.local.set({
+        [TOUR_KEY]: { nonce, step: "done", ts: Date.now() },
+      });
+    } catch (e) {
+      return Promise.resolve();
+    }
+  };
+
+  // A known EuroBonus-partner origin to fall back to when results show no badge.
+  const partnerHostFromShops = (shopList) => {
+    const prefer = [
+      "www.webhallen.com",
+      "webhallen.com",
+      "www.komplett.se",
+      "komplett.se",
+      "proshop.se",
+      "www.proshop.se",
+    ];
+    for (const h of prefer) if (shopList[h]) return cleanHost(h);
+    const first = Object.keys(shopList)[0];
+    return first ? cleanHost(first) : null;
+  };
+
+  // Anchored popover for the guided test. Own Shadow DOM overlay (like the
+  // banner) so host-page CSS can't reach it; position tracks a live getRect().
+  // Self-guards on COACH_ROOT_ID so the Google MutationObserver can't duplicate it.
+  const createCoachmark = ({
+    getRect,
+    title,
+    body,
+    ctaLabel,
+    onCta,
+    onClose,
+    showGlyph,
+  }) => {
+    if (document.getElementById(COACH_ROOT_ID)) return null;
+
+    const root = document.createElement("div");
+    root.id = COACH_ROOT_ID;
+    const shadow = root.attachShadow({ mode: "open" });
+
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = api.runtime.getURL("styles.css");
+    shadow.appendChild(link);
+
+    const card = document.createElement("div");
+    card.className = "coach-card";
+    const glyph = showGlyph
+      ? `<span class="coach-eb">${EB_GLYPH_SVG}</span>`
+      : "";
+    card.innerHTML = `
+      <span class="coach-arrow"></span>
+      <button class="coach-close" type="button" aria-label="Stäng">✕</button>
+      <p class="coach-title">${glyph}<span>${title}</span></p>
+      <p class="coach-body">${body}</p>
+      <div class="coach-actions">
+        <button class="btn btn-default btn-sm coach-cta" type="button">${ctaLabel}</button>
+      </div>`;
+    shadow.appendChild(card);
+
+    const arrow = card.querySelector(".coach-arrow");
+
+    const reposition = () => {
+      const rect = getRect();
+      if (!rect) return;
+      const m = 12;
+      const cr = card.getBoundingClientRect();
+      const cw = cr.width || 300;
+      const ch = cr.height || 120;
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+
+      // Prefer below the anchor; flip above only if it would overflow the bottom.
+      let placement = "bottom";
+      let top = rect.bottom + 10;
+      if (top + ch > vh - m && rect.top - 10 - ch > m) {
+        placement = "top";
+        top = rect.top - 10 - ch;
+      }
+      // Center on the anchor, clamped to the viewport; arrow tracks the anchor.
+      const cx = rect.left + rect.width / 2;
+      const left = Math.max(m, Math.min(cx - cw / 2, vw - cw - m));
+      card.dataset.placement = placement;
+      card.style.left = `${Math.round(left)}px`;
+      card.style.top = `${Math.round(top)}px`;
+      arrow.style.left = `${Math.round(Math.max(14, Math.min(cx - left, cw - 14)) - 6)}px`;
+    };
+
+    let raf = 0;
+    const schedule = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(reposition);
+    };
+
+    document.documentElement.appendChild(root);
+
+    let ro;
+    const remove = () => {
+      window.removeEventListener("scroll", schedule, true);
+      window.removeEventListener("resize", schedule);
+      if (ro) ro.disconnect();
+      cancelAnimationFrame(raf);
+      root.remove();
+    };
+
+    card.querySelector(".coach-cta").addEventListener("click", async () => {
+      try {
+        if (onCta) await onCta();
+      } finally {
+        remove();
+      }
+    });
+    card.querySelector(".coach-close").addEventListener("click", () => {
+      remove();
+      if (onClose) onClose();
+    });
+
+    window.addEventListener("scroll", schedule, true);
+    window.addEventListener("resize", schedule);
+    if (typeof ResizeObserver === "function") {
+      ro = new ResizeObserver(schedule);
+      ro.observe(card);
+    }
+
+    // Measure once laid out (rect is valid even at opacity:0), then fade in.
+    requestAnimationFrame(() => {
+      reposition();
+      requestAnimationFrame(() => card.classList.add("is-visible"));
+    });
+
+    return { remove };
+  };
+
+  // Advance search → banner, then visit the partner in the same tab so the
+  // banner (and the next coachmark) appear on the page we land on.
+  const visitPartner = async (nonce, host) => {
+    if (!host) return;
+    await setTour({ nonce, step: "banner", ts: Date.now() });
+    window.location.href = "https://" + cleanHost(host);
+  };
+
+  const showSearchCoachmark = (shopList, nonce) => {
+    const badge = document.querySelector("." + BADGE_CLASS);
+    if (!badge) return;
+    const host = badge.dataset.ebHost || partnerHostFromShops(shopList);
+    createCoachmark({
+      getRect: () => badge.getBoundingClientRect(),
+      title: STRINGS.coachSearchTitle,
+      body: STRINGS.coachSearchBody,
+      ctaLabel: STRINGS.coachSearchCta,
+      showGlyph: true,
+      onCta: () => visitPartner(nonce, host),
+      onClose: () => endTour(nonce),
+    });
+    badge.scrollIntoView({ block: "center", behavior: "smooth" });
+  };
+
+  const showEmptyCoachmark = (shopList, nonce) => {
+    const host = partnerHostFromShops(shopList);
+    createCoachmark({
+      getRect: () => ({
+        left: window.innerWidth / 2,
+        top: 72,
+        right: window.innerWidth / 2,
+        bottom: 72,
+        width: 0,
+        height: 0,
+      }),
+      title: STRINGS.coachEmptyTitle,
+      body: STRINGS.coachEmptyBody,
+      ctaLabel: STRINGS.coachSearchCta,
+      showGlyph: true,
+      onCta: () => visitPartner(nonce, host),
+      onClose: () => endTour(nonce),
+    });
+  };
+
+  const showBannerCoachmark = (nonce) => {
+    if (document.getElementById(COACH_ROOT_ID)) return;
+    const bannerRoot = document.getElementById(ROOT_ID);
+    const cta =
+      bannerRoot &&
+      bannerRoot.shadowRoot &&
+      bannerRoot.shadowRoot.querySelector(".cta-btn");
+    if (!cta) return;
+    createCoachmark({
+      getRect: () => cta.getBoundingClientRect(),
+      title: STRINGS.coachBannerTitle,
+      body: STRINGS.coachBannerBody,
+      ctaLabel: STRINGS.coachBannerCta,
+      onCta: async () => {
+        // Cross-tour guard: only end the run this coachmark belongs to.
+        const cur = await getTour();
+        if (!cur || cur.nonce === nonce) await endTour(nonce);
+      },
+      onClose: () => endTour(nonce),
+    });
+  };
+
+  // On a Google results page, decide whether a guided test is active and, if so,
+  // coach the first badge — polling briefly since Google hydrates cards async,
+  // with a generic fallback when no partner shows up.
+  const maybeStartSearchTour = async (shopList) => {
+    // The launch nonce travels in the URL fragment (#ebf=…) the host app sets.
+    // No marker → not a guided-test launch → nothing to do.
+    const nonce = launchNonce;
+    if (nonce == null) return;
+    const tour = await getTour();
+    const now = Date.now();
+    let activeNonce = null;
+
+    if (nonce != null && (!tour || nonce !== tour.nonce)) {
+      activeNonce = nonce; // brand-new run requested from the host app
+      await setTour({ nonce, step: "search", ts: now });
+    } else if (
+      tour &&
+      tour.step === "search" &&
+      tour.nonce === nonce &&
+      now - tour.ts < TOUR_TTL_MS
+    ) {
+      activeNonce = tour.nonce; // same run, page reloaded — keep coaching
+    }
+    if (activeNonce == null) return;
+
+    let elapsed = 0;
+    const STEP_MS = 400;
+    const LIMIT_MS = 4000;
+    const tick = () => {
+      if (document.getElementById(COACH_ROOT_ID)) return;
+      if (document.querySelector("." + BADGE_CLASS)) {
+        showSearchCoachmark(shopList, activeNonce);
+      } else if (elapsed >= LIMIT_MS) {
+        showEmptyCoachmark(shopList, activeNonce);
+      } else {
+        elapsed += STEP_MS;
+        setTimeout(tick, STEP_MS);
+      }
+    };
+    tick();
   };
 
   const shops = await fetchShopMap();
@@ -506,20 +858,42 @@
       timer = setTimeout(() => decorateGooglePartners(shops), 200);
     });
     observer.observe(document.body, { childList: true, subtree: true });
+    // Only a results page (not the consent interstitial / home) starts the tour.
+    if (location.pathname.startsWith("/search"))
+      await maybeStartSearchTour(shops);
     return;
   }
 
   const matchedId = getShopMatchId(window.location.href, shops);
+
+  // Guided test: did the search coachmark's "Besök sajten" send us to this
+  // partner? If so, force the banner — bypassing the affiliate-return redirect
+  // and the session "closed" suppression — and coach the user on it.
+  let bannerTour = false;
+  let bannerTourNonce = null;
   if (matchedId) {
+    const tour = await getTour();
+    if (tour && tour.step === "banner" && Date.now() - tour.ts < TOUR_TTL_MS) {
+      bannerTour = true;
+      bannerTourNonce = tour.nonce;
+    }
+  }
+
+  if (matchedId && !bannerTour) {
     const redirected = await handlePendingReturn(matchedId);
     if (redirected) return;
   }
 
-  try {
-    if (sessionStorage.getItem(SESSION_KEY) === "true") return;
-  } catch (e) {}
+  if (!bannerTour) {
+    try {
+      if (sessionStorage.getItem(SESSION_KEY) === "true") return;
+    } catch (e) {}
+  }
 
-  if (matchedId) await showTopBanner(matchedId);
+  if (matchedId) {
+    await showTopBanner(matchedId);
+    if (bannerTour) showBannerCoachmark(bannerTourNonce);
+  }
 })();
 
 async function reportHostPermission(api) {
@@ -544,7 +918,11 @@ async function hasAllSitesAccess(api) {
   // shape, so probe several rather than trusting a single pattern (the cause of
   // the host app sometimes never confirming the permission step).
   if (!api.permissions || !api.permissions.contains) return false;
-  const candidates = [["*://*/*"], ["https://*/*", "http://*/*"], ["<all_urls>"]];
+  const candidates = [
+    ["*://*/*"],
+    ["https://*/*", "http://*/*"],
+    ["<all_urls>"],
+  ];
   for (const origins of candidates) {
     try {
       if (await api.permissions.contains({ origins })) return true;
