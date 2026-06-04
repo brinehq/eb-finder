@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #
 # Sync the marketing version (CFBundleShortVersionString) across:
-#   - extension/manifest.json            "version" field
-#   - EB Finder/Config/Version.xcconfig  MARKETING_VERSION
+#   - EB Finder/Extension/Resources/manifest.json   "version" field
+#   - EB Finder/Config/Version.xcconfig             MARKETING_VERSION
 #
 # Source of truth: the most recent git tag matching `vX.Y.Z`.
 #
@@ -19,7 +19,7 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$REPO_ROOT"
 
-MANIFEST="extension/manifest.json"
+MANIFEST="EB Finder/Extension/Resources/manifest.json"
 VERSION_XCCONFIG="EB Finder/Config/Version.xcconfig"
 
 if [[ $# -ge 1 ]]; then
