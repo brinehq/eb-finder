@@ -1,136 +1,18 @@
 import SwiftUI
 
-// Design tokens for the EB Finder design system.
+// Design-token namespace for the EB Finder app.
 //
-// Mirrors extension/styles.css and the upstream design-system spec
-// (eb-finder-design-system/project/colors_and_type.css). Naming follows
-// shadcn (https://ui.shadcn.com/docs/theming) — semantic
-// foreground/background pairs, no brand prefix. Colors live in the
-// asset catalog (theme-* colorsets) so designer tweaks in Xcode are
-// picked up automatically, and dark variants are layered in via the
-// `Dark Appearance` per colorset.
+// COLORS live entirely in the asset catalog — PascalCase colorsets named after
+// the CSS tokens, referenced directly as `Color("Primary")`,
+// `Color("MutedForeground")`, `Color("Brand")`, etc. They adapt to light/dark
+// via each colorset's appearances, so the catalog is the single source of truth
+// and there is no Swift color layer to keep in sync. (We reference by string
+// because names like `Primary`/`Secondary` collide with SwiftUI's built-in
+// `Color.primary` / `.secondary`, so asset-symbol generation stays off.)
 //
-// Usage:
-//
-//     @Environment(\.theme) private var theme
-//     Text("EB Finder")
-//         .foregroundStyle(theme.primary)
-//         .padding()
-//         .background(theme.card, in: .rect(cornerRadius: Theme.Radius.lg))
-//
-// Swap themes at runtime by injecting a different instance:
-//
-//     ContentView().environment(\.theme, .default)
+// `Theme` below only namespaces the non-color tokens: radius + typography.
 
-// MARK: - Theme
-
-struct Theme {
-    // Surfaces
-    var background:             Color
-    var foreground:             Color
-    var card:                   Color
-    var cardForeground:         Color
-    var popover:                Color
-    var popoverForeground:      Color
-
-    // Primary — brand indigo workhorse
-    var primary:                Color
-    var primaryForeground:      Color
-
-    // Secondary — the sand CTA (lower-emphasis filled action).
-    // The one warm fill; indigo-ink text on sand, darkens on hover.
-    var secondary:              Color
-    var secondaryForeground:    Color
-    var secondaryHover:         Color
-
-    // Muted — subtle surfaces + lower-emphasis text. The passive SE
-    // locale badge is a muted chip (muted + mutedForeground + a border
-    // hairline) so metadata never reads as an EB affordance.
-    var muted:                  Color
-    var mutedForeground:        Color
-
-    // Accent — interactive hover / selected surfaces (list-row hover).
-    // Same value as `muted` in light mode (design-system intent: quiet
-    // hover); diverges in dark mode so hover is visible.
-    var accent:                 Color
-    var accentForeground:       Color
-
-    // Success — affirmative "this site IS a EuroBonus partner" state
-    var success:                Color
-    var successForeground:      Color
-
-    // Destructive — NOT used in the shipped product (it has no
-    // error/red state; "no match" is neutral gray). Provided for
-    // shadcn completeness; reach for `muted` before introducing red.
-    var destructive:            Color
-    var destructiveForeground:  Color
-
-    // Lines & focus
-    var border:                 Color
-    var input:                  Color
-    var ring:                   Color
-
-    /// The shipping EB Finder theme. Every color flows through the asset
-    /// catalog (theme-* colorsets) so designer tweaks in Xcode are picked
-    /// up automatically. Dark variants resolve via colorset appearances.
-    static let `default` = Theme(
-        background:            .themeBackground,
-        foreground:            .themeForeground,
-        card:                  .themeCard,
-        cardForeground:        .themeCardForeground,
-        popover:               .themePopover,
-        popoverForeground:     .themePopoverForeground,
-        primary:               .themePrimary,
-        primaryForeground:     .themePrimaryForeground,
-        secondary:             .themeSecondary,
-        secondaryForeground:   .themeSecondaryForeground,
-        secondaryHover:        .themeSecondaryHover,
-        muted:                 .themeMuted,
-        mutedForeground:       .themeMutedForeground,
-        accent:                .themeAccent,
-        accentForeground:      .themeAccentForeground,
-        success:               .themeSuccess,
-        successForeground:     .themeSuccessForeground,
-        destructive:           .themeDestructive,
-        destructiveForeground: .themeDestructiveForeground,
-        border:                .themeBorder,
-        input:                 .themeInput,
-        ring:                  .themeRing
-    )
-}
-
-// MARK: - Onboarding palette
-
-extension Theme {
-    /// Brand-derived colors for the onboarding "Liquid Glass" atmosphere. Every
-    /// value lives in the asset catalog (theme-onboarding-* colorsets) with
-    /// light + dark appearances, so the welcome/step screens never hardcode hex.
-    /// Semantic roles (ink → `foreground`, subtitle → `mutedForeground`, the
-    /// sand CTA → `secondary`, dots → `primary`/`secondary`) reuse the shadcn
-    /// tokens above; only the atmosphere wash, the ambient blobs and the step
-    /// glyph are onboarding-specific and defined here.
-    struct Onboarding {
-        let atmosphereTop:    Color
-        let atmosphereMid:    Color
-        let atmosphereBottom: Color
-        let blob1:            Color
-        let blob2:            Color
-        let blob3:            Color
-        let glyph:            Color
-    }
-
-    var onboarding: Onboarding {
-        Onboarding(
-            atmosphereTop:    .themeOnboardingAtmosphereTop,
-            atmosphereMid:    .themeOnboardingAtmosphereMid,
-            atmosphereBottom: .themeOnboardingAtmosphereBottom,
-            blob1:            .themeOnboardingBlob1,
-            blob2:            .themeOnboardingBlob2,
-            blob3:            .themeOnboardingBlob3,
-            glyph:            .themeOnboardingGlyph
-        )
-    }
-}
+enum Theme {}
 
 // MARK: - Radius
 
@@ -150,51 +32,31 @@ extension Theme {
     }
 }
 
-// MARK: - Brand font
+// MARK: - Typography
 
 extension Theme {
-    /// The ScandinavianNew brand face (SAS). Resolved by family name, so it works
-    /// once the .ttf/.otf are added to the app target and listed in Info.plist's
-    /// `UIAppFonts`; until then `Font.custom` falls back to San Francisco, so
-    /// there's no regression. Used for the onboarding's brand text — the settings
-    /// list intentionally stays on the native system face.
-    static func brandFont(_ size: CGFloat, _ weight: Font.Weight = .regular) -> Font {
-        Font.custom("ScandinavianNew", size: size).weight(weight)
-    }
-}
-
-// MARK: - Shadows
-
-extension View {
-    /// Soft drop shadow used on the injected partner banner.
-    /// Matches `--shadow-banner` in styles.css.
-    func bannerShadow() -> some View {
-        shadow(color: .black.opacity(0.15), radius: 4, x: 0, y: 2)
-    }
-
-    /// Tight drop shadow used on the injected "EB" chip.
-    /// Matches `--shadow-chip` in styles.css.
-    func chipShadow() -> some View {
-        shadow(color: .black.opacity(0.20), radius: 1, x: 0, y: 1)
-    }
-}
-
-// MARK: - Font weight
-
-extension Font.Weight {
-    /// 900 — reserved for the points figure (the design's loudest element).
-    static let points: Font.Weight = .black
-}
-
-// MARK: - Environment value
-
-private struct ThemeKey: EnvironmentKey {
-    static let defaultValue: Theme = .default
-}
-
-extension EnvironmentValues {
-    var theme: Theme {
-        get { self[ThemeKey.self] }
-        set { self[ThemeKey.self] = newValue }
+    /// The shadcn typography ramp (https://ui.shadcn.com/docs/components/base/typography)
+    /// on the system (SF) face. Heading levels use Apple's title vocabulary —
+    /// shadcn `h1…h4` → `largeTitle`/`title`/`title2`/`title3`; `lead`/`large`/
+    /// `small` keep shadcn's names. `Font` can't carry letter-spacing or
+    /// line-height, so apply `.tracking()`/`.lineSpacing()` at the call site when
+    /// a heading needs to be pixel-faithful.
+    enum Typography {
+        /// h1 — text-4xl, extra-bold, tracking-tight.
+        static let largeTitle = Font.system(size: 36, weight: .heavy)
+        /// h2 — text-3xl, semibold, tracking-tight.
+        static let title = Font.system(size: 30, weight: .semibold)
+        /// h3 — text-2xl, semibold, tracking-tight.
+        static let title2 = Font.system(size: 24, weight: .semibold)
+        /// h4 — text-xl, semibold, tracking-tight.
+        static let title3 = Font.system(size: 20, weight: .semibold)
+        /// p — base body copy.
+        static let body = Font.system(size: 16, weight: .regular)
+        /// lead — larger intro copy (pair with `MutedForeground`).
+        static let lead = Font.system(size: 20, weight: .regular)
+        /// large — emphasized inline text.
+        static let large = Font.system(size: 18, weight: .semibold)
+        /// small — fine print / labels.
+        static let small = Font.system(size: 14, weight: .medium)
     }
 }

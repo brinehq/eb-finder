@@ -11,10 +11,16 @@ struct SettingsView: View {
     let state: ExtensionState
     @Environment(\.openURL) private var openURL
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = true
+    @AppStorage("guidedTestNonce") private var guidedTestNonce = 0
 
     var body: some View {
         NavigationStack {
             List {
+                // Guided "try it out" test — runs the badge + banner tour in Safari.
+                Section {
+                    GuidedTestCard(disabled: extensionNeedsAttention, action: startGuidedTest)
+                }
+
                 Section {
                     Button {
                         Task { await state.openSafariExtensionPreferences() }
@@ -66,6 +72,25 @@ struct SettingsView: View {
             .navigationBarTitleDisplayMode(.inline)
         }
         .tint(.blue)
+    }
+
+    /// Kick off the guided test: bump the shared nonce the content script polls
+    /// for, then open a Swedish Google search in Safari (`gl=se` searches as if
+    /// from Sweden, `hl=sv` for language; the partner-name terms bias the
+    /// shopping results toward EuroBonus partners so a badge reliably appears).
+    private func startGuidedTest() {
+        // Carry a fresh, monotonic nonce in the URL fragment (#ebf=…). The content
+        // script reads it synchronously on the results page to start the tour; a
+        // new value each run is what lets the test be re-run.
+        guidedTestNonce += 1
+        var components = URLComponents(string: "https://www.google.se/search")!
+        components.queryItems = [
+            URLQueryItem(name: "q", value: "apple studio display xdr webhallen komplett proshop"),
+            URLQueryItem(name: "hl", value: "sv"),
+            URLQueryItem(name: "gl", value: "se"),
+        ]
+        components.fragment = "ebf=\(guidedTestNonce)"
+        if let url = components.url { openURL(url) }
     }
 
     /// The extension is installed but not fully usable: switched off, errored,
@@ -177,8 +202,7 @@ private struct LicenseView: View {
 
 // MARK: - Building blocks
 
-private struct SettingsRow: View {
-    var symbol: String? = nil
+private struct SettingsRow: View {    var symbol: String? = nil
     let title: LocalizedStringKey
     var detail: Text? = nil
     var warning: Bool = false
@@ -203,7 +227,7 @@ private struct SettingsRow: View {
             if warning {
                 Image(systemName: "exclamationmark.triangle.fill")
                     .font(.callout)
-                    .foregroundStyle(.orange)
+                    .foregroundStyle(Color("Warning"))
                     .accessibilityLabel(Text("settings.extension.warning"))
             }
             trailingIcon
@@ -235,5 +259,70 @@ private struct BrineCredit: View {
             .font(.footnote)
             .frame(maxWidth: .infinity, alignment: .center)
             .padding(.top, 10)
+    }
+}
+
+// MARK: - Guided test card
+
+/// The "try it out" card at the top of settings — a 2-step guided test the user
+/// runs in Safari. Step 1 (the button) opens a Swedish Google search; the
+/// extension then coaches the EB badge and, on the partner site, the banner.
+/// Disabled until the extension is on with all-sites access, otherwise the
+/// content script never runs and nothing would happen.
+private struct GuidedTestCard: View {    let disabled: Bool
+    let action: () -> Void
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            HStack(spacing: 9) {
+                Image(systemName: "sparkles")
+                    .font(.system(size: 17, weight: .semibold))
+                    .foregroundStyle(Color("Primary"))
+                Text("settings.guidedTest.title")
+                    .font(.headline)
+            }
+
+            VStack(alignment: .leading, spacing: 9) {
+                GuidedTestStepRow(index: 1, title: "settings.guidedTest.step1")
+                GuidedTestStepRow(index: 2, title: "settings.guidedTest.step2")
+            }
+
+            Button(action: action) {
+                HStack(spacing: 6) {
+                    Image(systemName: "magnifyingglass")
+                    Text("settings.guidedTest.button")
+                }
+                .font(.system(size: 15, weight: .semibold))
+                .frame(maxWidth: .infinity, minHeight: 44)
+                .foregroundStyle(Color("PrimaryForeground"))
+                .background(Color("Primary"), in: .capsule)
+                .opacity(disabled ? 0.4 : 1)
+            }
+            .buttonStyle(.plain)
+            .disabled(disabled)
+
+            Text(disabled ? "settings.guidedTest.disabledHint" : "settings.guidedTest.caption")
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+        }
+        .padding(.vertical, 4)
+    }
+}
+
+/// A single numbered step in the guided-test card (indigo disc + label).
+private struct GuidedTestStepRow: View {    let index: Int
+    let title: LocalizedStringKey
+
+    var body: some View {
+        HStack(spacing: 10) {
+            Text(verbatim: "\(index)")
+                .font(.system(size: 13, weight: .bold))
+                .foregroundStyle(Color("PrimaryForeground"))
+                .frame(width: 22, height: 22)
+                .background(Color("Primary"), in: .circle)
+            Text(title)
+                .font(.subheadline)
+                .foregroundStyle(.primary)
+        }
     }
 }

@@ -1,0 +1,10 @@
+{
+  "extension_name": {
+    "message": "EB Finder",
+    "description": "The extension's display name."
+  },
+  "extension_description": {
+    "message": "See sites you visit connected to EuroBonus.",
+    "description": "Short description shown in the browser's extension manager."
+  }
+}

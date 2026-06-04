@@ -1,50 +1,43 @@
 {
   "manifest_version": 3,
-  "name": "EB Finder",
-  "version": "0.2.0",
-  "description": "Spots SAS EuroBonus partner shops while you browse and reminds you to log in via SAS to earn points.",
+  "version": "0.5.0",
+  "default_locale": "en",
+
+  "name": "__MSG_extension_name__",
+  "description": "__MSG_extension_description__",
   "author": "Brine AB",
   "homepage_url": "https://www.brine.co",
-  "permissions": [
-    "storage",
-    "activeTab"
-  ],
-  "host_permissions": [
-    "https://onlineshopping.loyaltykey.com/*"
-  ],
+
+  "icons": {
+    "48": "images/icon-48.png",
+    "96": "images/icon-96.png",
+    "512": "images/icon-512.png",
+    "1024": "images/icon-1024.png"
+  },
+
+  "host_permissions": ["https://onlineshopping.loyaltykey.com/*"],
+
+  "permissions": ["storage", "activeTab"],
+
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
-      "16": "icons/icon-16.png",
-      "32": "icons/icon-32.png",
-      "48": "icons/icon-48.png",
-      "128": "icons/icon-128.png"
+      "16": "images/icon-16.png",
+      "32": "images/icon-32.png"
     }
   },
+
   "content_scripts": [
     {
-      "matches": [
-        "<all_urls>"
-      ],
-      "js": [
-        "content.js"
-      ],
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
       "run_at": "document_end"
     }
   ],
   "web_accessible_resources": [
     {
-      "resources": [
-        "styles.css"
-      ],
-      "matches": [
-        "<all_urls>"
-      ]
+      "resources": ["styles.css"],
+      "matches": ["<all_urls>"]
     }
-  ],
-  "icons": {
-    "16": "icons/icon-16.png",
-    "48": "icons/icon-48.png",
-    "128": "icons/icon-128.png"
-  }
+  ]
 }
