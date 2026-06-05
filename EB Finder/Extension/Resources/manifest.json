@@ -36,7 +36,7 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["styles.css"],
+      "resources": ["tokens.css", "content.css"],
       "matches": ["<all_urls>"]
     }
   ]

@@ -1,0 +1,355 @@
+/* =============================================================================
+   PAGE-INJECTED UI — top banner + guided-test coachmark, rendered inside a
+   Shadow DOM on host pages. Loaded after tokens.css. Deliberately lean: only
+   the CSS that content.js injects ships to every visited site.
+
+   The Google result badge is NOT styled here — it lives in the host DOM (no
+   shadow root), so content.js styles it inline with !important to survive the
+   page's own CSS.
+   ============================================================================= */
+
+/* Clean slate for the shadow host so host-page CSS can't bleed in. Custom
+   properties (the tokens) are unaffected by `all`, so they still resolve. */
+:host {
+  all: initial;
+}
+
+/* --- Buttons — Base UI button.tsx (rounded-4xl, text-sm font-medium, a
+   transparent border for size parity, and a 1px active nudge). The coachmark
+   CTA renders as .btn.btn-default.btn-sm; the banner CTA/close mirror it. */
+.btn {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 6px; /* gap-1.5 */
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  border-radius: var(--radius-full);
+  font-family: var(--font-sans);
+  font-size: var(--fs-cta); /* text-sm */
+  font-weight: var(--fw-bold); /* bold — SAS button labels */
+  white-space: nowrap;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  transition: all 150ms ease;
+}
+.btn:active {
+  transform: translateY(1px); /* active:translate-y-px */
+}
+.btn-default {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+.btn-default:hover {
+  background: color-mix(in oklch, var(--primary) 80%, transparent); /* hover:bg-primary/80 */
+}
+.btn-sm {
+  height: 32px;
+  padding: 0 12px; /* h-8 px-3 */
+}
+
+/* --- Top banner — shadcn Alert on the brand surface: background = --primary
+   (SAS blue), content = --primary-foreground (white). [icon | title +
+   description] grid, pinned full-width. */
+.banner-wrapper,
+.fixed-banner-container {
+  font-family: var(--font-native);
+  box-sizing: border-box;
+}
+
+.fixed-banner-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  box-shadow: var(--shadow-banner);
+  padding: 12px 24px; /* py-3 */
+  z-index: 2147483647;
+  container-type: inline-size;
+  opacity: 0;
+  transition: opacity 320ms ease;
+}
+.fixed-banner-container.is-visible {
+  opacity: 1;
+}
+.banner-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Alert anatomy: [icon] [title + description] */
+.banner-alert {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* gap-x-3 */
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.alert-icon {
+  display: flex;
+  flex-shrink: 0;
+  color: var(--primary-foreground);
+}
+.alert-icon svg {
+  display: block;
+}
+.alert-body {
+  min-width: 0;
+}
+.alert-title {
+  font-size: var(--fs-banner);
+  font-weight: var(--fw-medium); /* font-medium */
+  letter-spacing: -0.01em; /* tracking-tight */
+  line-height: var(--lh-snug);
+  color: var(--primary-foreground);
+}
+.alert-desc {
+  font-size: var(--fs-short); /* text-sm */
+  line-height: var(--lh-snug);
+  color: color-mix(in oklch, var(--primary-foreground) 80%, transparent);
+}
+.title-short {
+  display: none;
+}
+.points-highlight {
+  font-weight: var(--fw-bold);
+  color: var(--primary-foreground);
+}
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-shrink: 0;
+}
+
+/* Banner CTA = outline variant on the primary surface (cf. sas.se "Logga in"):
+   transparent fill, white (primary-foreground) border + text. */
+.cta-btn {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  height: 36px; /* h-9 */
+  padding: 0 16px; /* px-4 */
+  border: 2px solid var(--primary-foreground);
+  background-clip: padding-box;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--primary-foreground);
+  text-decoration: none;
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-cta);
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  transition: all 150ms ease;
+}
+.cta-btn:hover {
+  background: color-mix(in oklch, var(--primary-foreground) 12%, transparent);
+}
+.cta-btn:active {
+  transform: translateY(1px);
+}
+.cta-short {
+  display: none;
+}
+
+/* Banner close = ghost icon button (icon-sm). */
+.close-btn {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px; /* size-8 */
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--primary-foreground);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+.close-btn:hover {
+  background: color-mix(in oklch, var(--primary-foreground) 15%, transparent);
+  color: var(--primary-foreground);
+}
+.close-btn:active {
+  transform: translateY(1px);
+}
+
+/* Narrow host viewports: drop the description, swap to the short title + CTA. */
+@container (max-width: 720px) {
+  .alert-desc,
+  .title-full,
+  .cta-full {
+    display: none;
+  }
+  .title-short,
+  .cta-short {
+    display: inline;
+  }
+  .cta-btn {
+    padding: 7px 14px;
+    font-size: var(--fs-badge);
+  }
+}
+@container (max-width: 380px) {
+  .fixed-banner-container {
+    padding: var(--space-2) 12px;
+  }
+  .banner-wrapper {
+    gap: var(--space-3);
+  }
+  .cta-btn {
+    padding: var(--space-2) 12px;
+    font-size: 11px;
+  }
+}
+
+/* --- Guided-test coachmark — shadcn-style popover --------------------------
+   Mirrors shadcn's Base UI PopoverContent: w-72 rounded-2xl bg-popover p-4
+   text-sm text-popover-foreground shadow-2xl + a ring-1 ring-foreground/5
+   hairline (no solid border), entering with fade-in-0 + zoom-in-95 + a small
+   slide from the anchored edge (origin at the side touching the anchor). */
+.coach-card {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2147483647;
+  box-sizing: border-box;
+  width: 18rem; /* w-72 */
+  max-width: calc(100vw - 24px);
+  font-family: var(--font-native);
+  font-size: 14px; /* text-sm */
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border-radius: var(--radius-2xl);
+  box-shadow:
+    0 0 0 1px color-mix(in oklch, var(--primary-foreground) 20%, transparent),
+    var(--shadow-popover);
+  padding: 16px;
+  opacity: 0;
+  transform: scale(0.95);
+  transform-origin: center;
+  transition:
+    opacity 100ms ease,
+    transform 100ms ease;
+}
+/* Hidden state grows from the edge that touches the anchor + a 8px slide in. */
+.coach-card[data-placement="bottom"] {
+  transform-origin: top center;
+  transform: translateY(-8px) scale(0.95);
+}
+.coach-card[data-placement="top"] {
+  transform-origin: bottom center;
+  transform: translateY(8px) scale(0.95);
+}
+.coach-card.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.coach-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 22px 4px 0;
+  font-size: 16px; /* text-base */
+  font-weight: var(--fw-medium);
+  line-height: 1.4;
+  color: var(--primary-foreground);
+}
+.coach-eb {
+  color: var(--primary-foreground);
+  display: inline-flex;
+  flex-shrink: 0;
+}
+.coach-eb svg {
+  display: block;
+}
+.coach-body {
+  margin: 0;
+  font-size: 14px; /* text-sm */
+  line-height: 1.45;
+  color: color-mix(in oklch, var(--primary-foreground) 80%, transparent);
+}
+.coach-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px; /* gap-4 from the body */
+}
+/* Filled buttons sit on the primary surface, so they invert to a white fill +
+   primary (blue) text — keeping the primary color on the coach popover CTAs. */
+.coach-card .btn-default {
+  background: var(--primary-foreground);
+  color: var(--primary);
+}
+.coach-card .btn-default:hover {
+  background: color-mix(in oklch, var(--primary-foreground) 90%, transparent);
+}
+
+/* Coachmark close = ghost icon button (icon-xs). */
+.coach-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px; /* size-6 */
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--primary-foreground);
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+.coach-close:hover {
+  background: color-mix(in oklch, var(--primary-foreground) 15%, transparent);
+  color: var(--primary-foreground);
+}
+.coach-close:active {
+  transform: translateY(1px);
+}
+
+/* arrow — rotated square straddling the card edge; JS sets the edge + offset.
+   Matches the card: primary fill + the same subtle white hairline. */
+.coach-arrow {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: var(--primary);
+  border: 1px solid color-mix(in oklch, var(--primary-foreground) 20%, transparent);
+  transform: rotate(45deg);
+}
+.coach-card[data-placement="bottom"] .coach-arrow {
+  top: -7px;
+  border-right: 0;
+  border-bottom: 0;
+}
+.coach-card[data-placement="top"] .coach-arrow {
+  bottom: -7px;
+  border-left: 0;
+  border-top: 0;
+}

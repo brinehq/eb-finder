@@ -4,25 +4,128 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>EB Finder — banner preview</title>
-    <link rel="stylesheet" href="styles.css" />
+    <!-- Dev-only sandbox (excluded from the .appex). Loads the SAME production
+         sheets the popup + injected UI use, so the banner/coachmark/buttons
+         below are faithful. The preview-only chrome is inlined with literal
+         values so it never ships and never bloats tokens.css. -->
+    <link rel="stylesheet" href="tokens.css" />
+    <link rel="stylesheet" href="content.css" />
+    <link rel="stylesheet" href="popup.css" />
+    <style>
+      body.eb-preview {
+        margin: 0;
+        padding: 0;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+          Arial, sans-serif;
+        background: #f3f4f6;
+        color: #1f2937;
+      }
+      .preview-section {
+        padding: 24px;
+        border-bottom: 1px solid #e5e7eb;
+      }
+      .preview-section h2 {
+        margin: 0 0 12px 0;
+        font-size: 13px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #6b7280;
+      }
+      .resize-box {
+        background: #ffffff;
+        border: 1px dashed #6b7280;
+        resize: horizontal;
+        overflow: auto;
+        max-width: 100%;
+        min-width: 320px;
+      }
+      .resize-box.wide {
+        width: 1100px;
+      }
+      .resize-box.narrow {
+        width: 400px;
+      }
+      .resize-box.tiny {
+        width: 320px;
+      }
+      .note {
+        color: #6b7280;
+        font-size: 12px;
+        margin-top: 8px;
+      }
+      /* Render the fixed banner inline so several sizes stack on one page. */
+      .static-fixed {
+        position: static !important;
+        opacity: 1 !important;
+      }
+      .preview-google-mock {
+        padding: 16px;
+        color: #1a1a1a;
+        background: #ffffff;
+        font-family: arial, -apple-system, sans-serif;
+      }
+      .preview-google-mock-url {
+        font-size: 14px;
+        color: #6b7280;
+      }
+      .preview-google-mock-title {
+        font-size: 16px;
+        line-height: 1.4;
+        margin-top: 4px;
+      }
+      .preview-google-mock-price {
+        margin-top: 6px;
+        font-weight: 700;
+      }
+      .preview-google-mock-vendor-row {
+        margin-top: 6px;
+        display: flex;
+        align-items: center;
+        gap: 0;
+      }
+      /* EB badge — static mock of what content.js injects (the filled brand
+         monogram SVG; styled inline in the host DOM, live). */
+      .preview-eb-chip {
+        display: inline-flex;
+        align-items: center;
+        vertical-align: middle;
+        color: #003df5;
+        margin-left: 6px;
+        padding: 2px;
+        line-height: 0;
+        cursor: pointer;
+      }
+      .preview-eb-chip:hover {
+        opacity: 0.85;
+      }
+    </style>
   </head>
   <body class="eb-preview">
     <div class="preview-section">
-      <h2>Wide (1100px) — 88px tall, full text + full CTA</h2>
+      <h2>Wide (1100px) — Alert: icon + full title + description + full CTA</h2>
       <div class="resize-box wide">
         <div class="fixed-banner-container static-fixed">
           <div class="banner-wrapper">
-            <div class="text-section">
-              <span class="text-full"
-                >Proshop är en EuroBonus-partner — tjäna
-                <span class="points-highlight">10 poäng</span> per 100 kr.</span
-              >
-              <span class="text-short">Proshop är en EB-partner</span>
+            <div class="banner-alert">
+              <span class="alert-icon"
+                ><svg width="17" height="17" fill="none" viewBox="0 0 24 24" aria-hidden="true" style="display: block"><path fill="currentColor" fill-rule="evenodd" d="M12.31 15.5v-7h2.663q.754 0 1.253.24.503.235.75.645.253.411.252.93 0 .428-.163.731-.164.3-.438.49a1.9 1.9 0 0 1-.615.27v.068q.37.02.71.228.344.205.56.582.218.375.218.909 0 .543-.262.977-.261.43-.788.68-.526.25-1.324.25zm1.26-1.06h1.355q.687 0 .989-.263a.87.87 0 0 0 .306-.683 1.05 1.05 0 0 0-.588-.957 1.44 1.44 0 0 0-.673-.147H13.57zm0-2.963h1.247q.326 0 .587-.12a.928.928 0 0 0 .564-.878.87.87 0 0 0-.285-.67q-.282-.263-.84-.263H13.57z" clip-rule="evenodd"></path><path fill="currentColor" d="M6.5 8.5v7h4.552v-1.063H7.76v-1.91h3.03v-1.064H7.76v-1.9h3.264V8.5z"></path><path fill="currentColor" fill-rule="evenodd" d="M4.2 4h15.6A2.2 2.2 0 0 1 22 6.2v11.6a2.2 2.2 0 0 1-2.2 2.2H4.2A2.2 2.2 0 0 1 2 17.8V6.2A2.2 2.2 0 0 1 4.2 4m0 1.5a.7.7 0 0 0-.7.7v11.6a.7.7 0 0 0 .7.7h15.6a.7.7 0 0 0 .7-.7V6.2a.7.7 0 0 0-.7-.7z" clip-rule="evenodd"></path></svg
+              ></span>
+              <div class="alert-body">
+                <div class="alert-title">
+                  <span class="title-full">Proshop är en EuroBonus-partner</span>
+                  <span class="title-short">Proshop är en EB-partner</span>
+                </div>
+                <div class="alert-desc">
+                  Tjäna <span class="points-highlight">10 poäng</span> per 100 kr
+                </div>
+              </div>
             </div>
             <div class="actions">
               <a href="#" class="cta-btn">
-                <span class="cta-full">LOGGA IN &amp; TJÄNA</span>
-                <span class="cta-short">TJÄNA</span>
+                <span class="cta-full">Logga in &amp; tjäna</span>
+                <span class="cta-short">Tjäna</span>
               </a>
               <button class="close-btn" aria-label="Close">✕</button>
             </div>
@@ -33,21 +136,28 @@
     </div>
 
     <div class="preview-section">
-      <h2>Narrow (400px) — 56px tall, short text + short CTA</h2>
+      <h2>Narrow (400px) — short title, description hidden, short CTA</h2>
       <div class="resize-box narrow">
         <div class="fixed-banner-container static-fixed">
           <div class="banner-wrapper">
-            <div class="text-section">
-              <span class="text-full"
-                >Proshop är en EuroBonus-partner — tjäna
-                <span class="points-highlight">10 poäng</span> per 100 kr.</span
-              >
-              <span class="text-short">Proshop är en EB-partner</span>
+            <div class="banner-alert">
+              <span class="alert-icon"
+                ><svg width="17" height="17" fill="none" viewBox="0 0 24 24" aria-hidden="true" style="display: block"><path fill="currentColor" fill-rule="evenodd" d="M12.31 15.5v-7h2.663q.754 0 1.253.24.503.235.75.645.253.411.252.93 0 .428-.163.731-.164.3-.438.49a1.9 1.9 0 0 1-.615.27v.068q.37.02.71.228.344.205.56.582.218.375.218.909 0 .543-.262.977-.261.43-.788.68-.526.25-1.324.25zm1.26-1.06h1.355q.687 0 .989-.263a.87.87 0 0 0 .306-.683 1.05 1.05 0 0 0-.588-.957 1.44 1.44 0 0 0-.673-.147H13.57zm0-2.963h1.247q.326 0 .587-.12a.928.928 0 0 0 .564-.878.87.87 0 0 0-.285-.67q-.282-.263-.84-.263H13.57z" clip-rule="evenodd"></path><path fill="currentColor" d="M6.5 8.5v7h4.552v-1.063H7.76v-1.91h3.03v-1.064H7.76v-1.9h3.264V8.5z"></path><path fill="currentColor" fill-rule="evenodd" d="M4.2 4h15.6A2.2 2.2 0 0 1 22 6.2v11.6a2.2 2.2 0 0 1-2.2 2.2H4.2A2.2 2.2 0 0 1 2 17.8V6.2A2.2 2.2 0 0 1 4.2 4m0 1.5a.7.7 0 0 0-.7.7v11.6a.7.7 0 0 0 .7.7h15.6a.7.7 0 0 0 .7-.7V6.2a.7.7 0 0 0-.7-.7z" clip-rule="evenodd"></path></svg
+              ></span>
+              <div class="alert-body">
+                <div class="alert-title">
+                  <span class="title-full">Proshop är en EuroBonus-partner</span>
+                  <span class="title-short">Proshop är en EB-partner</span>
+                </div>
+                <div class="alert-desc">
+                  Tjäna <span class="points-highlight">10 poäng</span> per 100 kr
+                </div>
+              </div>
             </div>
             <div class="actions">
               <a href="#" class="cta-btn">
-                <span class="cta-full">LOGGA IN &amp; TJÄNA</span>
-                <span class="cta-short">TJÄNA</span>
+                <span class="cta-full">Logga in &amp; tjäna</span>
+                <span class="cta-short">Tjäna</span>
               </a>
               <button class="close-btn" aria-label="Close">✕</button>
             </div>
@@ -57,21 +167,28 @@
     </div>
 
     <div class="preview-section">
-      <h2>Tiny (320px) — 48px tall, iPhone SE-ish width</h2>
+      <h2>Tiny (320px) — iPhone SE-ish width, tightest padding</h2>
       <div class="resize-box tiny">
         <div class="fixed-banner-container static-fixed">
           <div class="banner-wrapper">
-            <div class="text-section">
-              <span class="text-full"
-                >Proshop är en EuroBonus-partner — tjäna
-                <span class="points-highlight">10 poäng</span> per 100 kr.</span
-              >
-              <span class="text-short">Proshop är en EB-partner</span>
+            <div class="banner-alert">
+              <span class="alert-icon"
+                ><svg width="17" height="17" fill="none" viewBox="0 0 24 24" aria-hidden="true" style="display: block"><path fill="currentColor" fill-rule="evenodd" d="M12.31 15.5v-7h2.663q.754 0 1.253.24.503.235.75.645.253.411.252.93 0 .428-.163.731-.164.3-.438.49a1.9 1.9 0 0 1-.615.27v.068q.37.02.71.228.344.205.56.582.218.375.218.909 0 .543-.262.977-.261.43-.788.68-.526.25-1.324.25zm1.26-1.06h1.355q.687 0 .989-.263a.87.87 0 0 0 .306-.683 1.05 1.05 0 0 0-.588-.957 1.44 1.44 0 0 0-.673-.147H13.57zm0-2.963h1.247q.326 0 .587-.12a.928.928 0 0 0 .564-.878.87.87 0 0 0-.285-.67q-.282-.263-.84-.263H13.57z" clip-rule="evenodd"></path><path fill="currentColor" d="M6.5 8.5v7h4.552v-1.063H7.76v-1.91h3.03v-1.064H7.76v-1.9h3.264V8.5z"></path><path fill="currentColor" fill-rule="evenodd" d="M4.2 4h15.6A2.2 2.2 0 0 1 22 6.2v11.6a2.2 2.2 0 0 1-2.2 2.2H4.2A2.2 2.2 0 0 1 2 17.8V6.2A2.2 2.2 0 0 1 4.2 4m0 1.5a.7.7 0 0 0-.7.7v11.6a.7.7 0 0 0 .7.7h15.6a.7.7 0 0 0 .7-.7V6.2a.7.7 0 0 0-.7-.7z" clip-rule="evenodd"></path></svg
+              ></span>
+              <div class="alert-body">
+                <div class="alert-title">
+                  <span class="title-full">Proshop är en EuroBonus-partner</span>
+                  <span class="title-short">Proshop är en EB-partner</span>
+                </div>
+                <div class="alert-desc">
+                  Tjäna <span class="points-highlight">10 poäng</span> per 100 kr
+                </div>
+              </div>
             </div>
             <div class="actions">
               <a href="#" class="cta-btn">
-                <span class="cta-full">LOGGA IN &amp; TJÄNA</span>
-                <span class="cta-short">TJÄNA</span>
+                <span class="cta-full">Logga in &amp; tjäna</span>
+                <span class="cta-short">Tjäna</span>
               </a>
               <button class="close-btn" aria-label="Close">✕</button>
             </div>
@@ -90,19 +207,21 @@
         <div class="preview-google-mock-price">35&nbsp;872,00&nbsp;kr</div>
         <div class="preview-google-mock-vendor-row">
           <div aria-label="From Proshop.se">Proshop.se</div>
-          <span class="preview-eb-chip">EB</span>
+          <span class="preview-eb-chip"
+            ><svg width="17" height="17" fill="none" viewBox="0 0 24 24" aria-hidden="true" style="display: block"><path fill="currentColor" fill-rule="evenodd" d="M12.31 15.5v-7h2.663q.754 0 1.253.24.503.235.75.645.253.411.252.93 0 .428-.163.731-.164.3-.438.49a1.9 1.9 0 0 1-.615.27v.068q.37.02.71.228.344.205.56.582.218.375.218.909 0 .543-.262.977-.261.43-.788.68-.526.25-1.324.25zm1.26-1.06h1.355q.687 0 .989-.263a.87.87 0 0 0 .306-.683 1.05 1.05 0 0 0-.588-.957 1.44 1.44 0 0 0-.673-.147H13.57zm0-2.963h1.247q.326 0 .587-.12a.928.928 0 0 0 .564-.878.87.87 0 0 0-.285-.67q-.282-.263-.84-.263H13.57z" clip-rule="evenodd"></path><path fill="currentColor" d="M6.5 8.5v7h4.552v-1.063H7.76v-1.91h3.03v-1.064H7.76v-1.9h3.264V8.5z"></path><path fill="currentColor" fill-rule="evenodd" d="M4.2 4h15.6A2.2 2.2 0 0 1 22 6.2v11.6a2.2 2.2 0 0 1-2.2 2.2H4.2A2.2 2.2 0 0 1 2 17.8V6.2A2.2 2.2 0 0 1 4.2 4m0 1.5a.7.7 0 0 0-.7.7v11.6a.7.7 0 0 0 .7.7h15.6a.7.7 0 0 0 .7-.7V6.2a.7.7 0 0 0-.7-.7z" clip-rule="evenodd"></path></svg
+          ></span>
         </div>
         <p class="note">
-          The blue <strong>EB</strong> chip is injected next to Google's vendor display.
-          Clicking it opens the SAS click-through URL so the purchase earns EuroBonus
-          points.
+          The solid brand <strong>EB</strong> badge is injected next to Google's vendor
+          display. Clicking it opens the SAS click-through URL so the purchase earns
+          EuroBonus points.
         </p>
       </div>
     </div>
 
     <div class="preview-section">
       <h2>Guided-test coachmarks — anchored popovers</h2>
-      <div class="resize-box wide" style="padding: 40px; background: var(--muted)">
+      <div class="resize-box wide" style="padding: 40px; background: #f3f4f6">
         <!-- Search step: anchored to the first EB badge (arrow on top edge). -->
         <div
           class="coach-card is-visible"

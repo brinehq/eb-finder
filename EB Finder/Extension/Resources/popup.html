@@ -1,7 +1,9 @@
+<!doctype html>
 <html>
   <head>
-    <script src="popup.js"></script>
-    <link rel="stylesheet" href="styles.css" />
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="tokens.css" />
+    <link rel="stylesheet" href="popup.css" />
   </head>
   <body class="eb-popup">
     <div id="status" class="status">
@@ -15,7 +17,7 @@
       target="_blank"
       rel="noopener noreferrer"
       style="display: none"
-      >LOGGA IN & TJÄNA</a
+      >Logga in &amp; tjäna</a
     >
     <p class="credit">
       Skapat av
@@ -23,5 +25,7 @@
         >Brine AB</a
       >
     </p>
+    <!-- Script runs after the markup above so it can find #status / #cta / #match-list. -->
+    <script src="popup.js"></script>
   </body>
 </html>
