@@ -3,8 +3,14 @@
 # Xcode Cloud post-clone hook.
 #
 # Apple runs this once per workflow execution, immediately after the repo is
-# checked out and before Xcode resolves dependencies. The script path is
-# fixed by Apple's contract: ci_scripts/ci_post_clone.sh at the repo root.
+# checked out and before Xcode resolves dependencies. Xcode Cloud looks for the
+# ci_scripts folder NEXT TO the .xcodeproj — and this project is generated in the
+# "EB Finder/" subdirectory — so this script must live at
+# "EB Finder/ci_scripts/ci_post_clone.sh", NOT the repo root (a repo-root
+# ci_scripts is silently ignored when the project lives in a subdirectory, which
+# is why the first tag build failed at "Resolve package dependencies"). All paths
+# below resolve from $CI_PRIMARY_REPOSITORY_PATH (the repo root), so the script's
+# logic is unaffected by where ci_scripts sits.
 #
 # What we do here:
 #   1. Install a pinned XcodeGen and generate "EB Finder.xcodeproj" from

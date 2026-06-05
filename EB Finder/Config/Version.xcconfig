@@ -1,5 +1,5 @@
 // App version values. The version is calendar-based and stamped automatically
-// at build time by ci_scripts/ci_post_clone.sh — there is nothing to bump or tag:
+// at build time by EB Finder/ci_scripts/ci_post_clone.sh — there is nothing to bump or tag:
 //
 //   MARKETING_VERSION         CFBundleShortVersionString = the UTC build date,
 //                             e.g. 2026.6.4 (Xcode Cloud overwrites this).

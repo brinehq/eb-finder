@@ -45,13 +45,15 @@ There's nothing to manage — **versions are calendar-based and fully automatic*
 - The version is the **UTC build date** (`CFBundleShortVersionString`, e.g.
   `2026.6.4`) plus Xcode Cloud's **build number** (`CFBundleVersion`). Both are
   stamped at build time by
-  [`ci_scripts/ci_post_clone.sh`](ci_scripts/ci_post_clone.sh) — no tags, no
+  [`EB Finder/ci_scripts/ci_post_clone.sh`](EB%20Finder/ci_scripts/ci_post_clone.sh) — no tags, no
   version bumps, no release commits.
 - The extension's `manifest.json` version is **derived from `MARKETING_VERSION`**
   by the "Stamp manifest version" Xcode build phase (defined in `project.yml`),
   so the app and extension always share one version — on local builds too. The
   committed `manifest.json` carries only a `0.0.0` placeholder.
-- Xcode Cloud builds every push to `main`, so each merge produces a dated build.
+- Xcode Cloud builds when you **cut a release** — push a `v*` tag (e.g.
+  `gh release create v2026.6.5 --generate-notes`) and the build uploads to
+  TestFlight. Merging to `main` does not build.
 - "Releasing" is just promoting a build to TestFlight or the App Store from App
   Store Connect whenever you choose — the repo plays no part in shipping.
 
