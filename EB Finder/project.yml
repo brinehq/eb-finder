@@ -154,11 +154,20 @@ targets:
         CODE_SIGN_ENTITLEMENTS: Extension/Extension.entitlements
         CODE_SIGN_IDENTITY: Apple Development
         SKIP_INSTALL: YES
+        # The "Stamp manifest version" phase below writes manifest.json into the
+        # built .appex. On a *signed* Xcode Cloud archive the user-script sandbox
+        # blocks that write ("Operation not permitted" / EPERM) even with declared
+        # input/output files; unsigned local builds don't hit it. The script is
+        # trivial (seds one version string into one JSON file), so disable
+        # sandboxing for this target rather than fight the bundle-write rule.
+        ENABLE_USER_SCRIPT_SANDBOXING: NO
     # The manifest's "version" is derived from $MARKETING_VERSION (one source of
     # truth for both the app and the extension), so it's never hard-coded in the
     # committed JSON. manifest.json is excluded from the resource copy above; this
     # phase generates the bundled copy with the version substituted in. Declared
-    # input/output keep it happy under ENABLE_USER_SCRIPT_SANDBOXING.
+    # input/output keep incremental builds correct; sandboxing is disabled for this
+    # target (above) because the sandbox blocks writing into the .appex on signed
+    # Xcode Cloud archives.
     postBuildScripts:
       - name: Stamp manifest version
         basedOnDependencyAnalysis: false
