@@ -1,0 +1,172 @@
+/* =============================================================================
+   POPUP — the toolbar popover (popup.html). Loaded after tokens.css.
+   Surfaces: status alert, primary CTA, match list (shadcn-style Items), credit.
+   The popup page has no background of its own — `color-scheme` (tokens.css)
+   drives the canvas so light/dark follow the system appearance.
+   ============================================================================= */
+body.eb-popup {
+  margin: 0;
+  font-family: var(--font-sans);
+  width: 340px;
+  padding: var(--space-5);
+  color: var(--foreground);
+}
+
+/* Status = Card surface (bg-card + ring-foreground/10). popup.js sets
+   .status + .match / .no-match. */
+.status {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: 10px;
+  align-items: start;
+  padding: 12px 14px;
+  border-radius: var(--radius-2xl);
+  background: var(--card);
+  box-shadow: 0 0 0 1px color-mix(in oklch, var(--foreground) 10%, transparent);
+  color: var(--card-foreground);
+  margin-bottom: var(--space-4);
+  font-size: 13px;
+  line-height: var(--lh-snug);
+}
+.status .status-icon {
+  color: var(--muted-foreground);
+}
+.status .status-icon svg {
+  display: block;
+}
+.status strong {
+  display: block;
+  margin-bottom: 2px;
+  font-size: var(--fs-cta);
+  font-weight: var(--fw-bold);
+}
+.status.match {
+  background: var(--success);
+  color: var(--success-foreground);
+  box-shadow: 0 0 0 1px color-mix(in oklch, var(--success-foreground) 22%, transparent);
+}
+.status.match .status-icon {
+  color: var(--success-foreground);
+}
+.status.no-match {
+  background: var(--card);
+  color: var(--card-foreground);
+}
+
+/* Primary "earn" action = full-width button (default variant, h-10). */
+.cta {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 40px; /* h-10 */
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  border-radius: var(--radius-full);
+  background: var(--primary);
+  color: var(--primary-foreground);
+  text-decoration: none;
+  font-family: var(--font-sans);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-cta);
+  margin-bottom: var(--space-4);
+  cursor: pointer;
+  user-select: none;
+  transition: all 150ms ease;
+}
+.cta:hover {
+  background: color-mix(in oklch, var(--primary) 80%, transparent);
+}
+.cta:active {
+  transform: translateY(1px);
+}
+
+/* Match list — shadcn-style Items. */
+.match-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-4) 0;
+  display: none;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-height: 280px;
+  overflow-y: auto;
+}
+.match-list.visible {
+  display: flex;
+}
+.match-list li {
+  margin: 0;
+}
+.match-list li > a {
+  text-decoration: none;
+  display: block;
+}
+/* Match rows = Card surface (bg-card + ring-foreground/10). */
+.item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: var(--radius-2xl);
+  background: var(--card);
+  box-shadow: 0 0 0 1px color-mix(in oklch, var(--foreground) 10%, transparent);
+  text-decoration: none;
+}
+.item:hover {
+  background: var(--muted);
+}
+.item-media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius-md);
+  background: var(--primary);
+  color: var(--primary-foreground);
+  flex-shrink: 0;
+}
+.item-media svg {
+  display: block;
+}
+.item-content {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.item-title {
+  font-weight: var(--fw-bold);
+  font-size: 13px;
+  color: var(--card-foreground);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.item-desc {
+  font-size: 12px;
+  color: var(--muted-foreground);
+  line-height: var(--lh-tight);
+}
+.item-actions {
+  flex-shrink: 0;
+  color: var(--primary);
+  font-weight: 900;
+  font-size: 13px;
+}
+.item-actions.placeholder {
+  color: var(--muted-foreground);
+  font-weight: 400;
+}
+
+/* "Skapat av Brine AB" — centered at the foot of the popup. */
+.credit {
+  margin: 0;
+  text-align: center;
+  font-size: var(--fs-disc);
+  color: var(--muted-foreground);
+  line-height: var(--lh-snug);
+}
+.credit a {
+  color: var(--primary);
+}

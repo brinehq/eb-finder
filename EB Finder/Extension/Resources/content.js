@@ -42,11 +42,13 @@
   }
 
   const STRINGS = {
-    variable: "{name} är en EuroBonus-partner — tjäna {points} per 100 kr.",
-    fixed: "{name} är en EuroBonus-partner — tjäna {points} som ny kund.",
-    short: "{name} är en EB-partner",
-    cta: "LOGGA IN & TJÄNA",
-    ctaShort: "TJÄNA",
+    // Banner = shadcn Alert: a title line + a muted description line.
+    bannerTitle: "{name} är en EuroBonus-partner",
+    bannerTitleShort: "{name} är en EB-partner",
+    bannerDescVariable: "Tjäna {points} per 100 kr",
+    bannerDescFixed: "Tjäna {points} som ny kund",
+    cta: "Logga in & tjäna",
+    ctaShort: "Tjäna",
     // Guided-test coachmarks — the host app's "prova det" tour.
     coachSearchTitle: "Det här är EB-märket",
     coachSearchBody:
@@ -259,6 +261,19 @@
     return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
   };
 
+  // Shadow-DOM surfaces (banner, coachmark) pull tokens + the page-injected
+  // component sheet — NOT the popup stylesheet — so host pages only download the
+  // CSS the injected UI actually uses.
+  const SHADOW_STYLESHEETS = ["tokens.css", "content.css"];
+  const attachShadowStyles = (shadow) => {
+    for (const href of SHADOW_STYLESHEETS) {
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = api.runtime.getURL(href);
+      shadow.appendChild(link);
+    }
+  };
+
   const buildBanner = async (uuid) => {
     const data = await fetchShopDetail(uuid);
     if (!data) return null;
@@ -267,30 +282,33 @@
     root.id = ROOT_ID;
 
     const shadow = root.attachShadow({ mode: "open" });
-
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = api.runtime.getURL("styles.css");
-    shadow.appendChild(link);
+    attachShadowStyles(shadow);
 
     const container = document.createElement("div");
     container.className = "fixed-banner-container";
 
-    const template =
-      data.commission_type === "fixed" ? STRINGS.fixed : STRINGS.variable;
     const points = formatPoints(data.points || data.cashback || 0);
     const name = data.name || "";
     const pointsSpan = `<span class="points-highlight">${points} poäng</span>`;
-    const fullText = template
-      .replace("{points}", pointsSpan)
-      .replace("{name}", name);
-    const shortText = STRINGS.short.replace("{name}", name);
+    const titleFull = STRINGS.bannerTitle.replace("{name}", name);
+    const titleShort = STRINGS.bannerTitleShort.replace("{name}", name);
+    const desc = (
+      data.commission_type === "fixed"
+        ? STRINGS.bannerDescFixed
+        : STRINGS.bannerDescVariable
+    ).replace("{points}", pointsSpan);
 
     container.innerHTML = `
       <div class="banner-wrapper">
-        <div class="text-section">
-          <span class="text-full">${fullText}</span>
-          <span class="text-short">${shortText}</span>
+        <div class="banner-alert">
+          <span class="alert-icon">${EB_GLYPH_SVG}</span>
+          <div class="alert-body">
+            <div class="alert-title">
+              <span class="title-full">${titleFull}</span>
+              <span class="title-short">${titleShort}</span>
+            </div>
+            <div class="alert-desc">${desc}</div>
+          </div>
         </div>
         <div class="actions">
           <a href="${data.url}" target="_blank" rel="noopener noreferrer" class="cta-btn">
@@ -380,57 +398,10 @@
     });
   };
 
-  // Mirrors styles.css. Inline !important styles fight third-party CSS on
-  // host pages, so `var(--*)` can't reach here — values stay literal.
+  // Mirrors --primary from tokens.css. Inline !important styles fight third-party
+  // CSS on host pages, so `var(--*)` can't reach here — the value stays literal.
   const TOKENS = {
-    primary:
-      "#003df5" /* --primary (SAS blue) — glyph color on light backgrounds */,
-    onDark:
-      "#ffffff" /* glyph color on dark backgrounds (e.g. Google dark mode) */,
-    radiusMd: "6px" /* --radius-md */,
-  };
-
-  // Parse a CSS color ("rgb(...)" / "rgba(...)") into {r,g,b,a}. Returns null
-  // if the string isn't an rgb(a) value (e.g. "transparent", which computed
-  // styles normalize to rgba(0,0,0,0) anyway).
-  const parseRgb = (str) => {
-    const m = /rgba?\(([^)]+)\)/.exec(str || "");
-    if (!m) return null;
-    const parts = m[1].split(",").map((s) => parseFloat(s));
-    if (parts.length < 3 || parts.some((n) => Number.isNaN(n))) return null;
-    return {
-      r: parts[0],
-      g: parts[1],
-      b: parts[2],
-      a: parts.length >= 4 ? parts[3] : 1,
-    };
-  };
-
-  // Decide whether the background behind `el` is dark. Walks up ancestors to the
-  // first opaque background color and compares its relative luminance against a
-  // mid threshold. Falls back to the OS/browser color-scheme preference when
-  // every ancestor is transparent.
-  const backgroundIsDark = (el) => {
-    let node = el;
-    while (node && node.nodeType === 1) {
-      const bg = parseRgb(getComputedStyle(node).backgroundColor);
-      if (bg && bg.a > 0) {
-        const lum = (0.2126 * bg.r + 0.7152 * bg.g + 0.0722 * bg.b) / 255;
-        return lum < 0.5;
-      }
-      node = node.parentElement;
-    }
-    return !!(
-      window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches
-    );
-  };
-
-  // Set the glyph color from the badge's surrounding background: white on dark,
-  // SAS blue on light. Safe to call repeatedly (e.g. when the page theme flips).
-  const applyBadgeColor = (badge) => {
-    const color = backgroundIsDark(badge) ? TOKENS.onDark : TOKENS.primary;
-    badge.style.setProperty("color", color, "important");
+    primary: "#003df5" /* --primary (SAS blue) — same EB icon color as the banner */,
   };
 
   // EB icon glyph — the framed "EB" monogram (currentColor).
@@ -440,26 +411,24 @@
     '<path fill="currentColor" d="M6.5 8.5v7h4.552v-1.063H7.76v-1.91h3.03v-1.064H7.76v-1.9h3.264V8.5z"></path>' +
     '<path fill="currentColor" fill-rule="evenodd" d="M4.2 4h15.6A2.2 2.2 0 0 1 22 6.2v11.6a2.2 2.2 0 0 1-2.2 2.2H4.2A2.2 2.2 0 0 1 2 17.8V6.2A2.2 2.2 0 0 1 4.2 4m0 1.5a.7.7 0 0 0-.7.7v11.6a.7.7 0 0 0 .7.7h15.6a.7.7 0 0 0 .7-.7V6.2a.7.7 0 0 0-.7-.7z" clip-rule="evenodd"></path></svg>';
 
-  // Ghost badge: transparent fill, framed-EB glyph. The glyph color is set per
-  // badge by applyBadgeColor() so it adapts to light/dark host backgrounds.
+  // The badge renders the SAME framed EB monogram as the banner (EB_GLYPH_SVG),
+  // colored in --primary; inline !important keeps host-page CSS from disturbing
+  // its box. No separate background — the monogram already carries its own frame.
   const BADGE_STYLE = [
     "display:inline-flex !important",
     "align-items:center !important",
     "justify-content:center !important",
     "vertical-align:middle !important",
+    `color:${TOKENS.primary} !important`,
     "background:transparent !important",
-    "padding:3px !important",
-    `border-radius:${TOKENS.radiusMd} !important`,
-    "text-decoration:none !important",
-    "cursor:pointer !important",
     "margin:0 0 0 6px !important",
-    "min-width:0 !important",
-    "width:auto !important",
-    "height:auto !important",
+    "padding:2px !important",
+    "border:0 !important",
+    "line-height:0 !important",
+    "cursor:pointer !important",
     "user-select:none !important",
     "position:relative !important",
     "z-index:2147483646 !important",
-    "white-space:nowrap !important",
     "opacity:1 !important",
   ].join(";");
 
@@ -505,9 +474,6 @@
     });
 
     target.parentNode.insertBefore(badge, target.nextSibling);
-    // Resolve glyph color now that the badge is in the DOM and its ancestor
-    // backgrounds are computable.
-    applyBadgeColor(badge);
 
     getOrFetchDetail(matchedId).then((detail) => {
       if (!detail) return;
@@ -536,12 +502,6 @@
     '[aria-label^="From "],[aria-label^="Från "],[aria-label^="Fra "]';
 
   const decorateGooglePartners = (shopList) => {
-    // Re-resolve glyph color on already-injected badges so they track the host
-    // theme if the user toggles Google's light/dark mode mid-session.
-    for (const badge of document.querySelectorAll(`.${BADGE_CLASS}`)) {
-      applyBadgeColor(badge);
-    }
-
     // Primary signal: Google's `data-dtld` ("displayed top-level domain") attribute,
     // present on both shopping card containers and the URL chip in organic results.
     const dtldElements = document.querySelectorAll(
@@ -645,11 +605,7 @@
     const root = document.createElement("div");
     root.id = COACH_ROOT_ID;
     const shadow = root.attachShadow({ mode: "open" });
-
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = api.runtime.getURL("styles.css");
-    shadow.appendChild(link);
+    attachShadowStyles(shadow);
 
     const card = document.createElement("div");
     card.className = "coach-card";

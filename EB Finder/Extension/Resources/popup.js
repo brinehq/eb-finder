@@ -227,7 +227,7 @@
   );
   if (detail.url) {
     ctaEl.href = detail.url;
-    ctaEl.style.display = "block";
+    ctaEl.style.display = "flex";
     ctaEl.addEventListener("click", () => {
       // Fire-and-forget so the browser's default new-tab navigation keeps the user-gesture.
       storePendingReturn(tab.url, matchedId);

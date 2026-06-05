@@ -1,0 +1,69 @@
+/* =============================================================================
+   DESIGN TOKENS — shared by the popup (popup.css) and the page-injected
+   banner/coachmark (content.css). Loaded as the FIRST stylesheet on each
+   surface so every component resolves the same variables. Only tokens that a
+   shipped rule actually references live here (see popup.css / content.css).
+   ============================================================================= */
+:root,
+:host {
+  color-scheme: light dark;
+
+  --radius: 0.5rem; /* 8px base */
+  --radius-md: calc(var(--radius) * 0.8); /* ~6px — chips, media tiles */
+  --radius-2xl: calc(var(--radius) * 1.8); /* ~14px — cards, popover, popup containers */
+  --radius-full: 9999px; /* pill / stadium — buttons */
+
+  --foreground: oklch(0.2178 0 0); /* near-black ink */
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2178 0 0);
+
+  --primary: oklch(0.486 0.2721 263.825); /* SAS royal blue — #003DF5 */
+  --primary-foreground: oklch(1 0 0);
+
+  --muted: oklch(0.967 0.0029 264.542); /* gray-100 fills */
+  --muted-foreground: oklch(0.551 0.0234 264.364); /* gray-500 labels */
+
+  --success: oklch(0.9793 0.0207 166.113); /* #ecfdf5 */
+  --success-foreground: oklch(0.4318 0.0865 166.913); /* #065f46 */
+
+  --shadow-banner: 0 2px 8px oklch(0 0 0 / 0.15);
+  /* shadcn popover surface — Tailwind shadow-2xl */
+  --shadow-popover: 0 25px 50px -12px oklch(0 0 0 / 0.25);
+
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+  --font-native: var(--font-sans);
+
+  --fw-medium: 500;
+  --fw-bold: 700;
+
+  --fs-banner: 16px;
+  --fs-cta: 14px;
+  --fs-short: 13px;
+  --fs-badge: 12px;
+  --fs-disc: 11px;
+
+  --lh-tight: 1.3;
+  --lh-snug: 1.4;
+
+  --space-2: 6px;
+  --space-3: 8px;
+  --space-4: 12px;
+  --space-5: 16px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root,
+  :host {
+    --foreground: oklch(1 0 0);
+    --card: oklch(0.2703 0.1252 262.023);
+    --card-foreground: oklch(1 0 0);
+    --primary: oklch(1 0 0);
+    --primary-foreground: oklch(0.2703 0.1252 262.023);
+    --muted: oklch(0.36 0.06 262);
+    --muted-foreground: oklch(0.82 0.03 262);
+    --shadow-banner: 0 2px 8px oklch(0 0 0 / 0.45);
+    --shadow-popover: 0 25px 50px -12px oklch(0 0 0 / 0.5);
+  }
+}
