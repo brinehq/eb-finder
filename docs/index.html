@@ -81,7 +81,23 @@
       body {
         margin: 0;
         font-family: var(--font-sans);
-        background: var(--background);
+        background:
+          radial-gradient(
+            900px 600px at 50% -100px,
+            color-mix(in oklch, var(--primary) 14%, transparent),
+            transparent 70%
+          ),
+          radial-gradient(
+            700px 500px at 85% 45%,
+            color-mix(in oklch, var(--success-foreground) 7%, transparent),
+            transparent 70%
+          ),
+          radial-gradient(
+            700px 500px at 10% 80%,
+            color-mix(in oklch, var(--primary) 8%, transparent),
+            transparent 70%
+          ),
+          var(--background);
         color: var(--foreground);
         line-height: var(--lh-snug);
         -webkit-font-smoothing: antialiased;
@@ -92,24 +108,8 @@
         padding: 0 24px;
       }
 
-      header {
-        padding: 20px 0;
-      }
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-weight: var(--fw-bold);
-        font-size: 17px;
-      }
-      .brand img {
-        width: 32px;
-        height: 32px;
-        border-radius: var(--radius-md);
-      }
-
       .hero {
-        padding: 56px 0 40px;
+        padding: 72px 0 40px;
         text-align: center;
       }
       .hero img.appicon {
@@ -197,6 +197,13 @@
         color: var(--muted-foreground);
         max-width: 600px;
       }
+      section.centered {
+        text-align: center;
+      }
+      section.centered p {
+        margin-left: auto;
+        margin-right: auto;
+      }
       section p strong,
       section p a {
         color: var(--foreground);
@@ -243,29 +250,6 @@
         font-size: 13px;
         color: var(--muted-foreground);
         line-height: var(--lh-snug);
-      }
-
-      /* Success alert — same surface the popup uses for a partner match. */
-      .match-demo {
-        display: grid;
-        grid-template-columns: 20px 1fr;
-        gap: 10px;
-        align-items: start;
-        max-width: 420px;
-        margin: 24px auto 0;
-        padding: 12px 14px;
-        text-align: left;
-        border-radius: var(--radius-2xl);
-        background: var(--success);
-        color: var(--success-foreground);
-        box-shadow: 0 0 0 1px
-          color-mix(in oklch, var(--success-foreground) 22%, transparent);
-        font-size: 13px;
-      }
-      .match-demo strong {
-        display: block;
-        margin-bottom: 2px;
-        font-size: 14px;
       }
 
       .steps {
@@ -317,13 +301,6 @@
     </style>
   </head>
   <body>
-    <header class="wrap">
-      <div class="brand">
-        <img src="icon-64.png" alt="" width="32" height="32" />
-        EB&nbsp;Finder
-      </div>
-    </header>
-
     <main class="wrap">
       <section class="hero">
         <img class="appicon" src="icon-256.png" alt="EB Finder app icon" width="112" height="112" />
@@ -343,16 +320,9 @@
           </a>
         </div>
         <p class="beta-note">External TestFlight beta · iOS / iPadOS 26.2 or later · Free</p>
-        <div class="match-demo">
-          <span aria-hidden="true">✓</span>
-          <div>
-            <strong>EuroBonus partner!</strong>
-            This shop earns points — log in via SAS before you check out.
-          </div>
-        </div>
       </section>
 
-      <section>
+      <section class="centered">
         <h2>Why it exists</h2>
         <p>
           SAS ships an official
@@ -367,17 +337,39 @@
         <h2>Highlights</h2>
         <ul class="cards">
           <li class="card">
-            <div class="card-media" aria-hidden="true">📱</div>
+            <div class="card-media" aria-hidden="true">
+              <!-- Hugeicons stroke-rounded: smart-phone-01 -->
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 9c0-3.3 0-4.95 1.025-5.975C7.05 2 8.7 2 12 2s4.95 0 5.975 1.025C19 4.05 19 5.7 19 9v6c0 3.3 0 4.95-1.025 5.975C16.95 22 15.3 22 12 22s-4.95 0-5.975-1.025C5 19.95 5 18.3 5 15V9Z" />
+                <path d="M11 19h2" />
+                <path d="M9 2l.089.534c.193 1.157.29 1.736.687 2.088.415.367 1.003.378 2.224.378s1.809-.011 2.224-.378c.398-.352.494-.93.687-2.088L15 2" />
+              </svg>
+            </div>
             <h3>Works where the official one doesn't</h3>
             <p>Safari on iPhone and iPad — the platforms the official Chrome extension skips.</p>
           </li>
           <li class="card">
-            <div class="card-media" aria-hidden="true">🔄</div>
+            <div class="card-media" aria-hidden="true">
+              <!-- Hugeicons stroke-rounded: refresh -->
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.5 5.5v4h-4" />
+                <path d="M3.5 18.5v-4h4" />
+                <path d="M4.06 11A8 8 0 0 1 18.9 8.13l1.6 1.37" />
+                <path d="M19.94 13A8 8 0 0 1 5.1 15.87L3.5 14.5" />
+              </svg>
+            </div>
             <h3>Same data as the official extension</h3>
             <p>Hits the same public LoyaltyKey API, so the partner list and points-per-krona stay in sync automatically.</p>
           </li>
           <li class="card">
-            <div class="card-media" aria-hidden="true">🔒</div>
+            <div class="card-media" aria-hidden="true">
+              <!-- Hugeicons stroke-rounded: shield-key / security-lock -->
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2c2.96 1.78 6.06 2.46 8 2.66.6.06 1 .57 1 1.17V11c0 6.5-5.5 9.5-9 11-3.5-1.5-9-4.5-9-11V5.83c0-.6.4-1.11 1-1.17 1.94-.2 5.04-.88 8-2.66Z" />
+                <path d="M12 11.5v3" />
+                <circle cx="12" cy="9.75" r="1.75" />
+              </svg>
+            </div>
             <h3>Zero tracking</h3>
             <p>No analytics, no background script. No data leaves your device beyond the two API calls.</p>
           </li>
