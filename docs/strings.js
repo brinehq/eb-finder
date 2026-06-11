@@ -13,7 +13,7 @@ const STRINGS = {
     whyP1:
       "My wife and I shop almost entirely on our phones — and we kept discovering <em>after</em> checkout that the store was a EuroBonus partner all along. Tons of points, gone. Poof.",
     whyP2:
-      'SAS has an official <a href="https://chromewebstore.google.com/detail/sas-eurobonus-finder/mkodkaejnhpkbmlgdbnimeaakobcoegn">EB&nbsp;Finder for Chrome</a> that solves exactly this… on desktop Chrome only. Nothing for the phone in your hand. So I built the missing piece.',
+      'SAS has an official <a href="https://chromewebstore.google.com/detail/sas-eurobonus-finder/mkodkaejnhpkbmlgdbnimeaakobcoegn">"SAS&nbsp;EuroBonus&nbsp;Finder" for Chrome</a> that solves exactly this… on desktop Chrome only. Nothing for the phone in your hand. So I built the missing piece.',
     highlightsTitle: "Highlights",
     card1Title: "Works where the official one doesn't",
     card1Body: "Safari on iPhone and iPad — the places you actually shop.",
@@ -55,7 +55,7 @@ const STRINGS = {
     whyP1:
       "Jag och min fru shoppar nästan bara i mobilen — och gång på gång upptäckte vi <em>efter</em> köpet att butiken var EuroBonus-partner hela tiden. Massor av poäng, borta. Poff.",
     whyP2:
-      'SAS har en officiell <a href="https://chromewebstore.google.com/detail/sas-eurobonus-finder/mkodkaejnhpkbmlgdbnimeaakobcoegn">EB&nbsp;Finder för Chrome</a> som löser exakt det här… fast bara i Chrome på datorn. Inget för mobilen i din hand. Så jag byggde den saknade biten.',
+      'SAS har en officiell <a href="https://chromewebstore.google.com/detail/sas-eurobonus-finder/mkodkaejnhpkbmlgdbnimeaakobcoegn">"SAS&nbsp;EuroBonus&nbsp;Finder" för Chrome</a> som löser exakt det här… fast bara i Chrome på datorn. Inget för mobilen i din hand. Så jag byggde den saknade biten.',
     highlightsTitle: "Höjdpunkter",
     card1Title: "Funkar där den officiella inte gör det",
     card1Body: "Safari på iPhone och iPad — där du faktiskt shoppar.",
@@ -77,7 +77,7 @@ const STRINGS = {
       "<strong>Shoppa som vanligt.</strong> När en butik ger EuroBonus-poäng knuffar EB&nbsp;Finder dig att logga in via SAS först. Det är allt — poängen säkrade.",
     feedbackTitle: "Feedback",
     feedbackText:
-      'Hittat en bugg? En partnerbutik som beter sig konstigt? En funktion du längtar efter? Hör av dig i <a href="https://m.me/cm/AbYqbMSdJHLmDqnD">Messenger-gemenskapen</a> eller på <a href="https://github.com/brinehq/eb-finder">GitHub</a>.',
+      'Hittat en bugg? En partnerbutik som beter sig konstigt? En funktion du längtar efter? Hör av dig i <a href="https://m.me/cm/AbYqbMSdJHLmDqnD">Messenger-gruppen</a> eller på <a href="https://github.com/brinehq/eb-finder">GitHub</a>.',
     contactText:
       'Eller hör av dig direkt — <a href="mailto:hello@brine.co">hello@brine.co</a>.',
     footerLegal:
