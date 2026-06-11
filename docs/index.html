@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EB Finder for Safari — never miss EuroBonus points again</title>
+    <meta
+      name="description"
+      content="A Safari Web Extension for iPhone and iPad that spots SAS EuroBonus shopping partners and nudges you to log in via SAS before you buy — so your purchase actually earns points."
+    />
+    <link rel="icon" href="icon-64.png" type="image/png" />
+    <meta property="og:title" content="EB Finder for Safari" />
+    <meta
+      property="og:description"
+      content="Spots SAS EuroBonus shopping partners on iPhone and iPad so your purchase actually earns points. Join the TestFlight beta."
+    />
+    <meta property="og:image" content="icon-256.png" />
+    <style>
+      /* =====================================================================
+         DESIGN TOKENS — inlined from Extension/Resources/tokens.css so this
+         page renders with the exact branding of the shipped extension.
+         ===================================================================== */
+      :root {
+        color-scheme: light dark;
+
+        --radius: 0.5rem;
+        --radius-md: calc(var(--radius) * 0.8);
+        --radius-2xl: calc(var(--radius) * 1.8);
+        --radius-full: 9999px;
+
+        --background: oklch(1 0 0);
+        --foreground: oklch(0.2178 0 0);
+        --card: oklch(1 0 0);
+        --card-foreground: oklch(0.2178 0 0);
+
+        --primary: oklch(0.486 0.2721 263.825); /* SAS royal blue — #003DF5 */
+        --primary-foreground: oklch(1 0 0);
+
+        --muted: oklch(0.967 0.0029 264.542);
+        --muted-foreground: oklch(0.551 0.0234 264.364);
+
+        --success: oklch(0.9793 0.0207 166.113);
+        --success-foreground: oklch(0.4318 0.0865 166.913);
+
+        --shadow-banner: 0 2px 8px oklch(0 0 0 / 0.15);
+        --shadow-popover: 0 25px 50px -12px oklch(0 0 0 / 0.25);
+
+        --font-sans:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+          Arial, sans-serif;
+
+        --fw-medium: 500;
+        --fw-bold: 700;
+
+        --lh-tight: 1.3;
+        --lh-snug: 1.4;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --background: oklch(0.2178 0.09 262);
+          --foreground: oklch(1 0 0);
+          --card: oklch(0.2703 0.1252 262.023);
+          --card-foreground: oklch(1 0 0);
+          --primary: oklch(1 0 0);
+          --primary-foreground: oklch(0.2703 0.1252 262.023);
+          --muted: oklch(0.36 0.06 262);
+          --muted-foreground: oklch(0.82 0.03 262);
+          --shadow-banner: 0 2px 8px oklch(0 0 0 / 0.45);
+          --shadow-popover: 0 25px 50px -12px oklch(0 0 0 / 0.5);
+        }
+      }
+
+      /* =====================================================================
+         PAGE — SAS-style: generous whitespace, bold ink headlines, royal
+         blue pill buttons, card surfaces ringed at foreground/10.
+         ===================================================================== */
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: var(--font-sans);
+        background: var(--background);
+        color: var(--foreground);
+        line-height: var(--lh-snug);
+        -webkit-font-smoothing: antialiased;
+      }
+      .wrap {
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+
+      header {
+        padding: 20px 0;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: var(--fw-bold);
+        font-size: 17px;
+      }
+      .brand img {
+        width: 32px;
+        height: 32px;
+        border-radius: var(--radius-md);
+      }
+
+      .hero {
+        padding: 56px 0 40px;
+        text-align: center;
+      }
+      .hero img.appicon {
+        width: 112px;
+        height: 112px;
+        border-radius: 26px;
+        box-shadow: var(--shadow-popover);
+        margin-bottom: 28px;
+      }
+      h1 {
+        font-size: clamp(34px, 6vw, 52px);
+        font-weight: var(--fw-bold);
+        line-height: var(--lh-tight);
+        letter-spacing: -0.02em;
+        margin: 0 0 16px;
+      }
+      .hero p.lede {
+        font-size: 18px;
+        color: var(--muted-foreground);
+        max-width: 560px;
+        margin: 0 auto 32px;
+      }
+      .hero p.lede strong {
+        color: var(--foreground);
+      }
+
+      /* Buttons — same recipe as the extension popup CTA (pill, h-10+). */
+      .cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        height: 48px;
+        padding: 0 28px;
+        border: 1px solid transparent;
+        border-radius: var(--radius-full);
+        text-decoration: none;
+        font-weight: var(--fw-bold);
+        font-size: 16px;
+        cursor: pointer;
+        user-select: none;
+        transition: all 150ms ease;
+      }
+      .btn:active {
+        transform: translateY(1px);
+      }
+      .btn-primary {
+        background: var(--primary);
+        color: var(--primary-foreground);
+      }
+      .btn-primary:hover {
+        background: color-mix(in oklch, var(--primary) 80%, transparent);
+      }
+      .btn-secondary {
+        background: var(--card);
+        color: var(--card-foreground);
+        box-shadow: 0 0 0 1px
+          color-mix(in oklch, var(--foreground) 15%, transparent);
+      }
+      .btn-secondary:hover {
+        background: var(--muted);
+      }
+      .beta-note {
+        margin-top: 14px;
+        font-size: 13px;
+        color: var(--muted-foreground);
+      }
+
+      section {
+        padding: 36px 0;
+      }
+      h2 {
+        font-size: 26px;
+        font-weight: var(--fw-bold);
+        letter-spacing: -0.01em;
+        margin: 0 0 20px;
+      }
+      section p {
+        color: var(--muted-foreground);
+        max-width: 600px;
+      }
+      section p strong,
+      section p a {
+        color: var(--foreground);
+      }
+      a {
+        color: var(--primary);
+      }
+
+      /* Cards — card surface + ring-foreground/10, as in the popup. */
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+        gap: 14px;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+      }
+      .card {
+        padding: 18px;
+        border-radius: var(--radius-2xl);
+        background: var(--card);
+        color: var(--card-foreground);
+        box-shadow: 0 0 0 1px
+          color-mix(in oklch, var(--foreground) 10%, transparent);
+      }
+      .card .card-media {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        border-radius: var(--radius-md);
+        background: var(--primary);
+        color: var(--primary-foreground);
+        margin-bottom: 12px;
+      }
+      .card h3 {
+        margin: 0 0 6px;
+        font-size: 15px;
+        font-weight: var(--fw-bold);
+      }
+      .card p {
+        margin: 0;
+        font-size: 13px;
+        color: var(--muted-foreground);
+        line-height: var(--lh-snug);
+      }
+
+      /* Success alert — same surface the popup uses for a partner match. */
+      .match-demo {
+        display: grid;
+        grid-template-columns: 20px 1fr;
+        gap: 10px;
+        align-items: start;
+        max-width: 420px;
+        margin: 24px auto 0;
+        padding: 12px 14px;
+        text-align: left;
+        border-radius: var(--radius-2xl);
+        background: var(--success);
+        color: var(--success-foreground);
+        box-shadow: 0 0 0 1px
+          color-mix(in oklch, var(--success-foreground) 22%, transparent);
+        font-size: 13px;
+      }
+      .match-demo strong {
+        display: block;
+        margin-bottom: 2px;
+        font-size: 14px;
+      }
+
+      .steps {
+        list-style: none;
+        counter-reset: step;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 14px;
+      }
+      .steps li {
+        display: flex;
+        gap: 14px;
+        align-items: baseline;
+        counter-increment: step;
+        color: var(--muted-foreground);
+      }
+      .steps li::before {
+        content: counter(step);
+        flex-shrink: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 26px;
+        height: 26px;
+        border-radius: var(--radius-full);
+        background: var(--primary);
+        color: var(--primary-foreground);
+        font-weight: var(--fw-bold);
+        font-size: 13px;
+        transform: translateY(6px);
+      }
+      .steps strong {
+        color: var(--foreground);
+      }
+
+      footer {
+        margin-top: 40px;
+        padding: 32px 0 48px;
+        border-top: 1px solid
+          color-mix(in oklch, var(--foreground) 10%, transparent);
+        font-size: 13px;
+        color: var(--muted-foreground);
+      }
+      footer p {
+        margin: 0 0 8px;
+        max-width: none;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="wrap">
+      <div class="brand">
+        <img src="icon-64.png" alt="" width="32" height="32" />
+        EB&nbsp;Finder
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="hero">
+        <img class="appicon" src="icon-256.png" alt="EB Finder app icon" width="112" height="112" />
+        <h1>Never miss EuroBonus points again.</h1>
+        <p class="lede">
+          EB&nbsp;Finder is a Safari Web Extension for <strong>iPhone and
+          iPad</strong> that spots <strong>SAS&nbsp;EuroBonus</strong> shopping
+          partners and nudges you to log in via SAS's tracking link before you
+          buy — so your purchase actually earns points.
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://brn.sh/eb-finder-testflight">
+            Join the beta on TestFlight
+          </a>
+          <a class="btn btn-secondary" href="https://m.me/cm/AbYqbMSdJHLmDqnD">
+            Join the feedback community
+          </a>
+        </div>
+        <p class="beta-note">External TestFlight beta · iOS / iPadOS 26.2 or later · Free</p>
+        <div class="match-demo">
+          <span aria-hidden="true">✓</span>
+          <div>
+            <strong>EuroBonus partner!</strong>
+            This shop earns points — log in via SAS before you check out.
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Why it exists</h2>
+        <p>
+          SAS ships an official
+          <a href="https://chromewebstore.google.com/detail/sas-eurobonus-finder/mkodkaejnhpkbmlgdbnimeaakobcoegn">EB&nbsp;Finder for Chrome</a>
+          that nudges you when a site is a EuroBonus partner — but it's desktop
+          Chrome only. Nothing for iPhone or iPad, where most of the everyday
+          shopping happens. So this fills the gap.
+        </p>
+      </section>
+
+      <section>
+        <h2>Highlights</h2>
+        <ul class="cards">
+          <li class="card">
+            <div class="card-media" aria-hidden="true">📱</div>
+            <h3>Works where the official one doesn't</h3>
+            <p>Safari on iPhone and iPad — the platforms the official Chrome extension skips.</p>
+          </li>
+          <li class="card">
+            <div class="card-media" aria-hidden="true">🔄</div>
+            <h3>Same data as the official extension</h3>
+            <p>Hits the same public LoyaltyKey API, so the partner list and points-per-krona stay in sync automatically.</p>
+          </li>
+          <li class="card">
+            <div class="card-media" aria-hidden="true">🔒</div>
+            <h3>Zero tracking</h3>
+            <p>No analytics, no background script. No data leaves your device beyond the two API calls.</p>
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>How it works</h2>
+        <ol class="steps">
+          <li>
+            <span><strong>Join the beta</strong> via
+              <a href="https://brn.sh/eb-finder-testflight">TestFlight</a> and
+              install the app on your iPhone or iPad.</span>
+          </li>
+          <li>
+            <span><strong>Enable the extension</strong> in Settings → Apps →
+              Safari → Extensions, and allow it on all websites.</span>
+          </li>
+          <li>
+            <span><strong>Shop as usual.</strong> When a site is a EuroBonus
+              partner, EB&nbsp;Finder nudges you to log in via SAS first — then
+              your purchase earns points.</span>
+          </li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Feedback</h2>
+        <p>
+          Bug reports, partner-site weirdness, and feature requests are very
+          welcome — in the
+          <a href="https://m.me/cm/AbYqbMSdJHLmDqnD">Messenger community</a> or
+          on <a href="https://github.com/brinehq/eb-finder">GitHub</a>.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <p>
+          EB&nbsp;Finder is an independent project — <strong>not</strong>
+          affiliated with SAS, EuroBonus, or any of the shopping partners.
+        </p>
+        <p>
+          Open source under the MIT license · Made by
+          <a href="https://www.brine.co">Brine&nbsp;AB</a>
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
