@@ -28,7 +28,7 @@ const STRINGS = {
       "The whole thing is MIT-licensed and out in the open. Peek under the hood, file an issue, or send a PR —",
     howTitle: "How it works",
     step1:
-      '<strong>Join the beta</strong> via <a href="https://brn.sh/eb-finder-testflight">TestFlight</a> and install the app on your iPhone or iPad.',
+      '<strong>Join the beta</strong> via <a href="https://brn.sh/eb-finder-testflight?utm_source=landing-page&utm_medium=web&utm_campaign=testflight-beta&utm_content=how-it-works">TestFlight</a> and install the app on your iPhone or iPad.',
     step2:
       "<strong>Enable the extension</strong> in Settings → Apps → Safari → Extensions, and allow it on all websites.",
     step3:
@@ -70,7 +70,7 @@ const STRINGS = {
       "Allt är MIT-licensierat och helt öppet. Kika under huven, rapportera ett fel eller skicka en PR —",
     howTitle: "Så funkar det",
     step1:
-      '<strong>Gå med i betan</strong> via <a href="https://brn.sh/eb-finder-testflight">TestFlight</a> och installera appen på din iPhone eller iPad.',
+      '<strong>Gå med i betan</strong> via <a href="https://brn.sh/eb-finder-testflight?utm_source=landing-page&utm_medium=web&utm_campaign=testflight-beta&utm_content=how-it-works">TestFlight</a> och installera appen på din iPhone eller iPad.',
     step2:
       "<strong>Aktivera tillägget</strong> i Inställningar → Appar → Safari → Tillägg, och tillåt det på alla webbplatser.",
     step3:
