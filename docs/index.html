@@ -81,20 +81,21 @@
       body {
         margin: 0;
         font-family: var(--font-sans);
+        /* Gradient built only from --primary and --background (white). */
         background:
           radial-gradient(
             900px 600px at 50% -100px,
-            color-mix(in oklch, var(--primary) 14%, transparent),
+            color-mix(in oklch, var(--primary) 16%, var(--background)),
             transparent 70%
           ),
           radial-gradient(
             700px 500px at 85% 45%,
-            color-mix(in oklch, var(--success-foreground) 7%, transparent),
+            color-mix(in oklch, var(--primary) 6%, var(--background)),
             transparent 70%
           ),
           radial-gradient(
             700px 500px at 10% 80%,
-            color-mix(in oklch, var(--primary) 8%, transparent),
+            color-mix(in oklch, var(--primary) 9%, var(--background)),
             transparent 70%
           ),
           var(--background);
@@ -169,13 +170,13 @@
       .btn-primary:hover {
         background: color-mix(in oklch, var(--primary) 80%, transparent);
       }
-      .btn-secondary {
-        background: var(--card);
-        color: var(--card-foreground);
-        box-shadow: 0 0 0 1px
-          color-mix(in oklch, var(--foreground) 15%, transparent);
+      /* Outline variant — transparent fill, 1px ring, muted hover. */
+      .btn-outline {
+        background: transparent;
+        color: var(--foreground);
+        border-color: color-mix(in oklch, var(--foreground) 20%, transparent);
       }
-      .btn-secondary:hover {
+      .btn-outline:hover {
         background: var(--muted);
       }
       .beta-note {
@@ -304,18 +305,18 @@
     <main class="wrap">
       <section class="hero">
         <img class="appicon" src="icon-256.png" alt="EB Finder app icon" width="112" height="112" />
-        <h1>Never miss EuroBonus points again.</h1>
+        <h1>Stop leaving EuroBonus points on the table.</h1>
         <p class="lede">
-          EB&nbsp;Finder is a Safari Web Extension for <strong>iPhone and
-          iPad</strong> that spots <strong>SAS&nbsp;EuroBonus</strong> shopping
-          partners and nudges you to log in via SAS's tracking link before you
-          buy — so your purchase actually earns points.
+          EB&nbsp;Finder taps you on the shoulder when a shop is a
+          <strong>SAS&nbsp;EuroBonus</strong> partner — right in Safari on your
+          <strong>iPhone and iPad</strong>. One tap to log in via SAS, shop as
+          usual, and watch the points roll in.
         </p>
         <div class="cta-row">
           <a class="btn btn-primary" href="https://brn.sh/eb-finder-testflight">
             Join the beta on TestFlight
           </a>
-          <a class="btn btn-secondary" href="https://m.me/cm/AbYqbMSdJHLmDqnD">
+          <a class="btn btn-outline" href="https://m.me/cm/AbYqbMSdJHLmDqnD">
             Join the feedback community
           </a>
         </div>
@@ -325,11 +326,15 @@
       <section class="centered">
         <h2>Why it exists</h2>
         <p>
-          SAS ships an official
+          My wife and I shop almost entirely on our phones — and we kept
+          discovering <em>after</em> checkout that the store was a EuroBonus
+          partner all along. Tons of points, gone. Poof.
+        </p>
+        <p>
+          SAS has an official
           <a href="https://chromewebstore.google.com/detail/sas-eurobonus-finder/mkodkaejnhpkbmlgdbnimeaakobcoegn">EB&nbsp;Finder for Chrome</a>
-          that nudges you when a site is a EuroBonus partner — but it's desktop
-          Chrome only. Nothing for iPhone or iPad, where most of the everyday
-          shopping happens. So this fills the gap.
+          that solves exactly this… on desktop Chrome only. Nothing for the
+          phone in your hand. So I built the missing piece.
         </p>
       </section>
 
@@ -346,7 +351,7 @@
               </svg>
             </div>
             <h3>Works where the official one doesn't</h3>
-            <p>Safari on iPhone and iPad — the platforms the official Chrome extension skips.</p>
+            <p>Safari on iPhone and iPad — the places you actually shop. Sorry, desktop Chrome, you had a head start.</p>
           </li>
           <li class="card">
             <div class="card-media" aria-hidden="true">
@@ -359,7 +364,7 @@
               </svg>
             </div>
             <h3>Same data as the official extension</h3>
-            <p>Hits the same public LoyaltyKey API, so the partner list and points-per-krona stay in sync automatically.</p>
+            <p>Same public LoyaltyKey API, so partners and points-per-krona stay in sync. Always fresh, never stale.</p>
           </li>
           <li class="card">
             <div class="card-media" aria-hidden="true">
@@ -371,9 +376,18 @@
               </svg>
             </div>
             <h3>Zero tracking</h3>
-            <p>No analytics, no background script. No data leaves your device beyond the two API calls.</p>
+            <p>No analytics, no background script, no funny business. Nothing leaves your device beyond two API calls.</p>
           </li>
         </ul>
+      </section>
+
+      <section class="centered">
+        <h2>Open source</h2>
+        <p>
+          The whole thing is MIT-licensed and out in the open. Peek under the
+          hood, file an issue, or send a PR —
+          <a href="https://github.com/brinehq/eb-finder">github.com/brinehq/eb-finder</a>.
+        </p>
       </section>
 
       <section>
@@ -389,9 +403,9 @@
               Safari → Extensions, and allow it on all websites.</span>
           </li>
           <li>
-            <span><strong>Shop as usual.</strong> When a site is a EuroBonus
-              partner, EB&nbsp;Finder nudges you to log in via SAS first — then
-              your purchase earns points.</span>
+            <span><strong>Shop as usual.</strong> When a site earns EuroBonus
+              points, EB&nbsp;Finder gives you a nudge to log in via SAS first.
+              That's it — points secured.</span>
           </li>
         </ol>
       </section>
@@ -399,8 +413,8 @@
       <section>
         <h2>Feedback</h2>
         <p>
-          Bug reports, partner-site weirdness, and feature requests are very
-          welcome — in the
+          Found a bug? A partner site acting weird? A feature you're dying for?
+          Tell us in the
           <a href="https://m.me/cm/AbYqbMSdJHLmDqnD">Messenger community</a> or
           on <a href="https://github.com/brinehq/eb-finder">GitHub</a>.
         </p>
