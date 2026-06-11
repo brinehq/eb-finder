@@ -9,12 +9,29 @@
       content="A Safari Web Extension for iPhone and iPad that spots SAS EuroBonus shopping partners and nudges you to log in via SAS before you buy — so your purchase actually earns points."
     />
     <link rel="icon" href="icon-64.png" type="image/png" />
-    <meta property="og:title" content="EB Finder for Safari" />
+    <link rel="apple-touch-icon" href="icon-256.png" />
+    <link rel="canonical" href="https://brinehq.github.io/eb-finder/" />
+    <!-- Social sharing previews -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="EB Finder" />
+    <meta property="og:url" content="https://brinehq.github.io/eb-finder/" />
+    <meta property="og:title" content="EB Finder for Safari — never miss EuroBonus points again" />
     <meta
       property="og:description"
       content="Spots SAS EuroBonus shopping partners on iPhone and iPad so your purchase actually earns points. Join the TestFlight beta."
     />
-    <meta property="og:image" content="icon-256.png" />
+    <meta property="og:image" content="https://brinehq.github.io/eb-finder/icon-256.png" />
+    <meta property="og:image:width" content="256" />
+    <meta property="og:image:height" content="256" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="sv_SE" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="EB Finder for Safari — never miss EuroBonus points again" />
+    <meta
+      name="twitter:description"
+      content="Spots SAS EuroBonus shopping partners on iPhone and iPad so your purchase actually earns points. Join the TestFlight beta."
+    />
+    <meta name="twitter:image" content="https://brinehq.github.io/eb-finder/icon-256.png" />
     <style>
       /* =====================================================================
          DESIGN TOKENS — inlined from Extension/Resources/tokens.css so this
@@ -69,6 +86,34 @@
         max-width: 760px;
         margin: 0 auto;
         padding: 0 24px;
+      }
+
+      /* Language switcher — top right corner. */
+      .lang-switch {
+        position: absolute;
+        top: 16px;
+        right: 20px;
+        display: flex;
+        gap: 2px;
+        padding: 3px;
+        border-radius: var(--radius-full);
+        background: var(--muted);
+      }
+      .lang-switch button {
+        appearance: none;
+        border: 0;
+        padding: 5px 12px;
+        border-radius: var(--radius-full);
+        background: transparent;
+        color: var(--muted-foreground);
+        font-family: var(--font-sans);
+        font-size: 13px;
+        font-weight: var(--fw-bold);
+        cursor: pointer;
+      }
+      .lang-switch button.active {
+        background: var(--primary);
+        color: var(--primary-foreground);
       }
 
       .hero {
@@ -304,35 +349,40 @@
     </style>
   </head>
   <body>
+    <div class="lang-switch" role="group" aria-label="Language">
+      <button type="button" data-lang="en">EN</button>
+      <button type="button" data-lang="sv">SV</button>
+    </div>
+
     <main class="wrap">
       <section class="hero">
         <img class="appicon" src="icon-256.png" alt="EB Finder app icon" width="112" height="112" />
-        <h1>Stop leaving EuroBonus points on the table.</h1>
-        <p class="lede">
+        <h1 data-i18n="heroTitle">Stop leaving EuroBonus points on the table.</h1>
+        <p class="lede" data-i18n="heroLede">
           EB&nbsp;Finder taps you on the shoulder when a shop is a
           <strong>SAS&nbsp;EuroBonus</strong> partner — right in Safari on your
           <strong>iPhone and iPad</strong>. One tap to log in via SAS, shop as
           usual, and watch the points roll in.
         </p>
         <div class="cta-row">
-          <a class="btn btn-primary" href="https://brn.sh/eb-finder-testflight">
+          <a class="btn btn-primary" href="https://brn.sh/eb-finder-testflight" data-i18n="ctaTestflight">
             Join the beta on TestFlight
           </a>
-          <a class="btn btn-outline" href="https://m.me/cm/AbYqbMSdJHLmDqnD">
+          <a class="btn btn-outline" href="https://m.me/cm/AbYqbMSdJHLmDqnD" data-i18n="ctaMessenger">
             Share feedback on Messenger
           </a>
         </div>
-        <p class="beta-note">iOS / iPadOS 26.2 or later · Free</p>
+        <p class="beta-note" data-i18n="betaNote">iOS / iPadOS 26.2 or later · Free</p>
       </section>
 
       <section class="centered">
-        <h2>Why it exists</h2>
-        <p>
+        <h2 data-i18n="whyTitle">Why it exists</h2>
+        <p data-i18n="whyP1">
           My wife and I shop almost entirely on our phones — and we kept
           discovering <em>after</em> checkout that the store was a EuroBonus
           partner all along. Tons of points, gone. Poof.
         </p>
-        <p>
+        <p data-i18n="whyP2">
           SAS has an official
           <a href="https://chromewebstore.google.com/detail/sas-eurobonus-finder/mkodkaejnhpkbmlgdbnimeaakobcoegn">EB&nbsp;Finder for Chrome</a>
           that solves exactly this… on desktop Chrome only. Nothing for the
@@ -341,7 +391,7 @@
       </section>
 
       <section>
-        <h2>Highlights</h2>
+        <h2 data-i18n="highlightsTitle">Highlights</h2>
         <ul class="cards">
           <li class="card">
             <div class="card-media" aria-hidden="true">
@@ -352,8 +402,8 @@
                 <path d="M9 2l.089.534c.193 1.157.29 1.736.687 2.088.415.367 1.003.378 2.224.378s1.809-.011 2.224-.378c.398-.352.494-.93.687-2.088L15 2" />
               </svg>
             </div>
-            <h3>Works where the official one doesn't</h3>
-            <p>Safari on iPhone and iPad — the places you actually shop.</p>
+            <h3 data-i18n="card1Title">Works where the official one doesn't</h3>
+            <p data-i18n="card1Body">Safari on iPhone and iPad — the places you actually shop.</p>
           </li>
           <li class="card">
             <div class="card-media" aria-hidden="true">
@@ -365,8 +415,8 @@
                 <path d="M19.94 13A8 8 0 0 1 5.1 15.87L3.5 14.5" />
               </svg>
             </div>
-            <h3>Same data as the official extension</h3>
-            <p>We read the same partner list SAS uses for its own Chrome extension — so shops and points are always up to date.</p>
+            <h3 data-i18n="card2Title">Same data as the official extension</h3>
+            <p data-i18n="card2Body">We read the same partner list SAS uses for its own Chrome extension — so shops and points are always up to date.</p>
           </li>
           <li class="card">
             <div class="card-media" aria-hidden="true">
@@ -377,17 +427,17 @@
                 <circle cx="12" cy="9.75" r="1.75" />
               </svg>
             </div>
-            <h3>Zero tracking</h3>
-            <p>We're not in this to make money — no ads, no analytics, and your data is never tracked or sold.</p>
+            <h3 data-i18n="card3Title">Zero tracking</h3>
+            <p data-i18n="card3Body">We're not in this to make money — our code has no ads, no analytics, and never tracks or sells your data. What the EuroBonus program itself does is between you and SAS.</p>
           </li>
         </ul>
       </section>
 
       <section class="centered">
-        <h2>Open source</h2>
+        <h2 data-i18n="ossTitle">Open source</h2>
         <p>
-          The whole thing is MIT-licensed and out in the open. Peek under the
-          hood, file an issue, or send a PR —
+          <span data-i18n="ossText">The whole thing is MIT-licensed and out in the open. Peek under the
+          hood, file an issue, or send a PR —</span>
           <a class="gh-link" href="https://github.com/brinehq/eb-finder">
             <!-- Hugeicons stroke-rounded: github -->
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -399,19 +449,19 @@
       </section>
 
       <section>
-        <h2>How it works</h2>
+        <h2 data-i18n="howTitle">How it works</h2>
         <ol class="steps">
           <li>
-            <span><strong>Join the beta</strong> via
+            <span data-i18n="step1"><strong>Join the beta</strong> via
               <a href="https://brn.sh/eb-finder-testflight">TestFlight</a> and
               install the app on your iPhone or iPad.</span>
           </li>
           <li>
-            <span><strong>Enable the extension</strong> in Settings → Apps →
+            <span data-i18n="step2"><strong>Enable the extension</strong> in Settings → Apps →
               Safari → Extensions, and allow it on all websites.</span>
           </li>
           <li>
-            <span><strong>Shop as usual.</strong> When a site earns EuroBonus
+            <span data-i18n="step3"><strong>Shop as usual.</strong> When a site earns EuroBonus
               points, EB&nbsp;Finder gives you a nudge to log in via SAS first.
               That's it — points secured.</span>
           </li>
@@ -419,27 +469,55 @@
       </section>
 
       <section>
-        <h2>Feedback</h2>
-        <p>
+        <h2 data-i18n="feedbackTitle">Feedback</h2>
+        <p data-i18n="feedbackText">
           Found a bug? A partner site acting weird? A feature you're dying for?
           Tell us in the
           <a href="https://m.me/cm/AbYqbMSdJHLmDqnD">Messenger community</a> or
           on <a href="https://github.com/brinehq/eb-finder">GitHub</a>.
+        </p>
+        <p data-i18n="contactText">
+          Or get in touch directly —
+          <a href="mailto:hello@brine.co">hello@brine.co</a>.
         </p>
       </section>
     </main>
 
     <footer>
       <div class="wrap">
-        <p>
+        <p data-i18n="footerLegal">
           EB&nbsp;Finder is an independent project — <strong>not</strong>
           affiliated with SAS, EuroBonus, or any of the shopping partners.
         </p>
-        <p>
+        <p data-i18n="footerCredit">
           Open source under the MIT license · Made by
           <a href="https://www.brine.co">Brine&nbsp;AB</a>
         </p>
       </div>
     </footer>
+
+    <script src="strings.js"></script>
+    <script>
+      const buttons = document.querySelectorAll(".lang-switch button");
+      function setLang(lang) {
+        document.documentElement.lang = lang;
+        document.title = STRINGS[lang].pageTitle;
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          const s = STRINGS[lang][el.dataset.i18n];
+          if (s) el.innerHTML = s;
+        });
+        buttons.forEach((b) => b.classList.toggle("active", b.dataset.lang === lang));
+        try {
+          localStorage.setItem("eb-lang", lang);
+        } catch (e) {}
+      }
+      buttons.forEach((b) => b.addEventListener("click", () => setLang(b.dataset.lang)));
+      let saved = null;
+      try {
+        saved = localStorage.getItem("eb-lang");
+      } catch (e) {}
+      if (!STRINGS[saved]) saved = null;
+      setLang(saved || (navigator.language?.startsWith("sv") ? "sv" : "en"));
+    </script>
   </body>
 </html>
